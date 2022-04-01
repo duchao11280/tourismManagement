@@ -12,20 +12,21 @@ const checkRole = require('../middleware/checkRole');
 const verifyToken = require('../middleware/verifyToken');
 
 //get user by ID
-router.get('/:id', [verifyToken.verifyToken, checkRole.isUser], userController.getUserByID);
+router.get('/:id', [verifyToken.verifyToken], userController.getUserByID);
 
 //update user info
-router.put('/:id', [verifyToken.verifyToken, checkRole.isUser], userController.updateUser);
+router.put('/:id', [verifyToken.verifyToken], userController.updateUser);
 
 // signup
 router.post('/signup', verifySignUp.verifyUserName, userController.signUp);
 
 // change password
-router.put("/changepassword/:id", [verifyToken.verifyToken, checkRole.isUser], verifyChangePassword.verifyPassword, userController.changePassword);
+router.put("/changepassword/:id", [verifyToken.verifyToken], verifyChangePassword.verifyPassword, userController.changePassword);
 
 ///Login
 router.post("/login", userController.login)
-
+//Log out
+router.post('/logout',userController.logOut);
 
 router.post('/sendfeedback/:id',
     [verifyToken.verifyToken, checkRole.isUser],

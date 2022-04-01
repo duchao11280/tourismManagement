@@ -72,7 +72,9 @@ exports.login = (req, res) => {
                         const token = jwt.sign({ userID: currentUser.userID, userName: currentUser.userName, role: currentUser.role },
                             process.env.SECRET_KEY, { expiresIn: 86400 });
                         delete currentUser["password"];
+                        res.cookie(process.env.key_token, token, { httpOnly: true })
                         res.send({ status: true, message: "Đăng nhập thành công", data: { user: currentUser, accessToken: token } })
+
                         return;
                     } else {
                         res.send({ status: false, message: "Sai tên đăng nhập hoặc mật khẩu" });
@@ -88,7 +90,6 @@ exports.login = (req, res) => {
         res.status(500).json({ status: false });
         return;
     }
-
 }
 
 /**
@@ -108,4 +109,10 @@ exports.changePassword = (req, res) => {
         res.json({ status: true, message: 'Đổi mật khẩu thành công', })
     })
 
+}
+
+exports.logOut = (req,res) =>{
+    res.clearCookie(process.env.key_token);
+    res.status(200).json({status: true, message:"Đăng xuất thành công"})
+    return;
 }
