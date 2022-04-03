@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// import Login from './login';
+import Landing from './Screen/landing';
+import Login from './Screen/login';
 import SignUp from './Screen/signup';
 
 

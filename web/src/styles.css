@@ -1,3 +1,5 @@
+
+/* //login.js */
 .containerLogin {
   display: flex;
   flex-direction: column;
@@ -8,8 +10,16 @@
 }
 
 .login-title {
+  justify-content: center;
+
+  align-items: center;
   font-family: Monospace;
-  font-size: 30px;
+  font-size: 25px;
+  font-weight: bold;
+}
+.login-title-input{
+  font-size: 16px;
+  font-weight: bold;
 }
 .login-form {
   margin-top: 10px;
@@ -49,6 +59,10 @@
 .signUpSentense {
   margin-top: 20px;
 }
+.error-font{
+  color: red;
+  font-size: 13px;
+}
 
 input[type="text"],
 input[type="password"] {
@@ -83,3 +97,118 @@ input[type="submit"]:hover {
   font-size: 25px;
   margin-bottom: 20px;
 } */
+
+
+/* landing.js */
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: #4747d1;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.top-right-login {
+  position: fixed; /* the fixed pos makes it work */
+  right: 20px/*how much you want to move it right 
+    put % or px or rem at end of the amount */;
+}
+.top-right-signUp {
+  position: fixed; /* the fixed pos makes it work */
+  right: 120px/*how much you want to move it right 
+    put % or px or rem at end of the amount */;
+}
+
+
+.top-left-home {
+  position: fixed; /* the fixed pos makes it work */
+  left: 20px/*how much you want to move it right 
+    put % or px or rem at end of the amount */;
+}
+.top-left-information {
+  position: fixed; /* the fixed pos makes it work */
+  left: 140px/*how much you want to move it right 
+    put % or px or rem at end of the amount */;
+}
+/* Add a color to the active/current link */
+.center-logolanding{
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.containerlanding{
+  /* display: flex;
+  flex-direction: column; */
+
+  min-height: 300vh;
+  background-color: #87ceeb;
+}
+.center-titlelanding{
+  position: fixed;
+  top: 95%;
+  left: 50%;
+  /* -webkit-transform: translate(-50%, -50%); */
+  transform: translate(-50%, -50%);
+  /* font-size: 100; */
+}
+
+.center-Buttonlanding{
+  width: 200px;
+  float: left;
+  justify-content: space-between;
+  display: flex;
+  position: fixed;
+  top: 53%;
+  left: 50%;
+  /* -webkit-transform: translate(-50%, -50%); */
+  transform: translate(-50%, -50%);
+  /* font-size: 100; */
+}
+
+
+.button-landing-down{
+  font-size: 15px;
+  font-weight: bold;
+  padding:5px;
+  border-radius: 5px;
+  background-color: rgb(52, 174, 47);
+
+}
+
+.button-landing-down:hover{
+  background-color: #b3cccc;
+  text-decoration: blue;
+  
+}
+.button-landing-help{
+  font-size: 15px;
+  font-weight: bold;
+  padding:5px;
+  border-radius: 5px;
+  background-color: #ff4d4d;
+
+}
+
+.button-landing-help:hover{
+  background-color: #ffb3b3;
+  
+}
+
+
+

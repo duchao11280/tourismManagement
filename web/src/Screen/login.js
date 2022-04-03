@@ -14,11 +14,16 @@ function Login() {
   const handlePasswordChange = (e) => {
     setpassword(e.target.value);
   }
+  const handleSubmit = (e) => {
+    console.log(userName, password);
+    alert("Đăng nhập thành công!");
+    e.preventDefault();
+  }
   return (
     <div className="containerLogin">
       <div><img src={Logo} alt="logo" /></div>
       <div className="login-form">
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="login-title">Đăng nhập</div>
           <div className="input-container">
             <label>Username </label>
