@@ -8,8 +8,8 @@ const verifyToken = require('../middleware/verifyToken');
 
 
 //get All Place
-router.get('/',[verifyToken.verifyToken,checkRole.isUser], placeController.getAllPlaceAndImages);
+router.get('/',[verifyToken.verifyToken], placeController.getAllPlaceAndImages);
 // get place id and name
-router.get('/idandname',[verifyToken.verifyToken,checkRole.isUser],placeController.getAllPlaceIDandName)
+router.get('/idandname',[verifyToken.verifyToken],placeController.getAllPlaceIDandName)
 
 module.exports = router;

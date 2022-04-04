@@ -3,15 +3,15 @@ import { View, Text } from 'react-native'
 import { Icon } from 'react-native-elements'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-import Home from '../../screens/Home'
-import Profile from '../../screens/Profile'
+import HomeNavigator from './HomeNavigator'
 import UserNavigator from './UserNavigator'
 const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
     return (
         <Tab.Navigator screenOptions={{ headerShown: false }}>
-            <Tab.Screen name='Home' component={Home}
+            <Tab.Screen name='HomeNavigator' component={HomeNavigator}
                 options={{
+                    tabBarLabel:'Trang chủ',
                     tabBarIcon: () => (
                         <Icon
                             name='home' type='font-awesome'
