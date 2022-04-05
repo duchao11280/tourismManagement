@@ -2,12 +2,13 @@ var express = require('express');
 var app = express();
 var dotenv = require('dotenv');
 var path = require('path');
+var cookieParser = require('cookie-parser')
 
 dotenv.config();
 const port = process.env.PORT || 3000;
 global.__basedir = __dirname;
 app.use(express.json());
-
+app.use(cookieParser())
 app.use(express.urlencoded({
     extended: true
 }));

@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import HomeNavigator from './HomeNavigator'
 import UserNavigator from './UserNavigator'
+import { useIsFocused } from '@react-navigation/native'
 const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
     return (
@@ -12,17 +13,27 @@ const TabNavigator = () => {
             <Tab.Screen name='HomeNavigator' component={HomeNavigator}
                 options={{
                     tabBarLabel:'Trang chủ',
-                    tabBarIcon: () => (
+                    tabBarIcon: ({focused}) => (
+                        focused?
                         <Icon
                             name='home' type='font-awesome'
-                            color='black' size={24}
+                            color='blue' size={32}
                         />
+                        :<Icon
+                        name='home' type='font-awesome'
+                        color='black' size={24}
+                    />
                     ),
                 }} />
-            <Tab.Screen name='Người dùng'
+            <Tab.Screen name='Tài khoản'
                 component={UserNavigator}
                 options={{
-                    tabBarIcon: () => (
+                    tabBarIcon: ({focused}) => (
+                        focused?
+                        <Icon
+                            name='user' type='font-awesome'
+                            color='blue' size={32}
+                        />:
                         <Icon
                             name='user' type='font-awesome'
                             color='black' size={24}
