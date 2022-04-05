@@ -18,7 +18,15 @@ Room.getAllRoomByUserID = (id, result) => {
         result(err, res);
     });
 }
-
+Room.getAllRoomIsEnableByPlaceID = (id, result) => {
+    dbConn.query(`SELECT room.roomID, room.roomName, room.slot, room.price,
+        room.description, room.address, room.userID, user.fullName 
+        FROM room, place, user WHERE room.isDisabled !=1 and
+        place.placeID = room.placeID and user.userID = room.userID and
+        room.placeID= ${id}`, (err, res) => {
+        result(err, res);
+    })
+}
 Room.addNewRoom = (roomName, slot, price, description, address, userID, placeID, result) => {
     dbConn.query(`INSERT into room(roomName, slot, price, description,` +
         `address, isBook, userID, placeID, isDisabled) ` +

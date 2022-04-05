@@ -3,26 +3,37 @@ import { View, Text } from 'react-native'
 import { Icon } from 'react-native-elements'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-import Home from '../../screens/Home'
-import Profile from '../../screens/Profile'
+import HomeNavigator from './HomeNavigator'
 import UserNavigator from './UserNavigator'
+import { useIsFocused } from '@react-navigation/native'
 const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
     return (
         <Tab.Navigator screenOptions={{ headerShown: false }}>
-            <Tab.Screen name='Home' component={Home}
+            <Tab.Screen name='HomeNavigator' component={HomeNavigator}
                 options={{
-                    tabBarIcon: () => (
+                    tabBarLabel:'Trang chủ',
+                    tabBarIcon: ({focused}) => (
+                        focused?
                         <Icon
                             name='home' type='font-awesome'
-                            color='black' size={24}
+                            color='blue' size={32}
                         />
+                        :<Icon
+                        name='home' type='font-awesome'
+                        color='black' size={24}
+                    />
                     ),
                 }} />
-            <Tab.Screen name='Người dùng'
+            <Tab.Screen name='Tài khoản'
                 component={UserNavigator}
                 options={{
-                    tabBarIcon: () => (
+                    tabBarIcon: ({focused}) => (
+                        focused?
+                        <Icon
+                            name='user' type='font-awesome'
+                            color='blue' size={32}
+                        />:
                         <Icon
                             name='user' type='font-awesome'
                             color='black' size={24}

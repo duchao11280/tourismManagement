@@ -7,12 +7,12 @@ const verifyToken = require('../middleware/verifyToken');
 const commentController = require('../controllers/comment_controller')
 const checkDelete = require('../middleware/checkDeleteComment')
 // Comment getAll comment by place id
-router.get('/placeid=:id',[verifyToken.verifyToken,checkRole.isUser],commentController.getAllCommentByPlaceID)
+router.get('/placeid=:id',[verifyToken.verifyToken],commentController.getAllCommentByPlaceID)
 
 // Insert Comment
-router.post('/',[verifyToken.verifyToken,checkRole.isUser],commentController.insertComment)
+router.post('/',[verifyToken.verifyToken],commentController.insertComment)
 
 // delete comment
-router.delete('/:id',[verifyToken.verifyToken,checkRole.isUser,checkDelete.checkDelete ],commentController.deleteComment)
+router.delete('/:id',[verifyToken.verifyToken,checkDelete.checkDelete ],commentController.deleteComment)
 
 module.exports = router;
