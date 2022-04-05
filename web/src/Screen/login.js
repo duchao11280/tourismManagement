@@ -1,6 +1,7 @@
 import "../styles.css";
 import Logo from "../assets/Logo.png";
 import React, { useState } from "react";
+import { login } from "../networking/userNetworking"
 
 // import inputType from "./assets/inputType.js";
 function Login() {
@@ -14,9 +15,39 @@ function Login() {
   const handlePasswordChange = (e) => {
     setpassword(e.target.value);
   }
+
+  const conductLogin = async () => {
+    const response = await login(userName, password);
+    if (response.status === true) {
+      setuserName('')
+      setpassword('')
+      try {
+
+        // console.log(response.data.user.userName.toString())
+
+        if (response.data.user.role === 0) {
+          console.log("user vao")
+        } else if (response.data.user.role === 1) {
+          console.log("admin")
+        } else if (response.data.user.role === 2) {
+          console.log("hotel")
+        } else if (response.data.user.role === 3) {
+          console.log("restaurant")
+        }
+
+      } catch (e) {
+      }
+    } else {
+      alert(response.message)
+    }
+
+
+
+  }
   const handleSubmit = (e) => {
     console.log(userName, password);
-    alert("Đăng nhập thành công!");
+    conductLogin();
+    // alert("Đăng nhập thành công!");
     e.preventDefault();
   }
   return (

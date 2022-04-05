@@ -90,6 +90,7 @@ const signUp = async (params) => {
     try {
         const respone = await fetch(API_URL + '/api/v1/user/signup', {
             method: 'POST',
+            mode: 'cors',
             headers: {
                 "Accept": 'application/json',
                 'Content-Type': 'application/json',
@@ -138,4 +139,4 @@ const sendFeedback = async (id, params) => {
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getProfile, editProfile, changePassword, login, signUp, sendFeedback };
+export { getProfile, editProfile, changePassword, login, signUp, sendFeedback };

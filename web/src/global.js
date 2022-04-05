@@ -1,6 +1,6 @@
 
 export const GLOBALS = {
-    API_URL: 'http://192.168.1.9:3000',
+    API_URL: 'http://10.0.133.62:3000',
 };
 
 export default GLOBALS;

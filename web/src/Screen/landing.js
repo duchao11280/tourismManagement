@@ -1,7 +1,7 @@
 import "../styles.css";
-import React, { useState } from "react";
+import React from "react";
 import Logo from "../assets/Logo.png";
-
+import { Link } from "react-router-dom";
 // import Logo from "./assets/Logo.png";
 // import inputType from "./assets/inputType.js";
 // import Combobox from "react-widgets/Combobox";
@@ -11,8 +11,11 @@ const Landing = () => {
         <div class="containerlanding">
             <div class="topnav">
                 <a class="active" href="#home">Trang chủ</a>
-                <a href="#news" class="top-right-login">Đăng nhập</a>
-                <a href="#contact" class="top-right-signUp">Đăng ký</a>
+                <Link to="login"><a href="#news" class="top-right-login">Đăng nhập</a></Link>
+                <Link to="signup"><a href="#contact" class="top-right-signUp">Đăng ký</a></Link>
+
+
+
                 <a href="#about">Thông tin</a>
             </div>
 

@@ -1,6 +1,6 @@
 import "../styles.css";
 import React, { useState } from "react";
-import signUp from "../networking/userNetworking"
+import { signUp } from "../networking/userNetworking"
 
 // import Logo from "./assets/Logo.png";
 // import inputType from "./assets/inputType.js";
@@ -96,7 +96,7 @@ const SignUp = () => {
             phonenumber: phonenumber,
             role: role
         };
-
+        console.log(params);
         signUp(params).then((response) => {
             if (response === undefined) {
                 alert("Xảy ra lỗi, vui lòng thử lại sau");
@@ -105,16 +105,15 @@ const SignUp = () => {
             alert(response.message);
         }).catch((error) => {
             alert("Xảy ra lỗi, vui lòng thử lại sau");
-        }).finally(() => {
         })
     }
-    const onSignUp = () => {
-        validate();
-        if (isValidate) {
-            conductSignUp();
-            console.log("ok dang ky");
-        }
-    }
+    // const onSignUp = () => {
+    //     validate();
+    //     if (isValidate) {
+    //         conductSignUp();
+    //         console.log("ok dang ky");
+    //     }
+    // }
     const validate = () => {
         const reg = new RegExp('^[0-9]+$');
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -258,11 +257,11 @@ const SignUp = () => {
         else {
             successcleanerr();
             console.log(fullName + "  " + userName + "  " + password + "  " + email + "  " + phonenumber + "  " + role);
-            onSignUp();
+            // onSignUp();
             // alert("Đăng ký thành công!");
+            conductSignUp();
             e.preventDefault();
         }
-
     }
 
     return (

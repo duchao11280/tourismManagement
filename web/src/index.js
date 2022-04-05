@@ -1,15 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Landing from './Screen/landing';
-import Login from './Screen/login';
-import SignUp from './Screen/signup';
+import App from './App';
+import { BrowserRouter } from "react-router-dom";
 
 
 ReactDOM.render(
-  <React.StrictMode>
-    <SignUp />
-  </React.StrictMode>,
+
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+
+
+
   document.getElementById('root')
 );
 
