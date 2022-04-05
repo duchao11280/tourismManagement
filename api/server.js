@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var dotenv = require('dotenv');
 var path = require('path');
-
+const cors = require('cors');
 dotenv.config();
 const port = process.env.PORT || 3000;
 global.__basedir = __dirname;
@@ -11,6 +11,10 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
+
+
+
+app.use(cors());
 
 app.get('/', function (req, res) {
     return res.send({ messenger: 'Hỗ trợ du lịch' })
