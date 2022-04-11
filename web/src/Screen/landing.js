@@ -11,12 +11,9 @@ const Landing = () => {
         <div class="containerlanding">
             <div class="topnav">
                 <a class="active" href="#home">Trang chủ</a>
-                <Link to="login"><a href="#news" class="top-right-login">Đăng nhập</a></Link>
-                <Link to="signup"><a href="#contact" class="top-right-signUp">Đăng ký</a></Link>
-
-
-
                 <a href="#about">Thông tin</a>
+                <a href="/login" class="top-right-login">Đăng nhập</a>
+                <a href="/signup" class="top-right-signUp">Đăng ký</a>
             </div>
 
             <div>

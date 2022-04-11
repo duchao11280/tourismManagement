@@ -3,10 +3,16 @@ import Logo from "../assets/Logo.png";
 import React, { useState } from "react";
 import { login } from "../networking/userNetworking"
 
+import { useHistory } from "react-router-dom";
+
 // import inputType from "./assets/inputType.js";
 function Login() {
+  const history = useHistory();
+
+
   const [userName, setuserName] = useState('');
   const [password, setpassword] = useState('');
+
 
   const handleUserNameChange = (e) => {
     setuserName(e.target.value);
@@ -18,6 +24,7 @@ function Login() {
 
   const conductLogin = async () => {
     const response = await login(userName, password);
+    console.log(response);
     if (response.status === true) {
       setuserName('')
       setpassword('')
@@ -26,13 +33,13 @@ function Login() {
         // console.log(response.data.user.userName.toString())
 
         if (response.data.user.role === 0) {
-          console.log("user vao")
+          alert('bạn đang đăng nhập tài khoản người dùng, vui lòng tải ứng dụng du lịch')
         } else if (response.data.user.role === 1) {
-          console.log("admin")
+          history.push("/admin")
         } else if (response.data.user.role === 2) {
-          console.log("hotel")
+          history.push("/admin")
         } else if (response.data.user.role === 3) {
-          console.log("restaurant")
+          history.push("/admin")
         }
 
       } catch (e) {
@@ -45,10 +52,12 @@ function Login() {
 
   }
   const handleSubmit = (e) => {
-    console.log(userName, password);
     conductLogin();
-    // alert("Đăng nhập thành công!");
     e.preventDefault();
+    console.log(userName, password);
+
+    // alert("Đăng nhập thành công!");
+
   }
   return (
     <div className="containerLogin">
@@ -58,14 +67,14 @@ function Login() {
           <div className="login-title">Đăng nhập</div>
           <div className="input-container">
             <label>Username </label>
-            <input type="text" name="uname" required value={userName}
+            <input type="text" name="uname" value={userName}
               onChange={(e) => { handleUserNameChange(e) }} />
           </div>
 
 
           <div className="input-container">
             <label>Password </label>
-            <input type="password" name="pass" required value={password}
+            <input type="password" name="pass" value={password}
               onChange={(e) => { handlePasswordChange(e) }} />
           </div>
 
@@ -75,7 +84,7 @@ function Login() {
         </form>
 
       </div>
-      <a href="http" className="signUpSentense">Chưa có tài khoản? đăng ký ngay!</a>
+      <a href="$" className="signUpSentense">Chưa có tài khoản? đăng ký ngay!</a>
     </div >
   );
 }

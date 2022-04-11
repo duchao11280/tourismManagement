@@ -321,8 +321,9 @@ const SignUp = () => {
                                 const select = e.target.value;
                                 setrole(select);
                             }}>
-                            <option value="3">Quản lý nhà hàng</option>
-                            <option value="2">Quản lý khách sạn</option>
+                            <option value="0">Người dùng ứng dụng</option>
+                            <option value="2">Nhà quản lý dịch vụ</option>
+
                         </select>
                     </div>
 

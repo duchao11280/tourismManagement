@@ -1,18 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import Admin from './Screen/admin';
 import App from './App';
-import { BrowserRouter } from "react-router-dom";
 
 
 ReactDOM.render(
-
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
-
-
-
+  <App />
+  ,
   document.getElementById('root')
 );
 
