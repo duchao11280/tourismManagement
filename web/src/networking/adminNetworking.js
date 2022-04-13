@@ -6,9 +6,9 @@ const getAllPlaces = async () => {
         const response = await fetch(
             API_URL + `/api/v1/admin/places`,
             {
-                method: 'GET',
-                
-            },
+                method: 'GET',      
+                credentials:'include'
+            }
         );
         const json = await response.json();
         console.log(json.data)
