@@ -1,6 +1,6 @@
 import "../styles.css";
 import React from "react";
-import Logo from "../assets/Logo.png";
+import Logo from "../assets/imgs/Logo.png";
 import { Link } from "react-router-dom";
 // import Logo from "./assets/Logo.png";
 // import inputType from "./assets/inputType.js";

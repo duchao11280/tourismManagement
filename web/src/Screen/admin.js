@@ -2,7 +2,7 @@ import "../styles.css";
 import React from "react";
 // import Logo from "../assets/Logo.png";
 // import { Link } from "react-router-dom";
-import Logo from "../assets/Logo.png";
+import Logo from "../assets/imgs/Logo.png";
 import "./css/admin.css"
 import { FaHome, FaUserAlt, FaInfoCircle, FaSignOutAlt } from "react-icons/fa";
 import { IconName } from "react-icons/bi";

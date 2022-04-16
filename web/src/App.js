@@ -6,6 +6,7 @@ import Admin from './Screen/admin';
 import Manager from './Screen/manager';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import PlaceManagement from '../src/Screen/placeManagement/PlaceManagement'
+import AddPlace from '../src/Screen/placeManagement/AddPlace'
 function App() {
     return (
         // <div className="App">
@@ -15,7 +16,7 @@ function App() {
         //         <Route path="signup" element={<SignUp />} />
         //     </Routes>
         // </div>
-
+        // <AddPlace/>
         
         <BrowserRouter>
             <Switch>
@@ -25,6 +26,8 @@ function App() {
                 <Route exact path="/admin" component={Admin} />
                 <Route exact path="/manager" component={Manager} />
                 <Route exact path="/admin/placemanagement" component={PlaceManagement}/>
+                <Route exact path="/admin/placemanagement/addplace" component={AddPlace}/>
+                
             </Switch>
         </BrowserRouter>
     )

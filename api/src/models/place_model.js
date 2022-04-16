@@ -20,6 +20,15 @@ Place.getAllPlaces = (result) => {
         }
     })
 }
+Place.getPlaceIDByPlaceName =(placeName,result)=>{
+    dbConn.query(`SELECT DISTINCT placeID from place WHERE placeName=${placeName}`,(err,res)=>{
+        if (res) {
+            result(null, res);
+        } else {
+            result(err, null);
+        }
+    })
+}
 Place.getPlaceIDandName = (result) => {
     dbConn.query('Select placeID,placeName From place Where isDeleted != 1', (err, res) => {
         if (res) {

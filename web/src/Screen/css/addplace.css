@@ -1,0 +1,48 @@
+.container{
+    margin:auto;
+    width:  90%;
+}
+h2{
+    margin: 20px;
+
+}
+.container_box{
+    background-color: #fafafa;
+    margin: auto;
+    border: 2px solid greenyellow;
+    border-radius: 20px;
+    width: 60%;
+    
+    display: flex;
+    flex-direction: column;
+    padding: 15px 5%;
+    
+}
+.input_text{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.box_image{
+    background-color: red;
+    
+}
+.image{
+    object-fit: contain;
+    width: 100%;
+}
+
+.box_btn{
+    display: flex;
+    justify-content: flex-end;
+    
+}
+.btn_add_place{
+    margin:5px;
+    padding:5px;
+}
+.btn_back{
+    margin: 5px;
+    padding:5px 15px;
+}

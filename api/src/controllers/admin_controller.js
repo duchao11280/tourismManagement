@@ -7,91 +7,109 @@ const NotificationModel = require('../models/notification_model');
 exports.getAllPlaces = (req, res) => {
     PlaceModel.getAllPlaces((err, places) => {
         if (err) {
-            res.status(500).json({status: false, message: "Thất bại"})
+            res.status(500).json({ status: false, message: "Thất bại" })
             return;
         };
-        res.json({status: true, message:'Lấy dữ liệu thành công', data: places})
+        res.json({ status: true, message: 'Lấy dữ liệu thành công', data: places })
     });
 }
 // get image by placeID
-exports.getImageByPlaceID = (req,res) =>{
-    ImageModel.getAllImageByPlaceID(req.params.id, (err,imgs)=>{
+exports.getImageByPlaceID = (req, res) => {
+    ImageModel.getAllImageByPlaceID(req.params.id, (err, imgs) => {
         if (err) {
-            res.status(500).json({status: false, message: "Thất bại"})
+            res.status(500).json({ status: false, message: "Thất bại" })
             return;
         };
         var data = [];
         imgs.forEach(element => {
             data.push({
                 id: Object.values(element)[0],
-                image: process.env.DOMAIN +'/public/images/' + Object.values(element)[1]})
+                image: process.env.DOMAIN + '/public/images/' + Object.values(element)[1]
+            })
         });
-        res.json({status: true, message:'Lấy dữ liệu thành công', data: data})
+        res.json({ status: true, message: 'Lấy dữ liệu thành công', data: data })
     })
 }
 // upload image to server
-exports.uploadImagePlace= (req, res) => {
+exports.uploadImagePlace = (req, res) => {
     try {
         if (req.file == undefined) {
-            return res.status(404).json({status: false, message: "Upload hình ảnh thất bại"});
+            return res.status(404).json({ status: false, message: "Upload hình ảnh thất bại" });
         }
-        ImageModel.insertImagePlace(req.file.filename, req.params.id,(err,result)=>{
+        ImageModel.insertImagePlace(req.file.filename, req.params.id, (err, result) => {
             if (err) {
-                res.status(500).json({status: false, message: "Thất bại"})
+                res.status(500).json({ status: false, message: "Thất bại" })
                 return;
             };
-            res.json({ status: true, message: 'Upload thành công'})
+            res.json({ status: true, message: 'Upload thành công' })
         })
 
     } catch (error) {
-        res.status(500).json({status: false, message:"Kết nối thất bại, vui lòng thử lại sau"})
+        res.status(500).json({ status: false, message: "Kết nối thất bại, vui lòng thử lại sau" })
         return;
     }
 }
 // Delete image
-exports.deleteImage = (req, res)=> {
+exports.deleteImage = (req, res) => {
     ImageModel.deleteImage(req.params.id, (err, data) => {
         if (err) {
-            res.status(500).json({status: false, message: "Thất bại"})
+            res.status(500).json({ status: false, message: "Thất bại" })
             return;
         };
-        res.json({ status: true, message: 'Xóa hình ảnh thành công'})
+        res.json({ status: true, message: 'Xóa hình ảnh thành công' })
     })
 }
 // Insert Place
-exports.insertPlace = (req, res) => {
-    var placeReq = new PlaceModel(req.body);
-    PlaceModel.insertPlace(placeReq.placeName,placeReq.description,
-        placeReq.tips, placeReq.city, (err, data) => {
-        if (err) {
-            res.status(500).json({status: false, message: "Thất bại"})
-            return;
-        };
-        res.json({ status: true, message: 'Thêm địa điểm thành công'})
-    })
-
+exports.insertPlace = async (req, res) => {
+    try {
+        var placeReq = new PlaceModel(req.body);
+        let placeID;
+        PlaceModel.insertPlace(placeReq.placeName, placeReq.description,
+            placeReq.tips, placeReq.city, (err, data) => {
+                if (err) {
+                    res.status(500).json({ status: false, message: "Thất bại" })
+                    return;
+                }
+                console.log(req.body.placeImgs)
+                if (req.files.length != 0) {
+                    placeID = data.insertId;
+                    for (let i = 0; i < req.files.length; i++) {
+                        ImageModel.insertImagePlace(req.files[i].filename, placeID, (err, result) => {
+                            if (err) {
+                                res.status(500).json({ status: false, message: "Thất bại" })
+                                return;
+                            };
+                        })
+                    }
+                }
+                res.json({ status: true, message: 'Thêm địa điểm thành công' })
+            })
+    } catch (error) {
+        res.status(500).json({ status: false, message: "Kết nối thất bại, vui lòng thử lại sau" })
+        return;
+    }
 }
 // Update info place
 exports.updateInfoPlace = (req, res) => {
     var placeReq = new PlaceModel(req.body);
-    PlaceModel.updateInfoPlace(req.params.id, placeReq.placeName,placeReq.description,
+    PlaceModel.updateInfoPlace(req.params.id, placeReq.placeName, placeReq.description,
         placeReq.tips, placeReq.city, (err, data) => {
-        if (err) {
-            res.status(500).json({status: false, message: "Thất bại"})
-            return;
-        };
-        res.json({ status: true, message: 'Cập nhật địa điểm thành công'})
-    })
+            if (err) {
+                res.status(500).json({ status: false, message: "Thất bại" })
+                return;
+            };
+            res.json({ status: true, message: 'Cập nhật địa điểm thành công' })
+        })
 
 }
 // Delete Place
-exports.deletePlace = (req, res)=> {
+exports.deletePlace = (req, res) => {
     PlaceModel.deletePlace(req.params.id, (err, data) => {
         if (err) {
-            res.status(500).json({status: false, message: "Thất bại"})
+            res.status(500).json({ status: false, message: "Thất bại" })
             return;
         };
-        res.json({ status: true, message: 'Xóa địa điểm thành công'})
+        res.json({ status: true, message: 'Xóa địa điểm thành công' })
     })
 }
 
@@ -100,10 +118,10 @@ exports.deletePlace = (req, res)=> {
 exports.getAllUsers = (req, res) => {
     UserModel.getAllUsers((err, users) => {
         if (err) {
-            res.status(500).json({status: false, message: "Thất bại"})
+            res.status(500).json({ status: false, message: "Thất bại" })
             return;
         };
-        res.json({status: true, message:'Lấy dữ liệu thành công', data: users})
+        res.json({ status: true, message: 'Lấy dữ liệu thành công', data: users })
     });
 }
 
@@ -111,47 +129,47 @@ exports.getAllUsers = (req, res) => {
 exports.disableUser = (req, res) => {
     UserModel.disableUser(req.params.id, (err, user) => {
         if (err) {
-            res.status(500).json({status: false, message: "Thất bại"})
+            res.status(500).json({ status: false, message: "Thất bại" })
             return;
         };
-        res.json({ status: true, message: 'Vô hiệu hóa thành công'})
+        res.json({ status: true, message: 'Vô hiệu hóa thành công' })
     })
 
 }
 //========================Notification================================//
-exports.addNotification = (req, res) =>{
+exports.addNotification = (req, res) => {
     var title = req.body.title;
     var content = req.body.content;
     var time = req.body.time;
-    NotificationModel.insertNotification(title,content,time, (err, data)=>{
+    NotificationModel.insertNotification(title, content, time, (err, data) => {
         if (err) {
-            res.status(500).json({status: false, message: "Thất bại"})
+            res.status(500).json({ status: false, message: "Thất bại" })
             return;
         };
-        res.json({ status: true, message: 'Thêm mới thành công'})
+        res.json({ status: true, message: 'Thêm mới thành công' })
     })
 }
 
-exports.updateNotification = (req, res) =>{
+exports.updateNotification = (req, res) => {
     var id = req.params.id;
     var title = req.body.title;
     var content = req.body.content;
     var time = req.body.time;
-    NotificationModel.updateNotification(id,title,content,time, (err, data)=>{
+    NotificationModel.updateNotification(id, title, content, time, (err, data) => {
         if (err) {
-            res.status(500).json({status: false, message: "Thất bại"})
+            res.status(500).json({ status: false, message: "Thất bại" })
             return;
         };
-        res.json({ status: true, message: 'Cập nhật thành công'})
+        res.json({ status: true, message: 'Cập nhật thành công' })
     })
 }
-exports.deleteNotification = (req, res) =>{
+exports.deleteNotification = (req, res) => {
     var id = req.params.id;
-    NotificationModel.deleteNotification(id, (err, data)=>{
+    NotificationModel.deleteNotification(id, (err, data) => {
         if (err) {
-            res.status(500).json({status: false, message: "Thất bại"})
+            res.status(500).json({ status: false, message: "Thất bại" })
             return;
         };
-        res.json({ status: true, message: 'Xóa thành công'})
+        res.json({ status: true, message: 'Xóa thành công' })
     })
 }

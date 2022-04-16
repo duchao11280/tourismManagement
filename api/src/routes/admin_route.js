@@ -12,7 +12,7 @@ const feedbackController = require('../controllers/feedback_controller')
 
 //======================Place=====================//
 //insert place
-router.post('/place', [verifyToken.verifyToken, checkRole.isAdmin], adminController.insertPlace)
+router.post('/place', [verifyToken.verifyToken, checkRole.isAdmin],uploadImage.array('placeImgs'), adminController.insertPlace)
 /**
  * update info place with place id
  * @param id

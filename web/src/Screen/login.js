@@ -1,5 +1,5 @@
 import "../styles.css";
-import Logo from "../assets/Logo.png";
+import Logo from "../assets/imgs/Logo.png";
 import React, { useState } from "react";
 import { login } from "../networking/userNetworking"
 
