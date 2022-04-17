@@ -70,7 +70,6 @@ exports.insertPlace = async (req, res) => {
                     res.status(500).json({ status: false, message: "Thất bại" })
                     return;
                 }
-                console.log(req.body.placeImgs)
                 if (req.files.length != 0) {
                     placeID = data.insertId;
                     for (let i = 0; i < req.files.length; i++) {

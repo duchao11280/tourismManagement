@@ -26,8 +26,9 @@ const addPlace = async (values,images) =>{
         data.append("description",values.description);
         data.append("tips",values.tips);
         data.append("city",values.city);
-        console.log(images)
-        data.append("placeImgs",images);
+        for (let i = 0 ; i < images.length ; i++) {
+            data.append("placeImgs", images[i]);
+        }
         const response = await fetch(
             API_URL + `/api/v1/admin/place`,
             {

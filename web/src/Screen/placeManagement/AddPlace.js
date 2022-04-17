@@ -41,7 +41,7 @@ const AddPlace = () => {
             <h2>Thêm mới địa điểm</h2>
             <div className="container_box">
                 <div className="input_text">
-                    <label htmlFor="placeName">Tên địa điểm</label>
+                    <label htmlFor="placeName">Tên địa điểm(*)</label>
                     
                     <input 
                         id="placeName"
@@ -54,7 +54,7 @@ const AddPlace = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="province">Tỉnh thành</label>
+                    <label htmlFor="province">Tỉnh thành(*)</label>
                     <br />
                     <select id="province" name="city" onChange={handleChange}>
                         {province.map((item) =>
@@ -66,7 +66,7 @@ const AddPlace = () => {
                     </select>
                 </div>
                 <div className="input_text">
-                    <label htmlFor="description">Mô tả:</label>
+                    <label htmlFor="description">Mô tả</label>
                     
                     <textarea 
                         id="description" 
@@ -77,7 +77,7 @@ const AddPlace = () => {
                     />
                 </div>
                 <div className="input_text">
-                    <label htmlFor="tips">Gợi ý:</label>
+                    <label htmlFor="tips">Gợi ý</label>
                     <textarea 
                         id="tips" 
                         name="tips" 
