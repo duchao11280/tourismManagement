@@ -3,7 +3,7 @@ import Landing from './Screen/landing';
 import Login from './Screen/login';
 import SignUp from './Screen/signup';
 import Admin from './Screen/admin';
-import Manager from './Screen/manager';
+// import Manager from './Screen/manager';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={SignUp} />
                 <Route exact path="/admin" component={Admin} />
-                <Route exact path="/manager" component={Manager} />
+                {/* <Route exact path="/manager" component={Manager} /> */}
             </Switch>
         </BrowserRouter>
     )

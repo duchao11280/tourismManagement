@@ -14,7 +14,7 @@ app.use(express.urlencoded({
 
 
 
-app.use(cors());
+app.use(cors({ credentials: true, origin: ["http://192.168.1.32:3001"] }));
 
 app.get('/', function (req, res) {
     return res.send({ messenger: 'Hỗ trợ du lịch' })
