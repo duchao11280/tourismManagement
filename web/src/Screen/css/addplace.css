@@ -24,10 +24,7 @@ h2{
 
 }
 
-.box_image{
-    background-color: red;
-    
-}
+
 .image{
     object-fit: contain;
     width: 100%;

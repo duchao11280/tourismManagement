@@ -1,4 +1,4 @@
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Landing from './Screen/landing';
 import Login from './Screen/login';
 import SignUp from './Screen/signup';
@@ -7,6 +7,7 @@ import Manager from './Screen/manager';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import PlaceManagement from '../src/Screen/placeManagement/PlaceManagement'
 import AddPlace from '../src/Screen/placeManagement/AddPlace'
+import EditPlace from '../src/Screen/placeManagement/EditPlace'
 function App() {
     return (
         // <div className="App">
@@ -27,7 +28,8 @@ function App() {
                 <Route exact path="/manager" component={Manager} />
                 <Route exact path="/admin/placemanagement" component={PlaceManagement}/>
                 <Route exact path="/admin/placemanagement/addplace" component={AddPlace}/>
-                
+                <Route exact path="/admin/placemanagement/editplace/:id" component={EditPlace}/>
+
             </Switch>
         </BrowserRouter>
     )

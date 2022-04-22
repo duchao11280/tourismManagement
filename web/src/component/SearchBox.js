@@ -4,7 +4,7 @@ import './css/searchbox.css'
 const SearchBox = (props) => {
     return (
         <div className="box_search">
-            <FcSearch class="icon" />
+            <FcSearch className="icon" />
             <input className="input_search" 
                 type="search" 
                 placeholder="Nhập từ khóa..."

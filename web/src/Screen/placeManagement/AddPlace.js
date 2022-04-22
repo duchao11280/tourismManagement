@@ -11,6 +11,7 @@ const AddPlace = () => {
         description:"",
         tips:""
     })
+    
     useEffect(() => {
         setURLListImage(images);
 
@@ -27,7 +28,8 @@ const AddPlace = () => {
           ...values,
           [name]: value,
         });
-      };
+    };
+
     const handleAdd =()=>{
         addPlace(values,images).then((res)=>{alert(res.message)}).catch((err)=>{console.log(err)})
     }

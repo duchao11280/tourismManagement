@@ -24,7 +24,7 @@ table tr:nth-child(odd){
     background-color: antiquewhite;
 }
 
-table tr:nth-child(1){
+table th{
     background-color:skyblue;
 }
 .box_button_add{
@@ -47,9 +47,14 @@ table tr:nth-child(1){
     align-items: center;
     justify-content: center;
 }
-.btn{
+.btn_action{
     height: 30px;
     width: 30px;
+    justify-content: center;
+    
+}
+.btn_action svg{
+    vertical-align: top;
 }
 .button_edit{
     margin: 10px;

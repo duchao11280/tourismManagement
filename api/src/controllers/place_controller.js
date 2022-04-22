@@ -3,8 +3,8 @@ const ImageModel = require('../models/image_model.js');
 
 
 exports.getAllPlaceAndImages = (req, res) => {
-    PlaceModel.getAllPlaces((err, places) => {
-        if (err) {
+    PlaceModel.getAllPlacesEnable((err, places) => {
+        if (err || places[0] === undefined) {
             res.status(500).json({ status: false, message: "Thất bại" })
             return;
         } else {

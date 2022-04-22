@@ -8,12 +8,32 @@ var Place = function (place) {
         this.city = place.city,
         this.isDeleted = place.isDeleted
 }
-// lấy tất cả các địa điểm chưa bị vô hiệu hóa
 Place.getAllPlaces = (result) => {
+    dbConn.query('Select * From place', (err, res) => {
+        if (res) {
+
+
+            result(null, res);
+        } else {
+            result(err, null);
+        }
+    })
+}
+// lấy tất cả các địa điểm chưa bị vô hiệu hóa
+Place.getAllPlacesEnable = (result) => {
     dbConn.query('Select * From place Where isDeleted != 1', (err, res) => {
         if (res) {
 
 
+            result(null, res);
+        } else {
+            result(err, null);
+        }
+    })
+}
+Place.getPlaceByID = (id,result) =>{
+    dbConn.query(`Select * from place Where placeID=${id}`,(err,res)=>{
+        if (res) {
             result(null, res);
         } else {
             result(err, null);
@@ -63,7 +83,14 @@ Place.deletePlace = (id, result) => {
         }
     );
 }
-
+// kích hoạt lại địa điểm
+Place.enablePlace = (id, result) => {
+    dbConn.query(`Update place Set  isDeleted=0 where placeID=${id}`,
+        (err, res) => {
+            result(err, res);
+        }
+    );
+}
 // get place and images
 Place.getAllPlaceAndImages = (result) => {
     dbConn.query('Select * from place LEFT JOIN image ON place.placeID = image.placeID', (err, res) => {

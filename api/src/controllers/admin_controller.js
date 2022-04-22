@@ -13,6 +13,38 @@ exports.getAllPlaces = (req, res) => {
         res.json({ status: true, message: 'Lấy dữ liệu thành công', data: places })
     });
 }
+exports.getPlaceAndImageByPlaceID = (req, res) => {
+    PlaceModel.getPlaceByID(req.params.id, (err, place) => {
+        if (err || place[0] === undefined) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        let data = {
+            placeID: place[0].placeID,
+            placeName: place[0].placeName,
+            description: place[0].description,
+            tips: place[0].tips,
+            city: place[0].city,
+            images: [],
+        }
+        ImageModel.getAllImageByPlaceID(data.placeID, (err, imgs) => {
+            if (err) {
+                res.status(500).json({ status: false, message: "Thất bại" })
+                return;
+            };
+            var images = [];
+            imgs.forEach(element => {
+                images.push({
+                    id: Object.values(element)[0],
+                    imgURL: process.env.DOMAIN + '/public/images/' + Object.values(element)[1]
+                })
+            });
+            data.images = images
+
+            res.json({ status: true, message: 'Lấy dữ liệu thành công', data: data })
+        })
+    })
+}
 // get image by placeID
 exports.getImageByPlaceID = (req, res) => {
     ImageModel.getAllImageByPlaceID(req.params.id, (err, imgs) => {
@@ -33,16 +65,25 @@ exports.getImageByPlaceID = (req, res) => {
 // upload image to server
 exports.uploadImagePlace = (req, res) => {
     try {
-        if (req.file == undefined) {
-            return res.status(404).json({ status: false, message: "Upload hình ảnh thất bại" });
+        if (req.files.length != 0) {
+            for (let i = 0; i < req.files.length; i++) {
+                if (req.files[i] == undefined) {
+                    return res.status(404).json({ status: false, message: "Upload hình ảnh thất bại" });
+                    
+                }
+            }
+            placeID = req.params.id;
+            for (let i = 0; i < req.files.length; i++) {
+                ImageModel.insertImagePlace(req.files[i].filename, placeID, (err, result) => {
+                    if (err) {
+                        res.status(500).json({ status: false, message: "Thất bại" })
+                        return;
+                    };
+                    
+                })
+            }
+            res.json({ status: true, message: 'Thêm hình ảnh thành công' })
         }
-        ImageModel.insertImagePlace(req.file.filename, req.params.id, (err, result) => {
-            if (err) {
-                res.status(500).json({ status: false, message: "Thất bại" })
-                return;
-            };
-            res.json({ status: true, message: 'Upload thành công' })
-        })
 
     } catch (error) {
         res.status(500).json({ status: false, message: "Kết nối thất bại, vui lòng thử lại sau" })
@@ -108,10 +149,19 @@ exports.deletePlace = (req, res) => {
             res.status(500).json({ status: false, message: "Thất bại" })
             return;
         };
-        res.json({ status: true, message: 'Xóa địa điểm thành công' })
+        res.json({ status: true, message: 'Vô hiệu hóa địa điểm thành công' })
     })
 }
-
+// Kích hoạt Place
+exports.enablePlace = (req, res) => {
+    PlaceModel.enablePlace(req.params.id, (err, data) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Kích hoạt địa điểm thành công' })
+    })
+}
 //========================User================================//
 // get all user
 exports.getAllUsers = (req, res) => {

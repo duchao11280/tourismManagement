@@ -24,15 +24,18 @@ router.put('/place/update/:id', [verifyToken.verifyToken, checkRole.isAdmin], ad
  * param id
  */
 router.put('/place/delete/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.deletePlace)
+// enable place
+router.put('/place/enable/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.enablePlace)
 
 // get All Place
 router.get('/places', [verifyToken.verifyToken, checkRole.isAdmin], adminController.getAllPlaces);
-
+// get place info and image by place id
+router.get("/place/:id", [verifyToken.verifyToken, checkRole.isAdmin], adminController.getPlaceAndImageByPlaceID);
 // get image by place id
 router.get("/place/images/:id", [verifyToken.verifyToken, checkRole.isAdmin], adminController.getImageByPlaceID);
 
 //upload image places
-router.post('/place/image/upload/:id', [verifyToken.verifyToken, checkRole.isAdmin], uploadImage.single("file"), adminController.uploadImagePlace)
+router.post('/place/image/upload/:id', [verifyToken.verifyToken, checkRole.isAdmin], uploadImage.array("files"), adminController.uploadImagePlace)
 
 /**
  * Disalbe image

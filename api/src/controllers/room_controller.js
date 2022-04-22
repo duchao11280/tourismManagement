@@ -2,7 +2,7 @@ const RoomModel = require('../models/room_model')
 const BookRoomModel = require('../models/bookroom_model')
 const PlaceModel = require('../models/place_model')
 exports.getAllRoomIsEnable = (req,res)=>{
-    PlaceModel.getAllPlaces((err, places) => {
+    PlaceModel.getAllPlacesEnable((err, places) => {
         if (err) {
             res.status(500).json({ status: false, message: "Thất bại" })
             return;
