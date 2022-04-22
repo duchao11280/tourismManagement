@@ -13,7 +13,8 @@ var User = function (user) {
 
 // get all user
 User.getAllUsers = (result) => {
-    dbConn.query(`Select * From user Where isDisabled != 1 `, (err, res) => {
+    dbConn.query(`Select userID, userName, fullName, email, phonenumber, user.role, role.roleName, isDisabled 
+                From user, role Where userName != 'admin' and user.role = role.role`, (err, res) => {
         result(err, res);
     });
 }
@@ -91,5 +92,10 @@ User.disableUser = (id, result) => {
         result(err, res);
     });
 }
-
+// kích hoạt người dùng
+User.enableUser = (id, result) => {
+    dbConn.query(`Update user Set isDisabled=0 where userID=${id}`, (err, res) => {
+        result(err, res);
+    });
+}
 module.exports = User;

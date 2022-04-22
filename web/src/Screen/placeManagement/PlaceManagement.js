@@ -12,9 +12,11 @@ const PlaceManagement = () => {
     const [searchfield, setSearchfield] = useState('');
     const [listPlaces, setListPlaces] = useState([]);
     const history = useHistory();
+    const [refresh, setRefresh] = useState(true)
+    
     useEffect(() => {
         getPlaceFromServer();
-    }, [])
+    }, [refresh])
     const getPlaceFromServer = () => {
 
         getAllPlaces()
@@ -26,11 +28,11 @@ const PlaceManagement = () => {
     const onSearchChange = (event) => {
         setSearchfield(event.target.value);
     }
-    const handleOnEnable = (id, index) => {
-        enablePlace(id).then((res) => { alert(res.message) }).catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau!") })
+    const handleOnEnable = (id) => {
+        enablePlace(id).then((res) => { alert(res.message);setRefresh(!refresh) }).catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau!") })
     }
-    const handleOnDisable = (id, index) => {
-        deletePlace(id).then((res) => { alert(res.message) }).catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau!") })
+    const handleOnDisable = (id) => {
+        deletePlace(id).then((res) => { alert(res.message);setRefresh(!refresh) }).catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau!") })
     }
     const handleOnEdit = (id) => {
         history.push(`/admin/placemanagement/editplace/${id}`)
@@ -79,8 +81,8 @@ const PlaceManagement = () => {
                                         <div className="action_button">
                                             <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(item.placeID) }}><BiPencil /></button>
                                             {item.isDeleted ?
-                                                <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(item.placeID, i) }}><TiTick /></button>
-                                                : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(item.placeID, i) }}><IoBan /></button>}
+                                                <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(item.placeID) }}><TiTick /></button>
+                                                : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(item.placeID) }}><IoBan /></button>}
                                         </div>
                                     </td>
                                 </tr>

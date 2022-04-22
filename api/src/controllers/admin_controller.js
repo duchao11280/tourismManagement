@@ -167,9 +167,14 @@ exports.enablePlace = (req, res) => {
 exports.getAllUsers = (req, res) => {
     UserModel.getAllUsers((err, users) => {
         if (err) {
-            res.status(500).json({ status: false, message: "Thất bại" })
+            res.status(500).json({ status: false, message: "Thất bại", data: [] })
             return;
         };
+        if(users[0] === undefined){
+            res.status(200).json({ status: false, message: "Không có dữ liệu", data: [] })
+            return;
+        }
+
         res.json({ status: true, message: 'Lấy dữ liệu thành công', data: users })
     });
 }
@@ -182,6 +187,17 @@ exports.disableUser = (req, res) => {
             return;
         };
         res.json({ status: true, message: 'Vô hiệu hóa thành công' })
+    })
+
+}
+// enable user
+exports.enableUser = (req, res) => {
+    UserModel.enableUser(req.params.id, (err, user) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Kích hoạt thành công' })
     })
 
 }

@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import PlaceManagement from '../src/Screen/placeManagement/PlaceManagement'
 import AddPlace from '../src/Screen/placeManagement/AddPlace'
 import EditPlace from '../src/Screen/placeManagement/EditPlace'
+import UserManagement from '../src/Screen/userManagement/UserManagement'
 function App() {
     return (
         // <div className="App">
@@ -29,7 +30,7 @@ function App() {
                 <Route exact path="/admin/placemanagement" component={PlaceManagement}/>
                 <Route exact path="/admin/placemanagement/addplace" component={AddPlace}/>
                 <Route exact path="/admin/placemanagement/editplace/:id" component={EditPlace}/>
-
+                <Route exact path="/admin/usermanagement" component={UserManagement}/>
             </Switch>
         </BrowserRouter>
     )

@@ -58,7 +58,7 @@ const addPlace = async (values, images) => {
     }
 }
 //  Cập nhật thông tin địa điểm du lịch
-const updateInfoPlace = async (id,params) => {
+const updateInfoPlace = async (id, params) => {
     try {
         if (params === undefined) return;
         const respone = await fetch(API_URL + `/api/v1/admin/place/update/${id}`, {
@@ -139,6 +139,51 @@ const uploadImageInEdit = async (id, images) => {
 
     }
 }
+// user management
+const getAllUsers = async () => {
+    try {
+        const response = await fetch(
+            API_URL + `/api/v1/admin/users`,
+            {
+                method: 'GET',
+                credentials: 'include'
+            }
+        );
+        const json = await response.json();
+        return json;
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+//  vô hiệu hóa người dùng
+const disableUser = async (id) => {
+    try {
+        const respone = await fetch(API_URL + `/api/v1/admin/disableuser/${id}`, {
+            method: 'PUT',
+            credentials: 'include'
+        });
+        const json = await respone.json();
+        return json;
+    } catch (error) {
+
+    }
+
+}
+// kích hoạt người dung
+const enableUser = async (id) => {
+    try {
+        const respone = await fetch(API_URL + `/api/v1/admin/enableuser/${id}`, {
+            method: 'PUT',
+            credentials: 'include'
+        });
+        const json = await respone.json();
+        return json;
+    } catch (error) {
+
+    }
+
+}
 export {
     getAllPlaces,
     addPlace,
@@ -148,4 +193,7 @@ export {
     disableImage,
     updateInfoPlace,
     uploadImageInEdit,
+    getAllUsers,
+    disableUser,
+    enableUser,
 }

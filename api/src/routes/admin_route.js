@@ -50,7 +50,8 @@ router.get('/users', [verifyToken.verifyToken, checkRole.isAdmin], adminControll
 
 // disable User
 router.put('/disableuser/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.disableUser);
-
+// enable user
+router.put('/enableuser/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.enableUser);
 //======================Notification=====================//
 router.post('/notification/addnew', [verifyToken.verifyToken, checkRole.isAdmin], adminController.addNotification)
 
