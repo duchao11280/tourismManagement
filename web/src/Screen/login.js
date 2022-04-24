@@ -36,11 +36,8 @@ function Login() {
           alert('bạn đang đăng nhập tài khoản người dùng, vui lòng tải ứng dụng du lịch')
         } else if (response.data.user.role === 1) {
           history.push("/admin")
-        } else if (response.data.user.role === 2) {
-          history.push("/admin")
-        } else if (response.data.user.role === 3) {
-          history.push("/admin")
         }
+        
 
       } catch (e) {
       }
