@@ -10,7 +10,7 @@ var Service = function (service) {
     this.hotline = service.hotline,
     this.latitude = service.latitude,
     this.longitude = service.longitude,
-    this.isDisable = service.isDisable
+    this.isDisabled = service.isDisabled
 
 }
 
@@ -18,7 +18,7 @@ var Service = function (service) {
 Service.insertService = (serviceName, typeID, description, placeID,
     address, hotline, latitude, longitude, result) => {
     dbConn.query(`INSERT INTO services(serviceName, typeID, description, placeID, 
-        address, hotline, latitude, longitude, isDisable) 
+        address, hotline, latitude, longitude, isDisabled) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)`,
         [serviceName, typeID, description, placeID, address, hotline,
             latitude, longitude], (err, res) => {
@@ -26,10 +26,10 @@ Service.insertService = (serviceName, typeID, description, placeID,
             })
 }
 // Update service
-Service.updateInfoSerivce = (id, serviceName, typeID, description, placeID,
+Service.updateInfoService = (id, serviceName, typeID, description, placeID,
     address, hotline, latitude, longitude, result) => {
     dbConn.query(`Update services Set serviceName = ?, typeID =?, description = ?, placeID = ?, 
-    address = ?, hotline = ?, latitude = ?, longitude =? where placeID=${id}`,
+    address = ?, hotline = ?, latitude = ?, longitude =? where serviceID=${id}`,
         [serviceName, typeID, description, placeID, address, hotline, 
             latitude, longitude], (err, res) => {
                 result(err, res);
@@ -38,15 +38,15 @@ Service.updateInfoSerivce = (id, serviceName, typeID, description, placeID,
 }
 // Disable service
 Service.disableService = (id, result) => {
-    dbConn.query(`Update place Set  isDisable=1 where placeID=${id}`,
+    dbConn.query(`Update services Set  isDisabled=1 where serviceID=${id}`,
         (err, res) => {
             result(err, res);
         }
     );
 }
 // Enable service
-Service.disableService = (id, result) => {
-    dbConn.query(`Update place Set  isDisable=0 where placeID=${id}`,
+Service.enableService = (id, result) => {
+    dbConn.query(`Update services Set  isDisabled=0 where serviceID=${id}`,
         (err, res) => {
             result(err, res);
         }
@@ -57,9 +57,9 @@ Service.disableService = (id, result) => {
 // Get all services 
 Service.getAllServices = (result) => {
     dbConn.query(`Select services.serviceID, services.serviceName, services.typeID, 
-        typeservice.typeName,services.description, services.placeID, place.placeName,
-        services.address, services.hotline, place.city
-        services.latitude, services.longitude, isDisable 
+        typeservice.typeService,services.description, services.placeID, place.placeName,
+        services.address, services.hotline, place.city,
+        services.latitude, services.longitude, isDisabled 
         From services, typeservice, place
         Where services.placeID = place.placeID and services.typeID = typeservice.typeID`,
         (err, res) => {
@@ -67,16 +67,16 @@ Service.getAllServices = (result) => {
         }
     );
 }
-// Get all service Enable
+// Get all service Enable by placeID
 
-Service.getAllServicesEnable = (result) => {
+Service.getAllServicesEnableByPlaceID = (id,result) => {
     dbConn.query(`Select services.serviceID, services.serviceName, services.typeID, 
-        typeservice.typeName,services.description, services.placeID, place.placeName,
-        services.address, services.hotline, place.city
-        services.latitude, services.longitude, isDisable 
+        typeservice.typeService,services.description, services.placeID, place.placeName,
+        services.address, services.hotline, place.city,
+        services.latitude, services.longitude, services.isDisabled 
         From services, typeservice, place
         Where services.placeID = place.placeID and services.typeID = typeservice.typeID 
-        and services.isDisable = 0`,
+        and services.isDisabled = 0 and placeID =${id}`,
         (err, res) => {
             result(err, res);
         }
@@ -84,16 +84,18 @@ Service.getAllServicesEnable = (result) => {
 }
 
 // Get service by service id 
-Service.getServiceByServiceID = (id, result) => {
+Service.getAllServiceByServiceID = (id, result) => {
     dbConn.query(`Select services.serviceID, services.serviceName, services.typeID, 
-        typeservice.typeName,services.description, services.placeID, place.placeName,
-        services.address, services.hotline, place.city
-        services.latitude, services.longitude, isDisable 
+        typeservice.typeService,services.description, services.placeID, place.placeName,
+        services.address, services.hotline, place.city,
+        services.latitude, services.longitude, services.isDisabled
         From services, typeservice, place
         Where services.placeID = place.placeID and services.typeID = typeservice.typeID 
-        and services.services.serviceID =${id}`,
+        and services.serviceID =${id}`,
         (err, res) => {
             result(err, res);
         }
     );
 }
+
+module.exports = Service;

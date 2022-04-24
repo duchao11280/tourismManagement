@@ -74,5 +74,22 @@ router.get('/feedback',
     feedbackController.adminGetAllFeedback)
 
 //======================Services=====================//
+// Get all services
+router.get('/services',[verifyToken.verifyToken,checkRole.isAdmin],adminController.getAllServices);
+// get service by service id
+router.get('/service/:id',[verifyToken.verifyToken,checkRole.isAdmin],adminController.getServiceAndImageByServiceID)
+// Update service by id
+router.put('/service/:id',[verifyToken.verifyToken,checkRole.isAdmin],adminController.updateInfoService)
+
+// disable service
+router.put('/service/disable/:id',[verifyToken.verifyToken,checkRole.isAdmin],adminController.disableService)
+
+// enable service
+router.put('/service/enable/:id',[verifyToken.verifyToken,checkRole.isAdmin],adminController.enableService)
+
+//insert service
+router.post('/service', [verifyToken.verifyToken, checkRole.isAdmin],uploadImage.array('files'), adminController.insertService)
+//upload image service
+router.post('/service/image/upload/:id', [verifyToken.verifyToken, checkRole.isAdmin], uploadImage.array("files"), adminController.uploadImageService)
 
 module.exports = router;

@@ -2,8 +2,10 @@ const PlaceModel = require('../models/place_model.js');
 const ImageModel = require('../models/image_model');
 const UserModel = require('../models/user_model');
 const NotificationModel = require('../models/notification_model');
+const ServiceModel = require('../models/service_model');
+const Service = require('../models/service_model');
 //========================PLace================================//
-//get all user
+//get all place
 exports.getAllPlaces = (req, res) => {
     PlaceModel.getAllPlaces((err, places) => {
         if (err) {
@@ -69,7 +71,7 @@ exports.uploadImagePlace = (req, res) => {
             for (let i = 0; i < req.files.length; i++) {
                 if (req.files[i] == undefined) {
                     return res.status(404).json({ status: false, message: "Upload hình ảnh thất bại" });
-                    
+
                 }
             }
             placeID = req.params.id;
@@ -79,7 +81,7 @@ exports.uploadImagePlace = (req, res) => {
                         res.status(500).json({ status: false, message: "Thất bại" })
                         return;
                     };
-                    
+
                 })
             }
             res.json({ status: true, message: 'Thêm hình ảnh thành công' })
@@ -170,7 +172,7 @@ exports.getAllUsers = (req, res) => {
             res.status(500).json({ status: false, message: "Thất bại", data: [] })
             return;
         };
-        if(users[0] === undefined){
+        if (users[0] === undefined) {
             res.status(200).json({ status: false, message: "Không có dữ liệu", data: [] })
             return;
         }
@@ -239,3 +241,147 @@ exports.deleteNotification = (req, res) => {
     })
 }
 //======================Services=====================//
+exports.getAllServices = (req, res) => {
+    ServiceModel.getAllServices((err, services) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Lấy dữ liệu thành công', data: services })
+    });
+}
+// update info service
+exports.updateInfoService = (req, res) => {
+    var service = new ServiceModel(req.body);
+    ServiceModel.updateInfoService(req.params.id, service.serviceName, 
+        service.typeID, service.description, service.placeID, service.address, 
+        service.hotline, service.latitude, service.longitude, (err, data) => {
+            if (err) {
+                res.status(500).json({ status: false, message: "Thất bại" })
+                return;
+            };
+            res.json({ status: true, message: 'Cập nhật thành công' })
+        })
+
+}
+// enable service
+exports.enableService = (req, res) => {
+    ServiceModel.enableService(req.params.id, (err, service) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Kích hoạt thành công' })
+    })
+}
+
+// disable service
+exports.disableService = (req, res) => {
+    ServiceModel.disableService(req.params.id, (err, service) => {
+        if (err) {
+            res.status(500).json({ status: false, message: err })
+            return;
+        };
+        res.json({ status: true, message: 'Vô hiệu hóa thành công' })
+    })
+}
+// insert service
+exports.insertService = async (req, res) => {
+    try {
+        var service = new ServiceModel(req.body);
+        let serviceID;
+        ServiceModel.insertService(service.serviceName, service.typeID, 
+            service.description, service.placeID, service.address, 
+            service.hotline, service.latitude, service.longitude, 
+            (err, data) => {
+                if (err) {
+                    res.status(500).json({ status: false, message: "Thất bại" })
+                    return;
+                }
+                if (req.files.length != 0) {
+                    serviceID = data.insertId;
+                    for (let i = 0; i < req.files.length; i++) {
+                        ImageModel.insertImageService(req.files[i].filename, serviceID, (err, result) => {
+                            if (err) {
+                                res.status(500).json({ status: false, message: "Thất bại" })
+                                return;
+                            };
+                        })
+                    }
+                }
+                res.json({ status: true, message: 'Thêm dịch vụ thành công' })
+            })
+    } catch (error) {
+        res.status(500).json({ status: false, message: "Kết nối thất bại, vui lòng thử lại sau" })
+        return;
+    }
+}
+
+exports.uploadImageService = (req, res) => {
+    try {
+        if (req.files.length != 0) {
+            for (let i = 0; i < req.files.length; i++) {
+                if (req.files[i] == undefined) {
+                    return res.status(404).json({ status: false, message: "Upload hình ảnh thất bại" });
+
+                }
+            }
+            serviceID = req.params.id;
+            for (let i = 0; i < req.files.length; i++) {
+                ImageModel.insertImageService(req.files[i].filename, serviceID, (err, result) => {
+                    if (err) {
+                        res.status(500).json({ status: false, message: "Thất bại" })
+                        return;
+                    };
+
+                })
+            }
+            res.json({ status: true, message: 'Thêm hình ảnh thành công' })
+        }
+
+    } catch (error) {
+        res.status(500).json({ status: false, message: "Kết nối thất bại, vui lòng thử lại sau" })
+        return;
+    }
+}
+// get service by service id
+exports.getServiceAndImageByServiceID = (req, res) => {
+    ServiceModel.getAllServiceByServiceID(req.params.id, (err, services) => {
+        if (err || services[0] === undefined) {
+            res.status(500).json({ status: false, message: err })
+            return;
+        };
+        let data = {
+            serviceID: services[0].serviceID,
+            serviceName: services[0].serviceName,
+            description: services[0].description,
+            typeID: services[0].typeID,
+            typeService: services[0].typeService,
+            placeID: services[0].placeID,
+            placeName: services[0].placeName,
+            city: services[0].city,
+            address: services[0].address,
+            hotline: services[0].hotline,
+            latitude: services[0].latitude,
+            longitude: services[0].longitude,
+            isDisabled: services[0].isDisabled,
+            images: [],
+        }
+        ImageModel.getAllImageByServiceID(data.serviceID, (err, imgs) => {
+            if (err) {
+                res.status(500).json({ status: false, message: "Thất bại" })
+                return;
+            };
+            var images = [];
+            imgs.forEach(element => {
+                images.push({
+                    id: Object.values(element)[0],
+                    imgURL: process.env.DOMAIN + '/public/images/' + Object.values(element)[1]
+                })
+            });
+            data.images = images
+
+            res.json({ status: true, message: 'Lấy dữ liệu thành công', data: data })
+        })
+    })
+}
