@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Admin from './Screen/admin';
 import App from './App';
+import Landing from './Screen/landing';
+
 
 
 ReactDOM.render(
