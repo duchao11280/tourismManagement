@@ -8,7 +8,7 @@ import { SearchBar } from "react-native-elements";
 import {
     getAllPlaces
 } from '../networking/placeNetworking'
-import PlaceInfoItem from '../components/child/place/PlaceItem'
+import PlaceInfoItem from '../components/child/place/PlaceInfoItem'
 const PlacesInfo = ({ navigation }) => {
     const [isLoading, setLoading] = useState(true);
     const [listPlaces, setListPlaces] = useState([]);

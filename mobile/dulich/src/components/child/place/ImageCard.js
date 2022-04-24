@@ -14,22 +14,6 @@ const ImageCard = (props) => {
                     }}
                 />
             </View>
-            <Pressable
-                style={Styles.delete}
-                onPress={() => {
-                    Alert.alert(
-                        "Cảnh báo",
-                        "Bạn có muốn xóa hình ảnh này?",
-                        [
-                            { text: "Đồng ý", onPress: () => { props.disableImage(props.item.id)} },
-                            { text: "Hủy bỏ", onPress: () => { }}
-                        ]
-                    )
-                }}
-            >
-                <Text style={Styles.textDelete}>X</Text>
-            </Pressable>
-
         </View>
     );
 }
@@ -40,6 +24,7 @@ const Styles = StyleSheet.create({
         backgroundColor: "#e8ffee",
         borderRadius: 15,
         marginTop: 10,
+        marginBottom: 20,
         marginRight: 15,
         elevation: 10,
     },
@@ -47,26 +32,5 @@ const Styles = StyleSheet.create({
         padding: 10,
         marginHorizontal: 5,
     },
-    delete: {
-        width: 35,
-        height: 35,
-        borderRadius: 20,
-        elevation: 15,
-        position: "absolute",
-        right: 5,
-        top: 5,
-        backgroundColor: 'white',
-
-    },
-    textDelete: {
-        fontSize: 18,
-        height: 35,
-        textAlignVertical: 'center',
-        textAlign: "center",
-        color: 'red',
-
-    }
-
-
 })
 export default ImageCard;

@@ -9,6 +9,7 @@ import PlaceManagement from '../src/Screen/placeManagement/PlaceManagement'
 import AddPlace from '../src/Screen/placeManagement/AddPlace'
 import EditPlace from '../src/Screen/placeManagement/EditPlace'
 import UserManagement from '../src/Screen/userManagement/UserManagement'
+import TableManagement from '../src/Screen/tableManagement/TableManagement'
 function App() {
     return (
         // <div className="App">
@@ -31,6 +32,7 @@ function App() {
                 <Route exact path="/admin/placemanagement/addplace" component={AddPlace}/>
                 <Route exact path="/admin/placemanagement/editplace/:id" component={EditPlace}/>
                 <Route exact path="/admin/usermanagement" component={UserManagement}/>
+                <Route exact path="/services/tablemanagement" component={TableManagement}/>
             </Switch>
         </BrowserRouter>
     )

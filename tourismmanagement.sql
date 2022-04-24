@@ -11,53 +11,11 @@
  Target Server Version : 100414
  File Encoding         : 65001
 
- Date: 22/04/2022 22:32:44
+ Date: 24/04/2022 20:09:04
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
--- ----------------------------
--- Table structure for bookroom
--- ----------------------------
-DROP TABLE IF EXISTS `bookroom`;
-CREATE TABLE `bookroom`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `roomID` int NULL DEFAULT NULL,
-  `userID` int NULL DEFAULT NULL,
-  `startTime` datetime(6) NULL DEFAULT NULL,
-  `phoneNumber` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `fk_bookroom_room`(`roomID` ASC) USING BTREE,
-  INDEX `fk_bookroom_user`(`userID` ASC) USING BTREE,
-  CONSTRAINT `fk_bookroom_room` FOREIGN KEY (`roomID`) REFERENCES `room` (`roomID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_bookroom_user` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of bookroom
--- ----------------------------
-
--- ----------------------------
--- Table structure for booktable
--- ----------------------------
-DROP TABLE IF EXISTS `booktable`;
-CREATE TABLE `booktable`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `tableID` int NULL DEFAULT NULL,
-  `userID` int NULL DEFAULT NULL,
-  `starttime` datetime(6) NULL DEFAULT NULL,
-  `phoneNumber` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `fk_booktable_restaurant`(`tableID` ASC) USING BTREE,
-  INDEX `fk_booktable_user`(`userID` ASC) USING BTREE,
-  CONSTRAINT `fk_booktable_restaurant` FOREIGN KEY (`tableID`) REFERENCES `tableservices` (`tableID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_booktable_user` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of booktable
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for comment
@@ -103,11 +61,11 @@ CREATE TABLE `image`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `placeID` int NULL DEFAULT NULL,
-  `contributeID` int NULL DEFAULT NULL,
+  `serviceID` int NULL DEFAULT NULL,
   `isDeleted` tinyint(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_image_place`(`placeID` ASC) USING BTREE,
-  INDEX `fk_image_contribute`(`contributeID` ASC) USING BTREE,
+  INDEX `fk_image_contribute`(`serviceID` ASC) USING BTREE,
   CONSTRAINT `fk_image_place` FOREIGN KEY (`placeID`) REFERENCES `place` (`placeID`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
@@ -117,7 +75,7 @@ CREATE TABLE `image`  (
 INSERT INTO `image` VALUES (7, '1650089335776_giangdien3.jpg', 30, NULL, 0);
 INSERT INTO `image` VALUES (8, '1650089335779_giangdien4.jpg', 30, NULL, 0);
 INSERT INTO `image` VALUES (11, '1650619782276_giangdien4.jpg', 1, NULL, 0);
-INSERT INTO `image` VALUES (12, '1650619782283_giangdien5.jpg', 1, NULL, 0);
+INSERT INTO `image` VALUES (12, '1650619782283_giangdien5.jpg', 1, NULL, 1);
 INSERT INTO `image` VALUES (13, '1650619879638_giangdien.jpg', 1, NULL, 0);
 
 -- ----------------------------
@@ -153,7 +111,7 @@ CREATE TABLE `place`  (
 -- ----------------------------
 -- Records of place
 -- ----------------------------
-INSERT INTO `place` VALUES (1, 'Thác Giang Điền', 'Thác Giang Điền là địa điểm thu hút rất nhiều bạn trẻ và các hộ gia đình kéo nhau về đây tổ chức cắm trại, tắm thác và tổ chức ăn uống. Với khung cảnh hoang sơ được bao bọc ', 'Mang theo đồ để cắm trại như: Thảm,  than, bếp nướng,...', 'Đồng Nai', 0);
+INSERT INTO `place` VALUES (1, 'Thác Giang Điền', 'Thác Giang Điền là địa điểm thu hút rất nhiều bạn trẻ và các hộ gia đình kéo nhau về đây tổ chức cắm trại, tắm thác và tổ chức ăn uống. Với khung cảnh hoang sơ được bao bọc...', 'Mang theo đồ để cắm trại như: Thảm,  than, bếp nướng,...', 'Đồng Nai', 0);
 INSERT INTO `place` VALUES (2, 'Quảng trường Ba Đình', 'Quảng trường Ba Đình là quảng trường lớn nhất Việt Nam, nằm trên đường Hùng Vương, quận Ba Đình và là nơi Lăng Chủ tịch Hồ Chí Minh được xây dựng.', 'Đi cùng bạn bè', 'Hà Nội', 0);
 INSERT INTO `place` VALUES (3, 'Núi Chứa Chan', 'Ngọn núi cao thứ hai ở Đông Nam Bộ có nhiều rừng rậm, vách đá dựng đứng... được các bạn trẻ chọn để khám phá khi rảnh rỗi.', '', 'Đồng Nai', 0);
 INSERT INTO `place` VALUES (4, 'Vườn Xoài', 'Đây là một địa điểm du lịch ưa thích đối với các bạn trẻ thích một nơi cắm trại vui vẻ. Noi nay that dep\n', 'Many hinh\n', 'Đồng Nai', 0);
@@ -176,58 +134,45 @@ CREATE TABLE `role`  (
 -- ----------------------------
 INSERT INTO `role` VALUES (0, 'Người dùng');
 INSERT INTO `role` VALUES (1, 'Admin');
-INSERT INTO `role` VALUES (2, 'Nhà cung cấp dịch vụ');
 
 -- ----------------------------
--- Table structure for room
+-- Table structure for services
 -- ----------------------------
-DROP TABLE IF EXISTS `room`;
-CREATE TABLE `room`  (
-  `roomID` int NOT NULL AUTO_INCREMENT,
-  `roomName` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `slot` int NULL DEFAULT NULL,
-  `price` int NULL DEFAULT NULL,
+DROP TABLE IF EXISTS `services`;
+CREATE TABLE `services`  (
+  `serviceID` int NOT NULL AUTO_INCREMENT,
+  `serviceName` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `typeID` int NULL DEFAULT NULL,
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `placeID` int NULL DEFAULT NULL,
   `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `isBook` tinyint(1) NULL DEFAULT NULL COMMENT 'phong duoc dat hay chua',
-  `userID` int NULL DEFAULT NULL COMMENT 'chu phong',
-  `placeID` int NULL DEFAULT NULL,
-  `isDisabled` tinyint NULL DEFAULT NULL,
-  PRIMARY KEY (`roomID`) USING BTREE,
-  INDEX `fk_room_user`(`userID` ASC) USING BTREE,
-  INDEX `fk_room_place1`(`placeID` ASC) USING BTREE,
-  CONSTRAINT `fk_room_place1` FOREIGN KEY (`placeID`) REFERENCES `place` (`placeID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_room_user` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+  `hotline` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `latitude` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'vi do',
+  `longitude` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'kinh do',
+  `isDisable` tinyint(1) NULL DEFAULT NULL,
+  PRIMARY KEY (`serviceID`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of room
+-- Records of services
 -- ----------------------------
+INSERT INTO `services` VALUES (1, 'L\'indochine Cafe', 2, 'Một nơi uống cafe yên tĩnh, thích hợp để thư giãn.', 6, '3/7A Đồng Khởi, Tam Hiệp, Tp. Biên Hòa, Đồng Nai', '0911758140', '10.956512', '106.860789', 0);
 
 -- ----------------------------
--- Table structure for tableservices
+-- Table structure for typeservice
 -- ----------------------------
-DROP TABLE IF EXISTS `tableservices`;
-CREATE TABLE `tableservices`  (
-  `tableID` int NOT NULL AUTO_INCREMENT,
-  `tableName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `slot` int NULL DEFAULT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `isBook` bit(1) NULL DEFAULT NULL COMMENT 'Phòng được đặt hay chưa',
-  `userID` int NULL DEFAULT NULL,
-  `placeID` int NULL DEFAULT NULL,
-  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `isDisabled` tinyint NULL DEFAULT NULL,
-  PRIMARY KEY (`tableID`) USING BTREE,
-  INDEX `fk_restaurant_user`(`userID` ASC) USING BTREE,
-  INDEX `fk_restaurant_place`(`placeID` ASC) USING BTREE,
-  CONSTRAINT `fk_restaurant_place` FOREIGN KEY (`placeID`) REFERENCES `place` (`placeID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_restaurant_user` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+DROP TABLE IF EXISTS `typeservice`;
+CREATE TABLE `typeservice`  (
+  `typeID` int NOT NULL,
+  `typeService` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`typeID`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of tableservices
+-- Records of typeservice
 -- ----------------------------
+INSERT INTO `typeservice` VALUES (1, 'Nơi ở');
+INSERT INTO `typeservice` VALUES (2, 'Dịch vụ khác');
 
 -- ----------------------------
 -- Table structure for user
@@ -243,8 +188,9 @@ CREATE TABLE `user`  (
   `role` int NULL DEFAULT NULL COMMENT '0 la nguoi dung, 1 la admin, 2 la khach san, 3 la nha hang ',
   `isDisabled` tinyint(1) NULL DEFAULT NULL COMMENT 'Tai khoan co bi vo hieu hoa hay khong?',
   `lastUpdate` datetime NULL DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`userID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+  PRIMARY KEY (`userID`) USING BTREE,
+  INDEX `role`(`role` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user
@@ -253,7 +199,7 @@ INSERT INTO `user` VALUES (1, 'admin', '$2a$14$kZSuw2csvSw.dMtBsA0p7O4e7xEOPj6bL
 INSERT INTO `user` VALUES (2, 'duchao111', '$2a$14$4U/phSn3BvzVxThRoqJiMu2y2ctLepQlGqKSh/CJqrCQo54tMqeQ6', 'Đức Hảo', 'duchao3003@gmail.com', '0799792465', 0, 0, '2022-03-31 21:50:22');
 INSERT INTO `user` VALUES (3, 'duchao112', '$2a$14$Kndy5W9C0LWs59WEO1LmEumTAfzSlKjd07H19TF6ijYUD2cWAYAUW', 'Đức Hảo', 'haond3003@gmail.com', '0799792465', 0, 0, '2022-03-31 21:52:40');
 INSERT INTO `user` VALUES (4, 'duchao113', '$2a$14$3UdWVH7aNYgkyOi23x.dg.bAc/MrMVkqwQIBuF2hdOlbVbCEWXeEy', 'Đức Hảo', 'haond3003@gmail.com', '0799792465', 0, 1, '2022-04-22 22:30:18');
-INSERT INTO `user` VALUES (5, 'hotel111', '$2a$14$/nrKt1AQBBPLTgU5IdWvGu/wSTN2X3tO94ZKmHkPPsVoSBY7WJlTq', 'Nguyen Hao', 'lilynguyen11280@gmail.com', '0799792465', 2, 0, '2022-04-22 22:16:16');
-INSERT INTO `user` VALUES (6, 'nhhao111', '$2a$14$Mf1x5VVobfzgkBTkTFvaIuPM8BiJOXeY5tvWKjsLz.dhV7gHOaqEy', 'NH Hao', 'hao@gmail.com', '0799792465', 2, 0, '2022-04-13 18:31:26');
+INSERT INTO `user` VALUES (5, 'hotel111', '$2a$14$/nrKt1AQBBPLTgU5IdWvGu/wSTN2X3tO94ZKmHkPPsVoSBY7WJlTq', 'Nguyen Hao', 'lilynguyen11280@gmail.com', '0799792465', 0, 0, '2022-04-24 14:23:11');
+INSERT INTO `user` VALUES (6, 'nhhao111', '$2a$14$Mf1x5VVobfzgkBTkTFvaIuPM8BiJOXeY5tvWKjsLz.dhV7gHOaqEy', 'NH Hao', 'hao@gmail.com', '0799792465', 0, 0, '2022-04-24 14:27:08');
 
 SET FOREIGN_KEY_CHECKS = 1;
