@@ -20,7 +20,7 @@ const PlacesInfo = ({ navigation, route }) => {
     }, []);
 
     const getPlaceFromServer = () => {
-        getAllPlaces().then((listPlaces) => { setListPlaces(listPlaces); })
+        getAllPlaces(route.params.province).then((listPlaces) => { setListPlaces(listPlaces); })
             .catch((err) => { Alert.alert("Thông báo", "Kết nối thất bại") })
             .finally(() => { setLoading(false), setRefreshing(false); });
     }

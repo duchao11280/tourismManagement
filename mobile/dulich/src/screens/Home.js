@@ -103,7 +103,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#e6f2ff',
-        paddingTop: 40
+        paddingTop: 40,
+        paddingLeft: 5,
+        paddingRight: 5,
     },
     BeachImage: {
         flexDirection: 'column',

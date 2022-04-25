@@ -8,6 +8,7 @@ import ImageCard from '../components/child/place/ImageCard'
 import CommentItem from '../components/child/place/CommentItem'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAllCommentByPlaceID, deleteCommentByUser, addComment } from '../networking/commentNetworking'
+import ProvinceLocation from '../components/child/place/ProvinceLocation'
 
 const PlaceInfoDetail = ({ navigation, route }) => {
     const [place, setPlace] = useState(route.params.place)
@@ -35,9 +36,9 @@ const PlaceInfoDetail = ({ navigation, route }) => {
     }
     const deleteComment = (id) => {
         getUserID()
-            .then(()=>deleteCommentByUser(id,userID)
+            .then(() => deleteCommentByUser(id, userID)
                 .then((response) => {
-                    if(response !== undefined)
+                    if (response !== undefined)
                         Alert.alert("Thông báo", response.message)
 
                     onRefresh();
@@ -71,10 +72,9 @@ const PlaceInfoDetail = ({ navigation, route }) => {
         <View>
             <Text style={styles.title}>Tên địa điểm:</Text>
             <Text style={styles.content}>{place.placeName}</Text>
-            <Text style={styles.title}>Tỉnh thành:</Text>
-            <Text style={styles.content}>{place.city}</Text>
-            <Text style={styles.title}>Tips:</Text>
-            <Text style={styles.content}>{place.tips}</Text>
+            <Text style={styles.title}>Địa chỉ:</Text>
+            <Text style={styles.content}>{place.address}</Text>
+            <ProvinceLocation lat={place.latitude} long={place.longitude} />
             <Text style={styles.title}>Mô tả:</Text>
             <Text style={styles.content}>{place.description}</Text>
             <FlatList
@@ -95,6 +95,10 @@ const PlaceInfoDetail = ({ navigation, route }) => {
                 }}
             >
             </FlatList>
+            <Text style={styles.title}>Có thể bạn chưa biết:</Text>
+            <Text style={styles.content}>{place.tips}</Text>
+
+
             <Text style={{ fontWeight: 'bold', margin: 15 }}>Bình luận: </Text>
         </View>
     )
@@ -164,7 +168,9 @@ const styles = StyleSheet.create({
     },
     content: {
         fontSize: 18,
-        marginLeft: 18,
+        lineHeight: 25,
+        marginHorizontal: 18,
+        textAlign: 'justify',
     },
     inputText: {
         margin: 10,
