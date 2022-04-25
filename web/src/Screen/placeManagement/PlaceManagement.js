@@ -7,14 +7,16 @@ import { TiTick } from "react-icons/ti"
 import { AiOutlinePlus } from 'react-icons/ai'
 import { useHistory } from 'react-router-dom'
 import { getAllPlaces, enablePlace, deletePlace } from "../../networking/adminNetworking"
+import Admin from '../admin'
 const PlaceManagement = () => {
 
     const [searchfield, setSearchfield] = useState('');
     const [listPlaces, setListPlaces] = useState([]);
     const history = useHistory();
     const [refresh, setRefresh] = useState(true)
-    
+
     useEffect(() => {
+
         getPlaceFromServer();
     }, [refresh])
     const getPlaceFromServer = () => {
@@ -29,10 +31,10 @@ const PlaceManagement = () => {
         setSearchfield(event.target.value);
     }
     const handleOnEnable = (id) => {
-        enablePlace(id).then((res) => { alert(res.message);setRefresh(!refresh) }).catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau!") })
+        enablePlace(id).then((res) => { alert(res.message); setRefresh(!refresh) }).catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau!") })
     }
     const handleOnDisable = (id) => {
-        deletePlace(id).then((res) => { alert(res.message);setRefresh(!refresh) }).catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau!") })
+        deletePlace(id).then((res) => { alert(res.message); setRefresh(!refresh) }).catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau!") })
     }
     const handleOnEdit = (id) => {
         history.push(`/admin/placemanagement/editplace/${id}`)
@@ -48,16 +50,17 @@ const PlaceManagement = () => {
     })
 
     return (
-        <div className="container">
+        <><Admin /><div className="container">
+
             <h2 className="title">Quản lý địa điểm du lịch</h2>
             <SearchBox searchChange={onSearchChange} />
             <div>
                 <div className="box_button_add">
                     <h3> Danh sách địa điểm</h3>
-                    <button className="button_add" onClick={() => { handleOnAddPlace() }}>
+                    <button className="button_add" onClick={() => { handleOnAddPlace(); }}>
                         <AiOutlinePlus />
-                    Thêm mới
-                </button>
+                        Thêm mới
+                    </button>
                 </div>
                 <table className="table_place">
                     <thead>
@@ -79,19 +82,19 @@ const PlaceManagement = () => {
                                     <td>{item.isDeleted ? "Bị vô hiệu hóa" : "Đang hoạt động"}</td>
                                     <td>
                                         <div className="action_button">
-                                            <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(item.placeID) }}><BiPencil /></button>
+                                            <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(item.placeID); }}><BiPencil /></button>
                                             {item.isDeleted ?
-                                                <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(item.placeID) }}><TiTick /></button>
-                                                : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(item.placeID) }}><IoBan /></button>}
+                                                <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(item.placeID); }}><TiTick /></button>
+                                                : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(item.placeID); }}><IoBan /></button>}
                                         </div>
                                     </td>
                                 </tr>
-                            )
+                            );
                         })}
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div></>
     )
 }
 

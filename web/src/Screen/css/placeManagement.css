@@ -1,6 +1,7 @@
 .container{
     width: 90%;
     margin:auto;
+    padding-left: 11%;
 }
 .title{
     text-align: center;

@@ -1,41 +1,79 @@
 import "../styles.css";
 import React from "react";
-// import Logo from "../assets/Logo.png";
-// import { Link } from "react-router-dom";
+
 import Logo from "../assets/imgs/Logo.png";
 import "./css/admin.css"
-import { FaHome, FaUserAlt, FaInfoCircle, FaSignOutAlt } from "react-icons/fa";
-import { IconName } from "react-icons/bi";
-// import Logo from "./assets/Logo.png";
-// import inputType from "./assets/inputType.js";
-// import Combobox from "react-widgets/Combobox";
+import { ImHome } from "react-icons/im";
+import { FaThLarge, FaUserAlt, FaConciergeBell, FaSignOutAlt } from "react-icons/fa";
+import { GiEarthAmerica } from "react-icons/gi";
+import { useHistory, Link } from 'react-router-dom'
 const Admin = () => {
 
+    const history = useHistory();
+    const handleOnAddPlace = () => {
+        history.push(`/admin/placemanagement/`)
+    }
     return (
-        <div>
-            <div class='logo'>
-                <img src={Logo} alt="logo" />
-            </div>
-            <div class='sideBarMenu'>
+        <div class="container-Admin">
+            {/* <div class="topbar-Admin">
+                <div class="logo-Admin">
+                    <h2>Brand.</h2> 
+                </div>
+                <div class="search-Admin">
+                    <input type="text" name="search" placeholder="search here" />
+                    <label for="search"><i class="fas fa-search"></i></label>
+                </div>
+
+
+            </div> */}
+            <div class="sidebar-Admin">
                 <ul>
-                    <div><li><a><FaHome />  Trang chủ</a></li></div>
-                    <div><li><a><FaInfoCircle />  Địa điểm</a></li></div>
-                    <div><li><a><FaUserAlt />  Người dùng</a></li></div>
-                    <div><li><a><FaSignOutAlt />  Đăng xuất</a></li></div>
+                    <li>
+
+                        <Link to="/admin"> <a href="#" >
+                            <FaThLarge className="icon-Admin" />
+                            <div>Trang Chủ</div>
+                        </a></Link>
+                    </li>
+                    <li>
+
+                        <Link to="/admin/usermanagement">   <a href="" >
+                            <FaUserAlt className="icon-Admin" />
+                            <div>Người Dùng</div>
+                        </a></Link>
+                    </li>
+                    <li>
+
+
+                        <Link to="/admin/placemanagement">
+                            <a >
+                                <GiEarthAmerica className="icon-Admin" />
+                                <div>Địa Điểm</div>
+                            </a></Link>
+                    </li>
+                    <li>
+
+                        <Link to="/admin/servicesmanagement">
+                            <a >
+                                <FaConciergeBell className="icon-Admin" />
+                                <div>Dịch Vụ</div>
+                            </a></Link>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <FaSignOutAlt className="icon-Admin" />
+                            <div>Đăng Xuất</div>
+                        </a>
+                    </li>
+
                 </ul>
             </div>
 
-
-            <div class='searchbox' ><input type='text' maxlength="100" size="100"></input></div>
-            <div class='userlist'>
-                <ol>
-                    <li>Duchao123</li>
-                    <li>admin</li>
-                    <li>admin123</li>
-                </ol>
-            </div>
-
         </div>
+
+
+
+
     );
 }
 
