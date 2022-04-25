@@ -6,13 +6,18 @@ import "./css/admin.css"
 import { ImHome } from "react-icons/im";
 import { FaThLarge, FaUserAlt, FaConciergeBell, FaSignOutAlt } from "react-icons/fa";
 import { GiEarthAmerica } from "react-icons/gi";
+import { useHistory, Link } from 'react-router-dom'
 const Admin = () => {
 
+    const history = useHistory();
+    const handleOnAddPlace = () => {
+        history.push(`/admin/placemanagement/`)
+    }
     return (
         <div class="container-Admin">
-            <div class="topbar-Admin">
+            {/* <div class="topbar-Admin">
                 <div class="logo-Admin">
-                    {/* <!-- <h2>Brand.</h2> //logo --> */}
+                    <h2>Brand.</h2> 
                 </div>
                 <div class="search-Admin">
                     <input type="text" name="search" placeholder="search here" />
@@ -20,32 +25,39 @@ const Admin = () => {
                 </div>
 
 
-            </div>
+            </div> */}
             <div class="sidebar-Admin">
                 <ul>
                     <li>
-                        <a href="#">
+
+                        <Link to="/admin"> <a href="#" >
                             <FaThLarge className="icon-Admin" />
                             <div>Trang Chủ</div>
-                        </a>
+                        </a></Link>
                     </li>
                     <li>
-                        <a href="#">
+
+                        <Link to="/admin/usermanagement">   <a href="" >
                             <FaUserAlt className="icon-Admin" />
                             <div>Người Dùng</div>
-                        </a>
+                        </a></Link>
                     </li>
                     <li>
-                        <a href="#">
-                            <GiEarthAmerica className="icon-Admin" />
-                            <div>Địa Điểm</div>
-                        </a>
+
+
+                        <Link to="/admin/placemanagement">
+                            <a >
+                                <GiEarthAmerica className="icon-Admin" />
+                                <div>Địa Điểm</div>
+                            </a></Link>
                     </li>
                     <li>
-                        <a href="#">
-                            <FaConciergeBell className="icon-Admin" />
-                            <div>Dịch Vụ</div>
-                        </a>
+
+                        <Link to="/admin/servicesmanagement">
+                            <a >
+                                <FaConciergeBell className="icon-Admin" />
+                                <div>Dịch Vụ</div>
+                            </a></Link>
                     </li>
                     <li>
                         <a href="#">

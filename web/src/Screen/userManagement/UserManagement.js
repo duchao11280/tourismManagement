@@ -3,6 +3,7 @@ import SearchBox from '../../component/SearchBox'
 import { IoBan } from "react-icons/io5";
 import { TiTick } from "react-icons/ti"
 import { disableUser, getAllUsers, enableUser } from '../../networking/adminNetworking'
+import Admin from '../admin'
 const UserManagement = () => {
     const [searchfield, setSearchfield] = useState('');
     const [listUser, setListUser] = useState([]);
@@ -41,7 +42,7 @@ const UserManagement = () => {
         return search;
     })
     return (
-        <div className="container">
+        <><Admin /><div className="container">
             <h2 className="title">Quản lý người dùng</h2>
             <SearchBox searchChange={onSearchChange} />
             <div>
@@ -72,17 +73,17 @@ const UserManagement = () => {
                                     <td>
                                         <div className="action_button">
                                             {item.isDisabled ?
-                                                <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnableUser(item.userID) }}><TiTick /></button>
-                                                : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisableUser(item.userID) }}><IoBan /></button>}
+                                                <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnableUser(item.userID); }}><TiTick /></button>
+                                                : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisableUser(item.userID); }}><IoBan /></button>}
                                         </div>
                                     </td>
                                 </tr>
-                            )
+                            );
                         })}
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div></>
     )
 }
 
