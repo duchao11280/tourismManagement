@@ -1,15 +1,31 @@
-import * as React from 'react';
-import { Text, View, StyleSheet, Button, Image, TextInput, Pressable } from 'react-native';
+import React, { Component, useEffect, useState } from 'react';
+import { Text, View, StyleSheet, Button, Image, TextInput, Pressable, FlatList, SafeAreaView } from 'react-native';
 import { FontAwesome5 } from 'react-native-vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { province } from '../resources/values/province'
+import Province from '../components/child/place/Province'
+import { Appbar } from 'react-native-paper';
+import { SearchBar } from "react-native-elements";
 
 
 
-const Home = ({ navigation}) => {
+const Home = ({ navigation }) => {
+    const [searchfield, setSearchfield] = useState('');
+    // const [listProvince, setListProvinceName] = useState(province);
+
+    const handleSearch = (text) => {
+        setSearchfield(text);
+
+    };
+
+    const gotoPlaceByProvince = (province) => {
+        navigation.push('PlacesInfo', { province: province })
+    }
     return (
-        <View style={styles.container}>
-            <View style={styles.BeachImage}>
+        <SafeAreaView style={{ flex: 1 }}>
+            <View style={styles.container}>
+                {/* <View style={styles.BeachImage}>
                 <Image source={require('../resources/imgs/Beach.png')} />
             </View>
 
@@ -51,9 +67,35 @@ const Home = ({ navigation}) => {
                 </View>
 
 
-            </View>
-
-        </View >
+            </View> */}
+                {/* <Appbar.Header statusBarHeight={1}>
+                    <Appbar.Content title="Các tỉnh thành Việt Nam" />
+                </Appbar.Header> */}
+                <View>
+                    <SearchBar
+                        placeholder="Tìm địa điểm"
+                        lightTheme
+                        round // bo góc
+                        onChangeText={handleSearch}
+                        value={searchfield}
+                    />
+                </View>
+                <View >
+                    <Text style={styles.content}>Khám phá các địa điểm tại các thành phố:</Text>
+                </View>
+                <FlatList
+                    data={province}
+                    numColumns={2}
+                    keyExtractor={item => item.id.toString()}
+                    renderItem={({ item, index }) => {
+                        return (
+                            // <View><Text>{item.provinceName}</Text></View>
+                            <Province province={item.provinceName} gotoPlace={gotoPlaceByProvince} />
+                        )
+                    }}
+                ></FlatList>
+            </View >
+        </SafeAreaView>
     )
 }
 
@@ -61,6 +103,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#e6f2ff',
+        paddingTop: 40
     },
     BeachImage: {
         flexDirection: 'column',
@@ -71,8 +114,8 @@ const styles = StyleSheet.create({
     firstHeadButtonView: {
         flexDirection: 'row',
         paddingTop: 40,
-        justifyContent:'space-around',
-        flexWrap:'wrap'
+        justifyContent: 'space-around',
+        flexWrap: 'wrap'
 
     },
     FontButton: {
@@ -81,12 +124,16 @@ const styles = StyleSheet.create({
 
     ServiceButton: {
         marginHorizontal: 20,
-        marginTop:20,
+        marginTop: 20,
     },
     icon: {
-        justifyContent:'center',
-        alignSelf:'center'
+        justifyContent: 'center',
+        alignSelf: 'center'
     },
+    content: {
+        fontSize: 15,
+        fontWeight: "bold"
+    }
 })
 
 

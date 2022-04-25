@@ -9,7 +9,7 @@ import {
     getAllPlaces
 } from '../networking/placeNetworking'
 import PlaceInfoItem from '../components/child/place/PlaceInfoItem'
-const PlacesInfo = ({ navigation }) => {
+const PlacesInfo = ({ navigation, route }) => {
     const [isLoading, setLoading] = useState(true);
     const [listPlaces, setListPlaces] = useState([]);
     const [searchfield, setSearchfield] = useState('');
@@ -45,7 +45,7 @@ const PlacesInfo = ({ navigation }) => {
                 <Appbar.Content title="Thông tin du lịch" />
             </Appbar.Header>
             <SearchBar
-                placeholder="Type Here..."
+                placeholder="Tìm địa điểm"
                 lightTheme
                 round // bo góc
                 onChangeText={handleSearch}
