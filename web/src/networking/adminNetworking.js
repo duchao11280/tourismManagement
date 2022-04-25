@@ -40,6 +40,9 @@ const addPlace = async (values, images) => {
         data.append("description", values.description);
         data.append("tips", values.tips);
         data.append("city", values.city);
+        data.append("address", values.city);
+        data.append("latitude", values.latitude);
+        data.append("longitude", values.longitude);
         for (let i = 0; i < images.length; i++) {
             data.append("placeImgs", images[i]);
         }
@@ -72,7 +75,10 @@ const updateInfoPlace = async (id, params) => {
                 placeName: params.placeName,
                 description: params.description,
                 tips: params.tips,
-                city: params.city
+                city: params.city,
+                address:params.address,
+                latitude: params.latitude,
+                longitude: params.longitude
             })
         });
         const json = await respone.json();

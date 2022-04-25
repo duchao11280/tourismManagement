@@ -3,7 +3,7 @@ const ImageModel = require('../models/image_model');
 const UserModel = require('../models/user_model');
 const NotificationModel = require('../models/notification_model');
 const ServiceModel = require('../models/service_model');
-const Service = require('../models/service_model');
+const TypeService = require('../models/typeservice_model')
 //========================PLace================================//
 //get all place
 exports.getAllPlaces = (req, res) => {
@@ -27,6 +27,9 @@ exports.getPlaceAndImageByPlaceID = (req, res) => {
             description: place[0].description,
             tips: place[0].tips,
             city: place[0].city,
+            address: place[0].address,
+            latitude: place[0].latitude,
+            longitude: place[0].longitude,
             images: [],
         }
         ImageModel.getAllImageByPlaceID(data.placeID, (err, imgs) => {
@@ -63,6 +66,16 @@ exports.getImageByPlaceID = (req, res) => {
         });
         res.json({ status: true, message: 'Lấy dữ liệu thành công', data: data })
     })
+}
+
+exports.searchAllPlaceByCity = (req,res) =>{
+    PlaceModel.searchAllPlaceByCity(req.body.city,(err, places) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Lấy dữ liệu thành công', data: places })
+    });
 }
 // upload image to server
 exports.uploadImagePlace = (req, res) => {
@@ -108,7 +121,7 @@ exports.insertPlace = async (req, res) => {
         var placeReq = new PlaceModel(req.body);
         let placeID;
         PlaceModel.insertPlace(placeReq.placeName, placeReq.description,
-            placeReq.tips, placeReq.city, (err, data) => {
+            placeReq.tips, placeReq.city, placeReq.address, placeReq.latitude, placeReq.longitude, (err, data) => {
                 if (err) {
                     res.status(500).json({ status: false, message: "Thất bại" })
                     return;
@@ -135,7 +148,7 @@ exports.insertPlace = async (req, res) => {
 exports.updateInfoPlace = (req, res) => {
     var placeReq = new PlaceModel(req.body);
     PlaceModel.updateInfoPlace(req.params.id, placeReq.placeName, placeReq.description,
-        placeReq.tips, placeReq.city, (err, data) => {
+        placeReq.tips, placeReq.city,placeReq.address,placeReq.latitude,placeReq.longitude, (err, data) => {
             if (err) {
                 res.status(500).json({ status: false, message: "Thất bại" })
                 return;
@@ -383,5 +396,15 @@ exports.getServiceAndImageByServiceID = (req, res) => {
 
             res.json({ status: true, message: 'Lấy dữ liệu thành công', data: data })
         })
+    })
+}
+// get type service
+exports.getAllTypeService = (req, res) => {
+    TypeService.getAllType((err, type) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Vô hiệu hóa thành công', data : type })
     })
 }

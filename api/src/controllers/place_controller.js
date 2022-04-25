@@ -2,10 +2,10 @@ const PlaceModel = require('../models/place_model.js');
 const ImageModel = require('../models/image_model.js');
 
 
-exports.getAllPlaceAndImages = (req, res) => {
-    PlaceModel.getAllPlacesEnable((err, places) => {
+exports.getAllPlaceAndImagesByCity = (req, res) => {
+    PlaceModel.getAllPlacesEnableByCity(req.body.city,(err, places) => {
         if (err || places[0] === undefined) {
-            res.status(500).json({ status: false, message: "Thất bại" })
+            res.status(500).json({ status: false, message: "Thất bại", data: [] })
             return;
         } else {
             var data = []
@@ -30,6 +30,9 @@ exports.getAllPlaceAndImages = (req, res) => {
                         description: place.description,
                         tips: place.tips,
                         city: place.city,
+                        address: place.address,
+                        latitude: place.latitude,
+                        longitude: place.longitude,
                         images: images
                     })
        

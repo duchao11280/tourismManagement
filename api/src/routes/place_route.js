@@ -7,8 +7,8 @@ const checkRole = require('../middleware/checkRole');
 const verifyToken = require('../middleware/verifyToken');
 
 
-//get All Place
-router.get('/',[verifyToken.verifyToken], placeController.getAllPlaceAndImages);
+//search place by city
+router.post('/',[verifyToken.verifyToken], placeController.getAllPlaceAndImagesByCity);
 // get place id and name
 router.get('/idandname',[verifyToken.verifyToken],placeController.getAllPlaceIDandName)
 

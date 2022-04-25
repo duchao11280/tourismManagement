@@ -29,6 +29,8 @@ router.put('/place/enable/:id', [verifyToken.verifyToken, checkRole.isAdmin], ad
 
 // get All Place
 router.get('/places', [verifyToken.verifyToken, checkRole.isAdmin], adminController.getAllPlaces);
+// get places by city
+router.post('/places/bycity',[verifyToken.verifyToken],adminController.searchAllPlaceByCity)
 // get place info and image by place id
 router.get("/place/:id", [verifyToken.verifyToken, checkRole.isAdmin], adminController.getPlaceAndImageByPlaceID);
 // get image by place id
@@ -91,5 +93,9 @@ router.put('/service/enable/:id',[verifyToken.verifyToken,checkRole.isAdmin],adm
 router.post('/service', [verifyToken.verifyToken, checkRole.isAdmin],uploadImage.array('files'), adminController.insertService)
 //upload image service
 router.post('/service/image/upload/:id', [verifyToken.verifyToken, checkRole.isAdmin], uploadImage.array("files"), adminController.uploadImageService)
+
+
+router.get('/typeservice', [verifyToken.verifyToken, checkRole.isAdmin], adminController.getAllTypeService);
+
 
 module.exports = router;

@@ -15,7 +15,10 @@ const EditPlace = () => {
         placeName: "",
         city: "",
         description: "",
-        tips: ""
+        tips: "",
+        address: "",
+        latitude: "",
+        longitude: ""
     })
     const [showModal, setShowModal] = useState(false);
     const [imagesAdd, setImagesAdd] = useState([])
@@ -29,7 +32,10 @@ const EditPlace = () => {
                     placeName: response.data.placeName,
                     city: response.data.city,
                     description: response.data.description,
-                    tips: response.data.tips
+                    tips: response.data.tips,
+                    address: response.data.address,
+                    latitude: response.data.latitude,
+                    longitude: response.data.longitude
                 });
                 setImgs(response.data.images);
                 setCurrImg(response.data.images[0])
@@ -121,6 +127,39 @@ const EditPlace = () => {
                             )}
                         </select>
                     </div>
+                    <div className="input_text">
+                    <label htmlFor="address">Địa chỉ(*)</label>
+                    <input 
+                        id="address"
+                        type="text" 
+                        name="address" 
+                        value={values.address}
+                        placeholder="Nhập địa chỉ" 
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="input_text">
+                    <label htmlFor="latitude">Vĩ độ(*)</label>
+                    <input 
+                        id="latitude"
+                        type="text" 
+                        name="latitude" 
+                        value={values.latitude}
+                        placeholder="Nhập vĩ độ..." 
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="input_text">
+                    <label htmlFor="longitude">Kinh độ(*)</label>
+                    <input 
+                        id="longitude"
+                        type="text" 
+                        name="longitude" 
+                        value={values.longitude}
+                        placeholder="Nhập kinh độ..." 
+                        onChange={handleChange}
+                    />
+                </div>
                     <div className="input_text">
                         <label htmlFor="description">Mô tả</label>
 

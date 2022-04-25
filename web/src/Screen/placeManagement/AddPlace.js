@@ -9,7 +9,10 @@ const AddPlace = () => {
         placeName:"",
         city:province[0].provinceName,
         description:"",
-        tips:""
+        tips:"",
+        address:"",
+        latitude: "",
+        longitude: ""
     })
     
     useEffect(() => {
@@ -66,6 +69,39 @@ const AddPlace = () => {
                             >{item.provinceName}</option>
                         )}
                     </select>
+                </div>
+                <div className="input_text">
+                    <label htmlFor="address">Địa chỉ(*)</label>
+                    <input 
+                        id="address"
+                        type="text" 
+                        name="address" 
+                        value={values.address}
+                        placeholder="Nhập địa chỉ" 
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="input_text">
+                    <label htmlFor="latitude">Vĩ độ(*)</label>
+                    <input 
+                        id="latitude"
+                        type="text" 
+                        name="latitude" 
+                        value={values.latitude}
+                        placeholder="Nhập vĩ độ..." 
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="input_text">
+                    <label htmlFor="longitude">Kinh độ(*)</label>
+                    <input 
+                        id="longitude"
+                        type="text" 
+                        name="longitude" 
+                        value={values.longitude}
+                        placeholder="Nhập kinh độ..." 
+                        onChange={handleChange}
+                    />
                 </div>
                 <div className="input_text">
                     <label htmlFor="description">Mô tả</label>

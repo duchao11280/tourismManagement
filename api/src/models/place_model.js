@@ -6,6 +6,9 @@ var Place = function (place) {
         this.description = place.description,
         this.tips = place.tips,
         this.city = place.city,
+        this.address = place.address,
+        this.latitude = place.latitude,
+        this.longitude = place.longitude,
         this.isDeleted = place.isDeleted
 }
 Place.getAllPlaces = (result) => {
@@ -20,8 +23,8 @@ Place.getAllPlaces = (result) => {
     })
 }
 // lấy tất cả các địa điểm chưa bị vô hiệu hóa
-Place.getAllPlacesEnable = (result) => {
-    dbConn.query('Select * From place Where isDeleted != 1', (err, res) => {
+Place.getAllPlacesEnableByCity = (city,result) => {
+    dbConn.query('Select * From place Where isDeleted != 1 and city=?',[city], (err, res) => {
         if (res) {
 
 
@@ -49,6 +52,15 @@ Place.getPlaceIDByPlaceName =(placeName,result)=>{
         }
     })
 }
+Place.searchAllPlaceByCity =(city,result)=>{
+    dbConn.query(`SELECT * from place WHERE city=?`,[city],(err,res)=>{
+        if (res) {
+            result(null, res);
+        } else {
+            result(err, null);
+        }
+    })
+}
 Place.getPlaceIDandName = (result) => {
     dbConn.query('Select placeID,placeName From place Where isDeleted != 1', (err, res) => {
         if (res) {
@@ -61,16 +73,16 @@ Place.getPlaceIDandName = (result) => {
     })
 }
 // thêm vào một địa điểm mới
-Place.insertPlace = (placeName, description, tips, city, result) => {
-    dbConn.query('Insert into place(placeName, description, tips, city, isDeleted) VALUES(?,?,?,?,0) ',
-        [placeName, description, tips, city], (err, res) => {
+Place.insertPlace = (placeName, description, tips, city, address, latitude, longitude, result) => {
+    dbConn.query('Insert into place(placeName, description, tips, city, address, latitude, longitude, isDeleted) VALUES(?,?,?,?,?,?,?,0) ',
+        [placeName, description, tips, city, address, latitude, longitude,], (err, res) => {
             result(err, res);
         })
 }
 // cập nhât các thông tin địa điểm
-Place.updateInfoPlace = (id, placeName, description, tips, city, result) => {
-    dbConn.query(`Update place Set  placeName=?, description=?,  tips=?, city=? where placeID=${id}`,
-        [placeName, description, tips, city], (err, res) => {
+Place.updateInfoPlace = (id, placeName, description, tips, city, address, latitude, longitude, result) => {
+    dbConn.query(`Update place Set  placeName=?, description=?,  tips=?, city=? , address=?, latitude=?, longitude=? where placeID=${id}`,
+        [placeName, description, tips, city, address, latitude, longitude], (err, res) => {
             result(err, res);
         }
     );
