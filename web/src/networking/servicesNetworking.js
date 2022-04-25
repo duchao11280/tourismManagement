@@ -53,7 +53,7 @@ const disableService = async (id) => {
     } catch (error) {
     }
 }
-const getAllTypeService = async () =>{
+const getAllTypeService = async () => {
     try {
         const response = await fetch(
             API_URL + `/api/v1/admin/typeservice`,
@@ -68,7 +68,7 @@ const getAllTypeService = async () =>{
 
     }
 }
-const searchAllPlaceByCity = async (city) =>{
+const searchAllPlaceByCity = async (city) => {
     try {
         const response = await fetch(
             API_URL + `/api/v1/admin/places/bycity`,
@@ -90,6 +90,82 @@ const searchAllPlaceByCity = async (city) =>{
 
     }
 }
+// add services
+const addService = async (values, images) => {
+    try {
+        var data = new FormData();
+        data.append("serviceName", values.serviceName);
+        data.append("description", values.description);
+        data.append("typeID", values.typeID);
+        data.append("placeID", values.placeID);
+        data.append("address", values.address);
+        data.append("hotline", values.hotline);
+        data.append("latitude", values.latitude);
+        data.append("longitude", values.longitude);
+        for (let i = 0; i < images.length; i++) {
+            data.append("files", images[i]);
+        }
+        const response = await fetch(
+            API_URL + `/api/v1/admin/service`,
+            {
+                method: 'POST',
+                credentials: 'include',
+                body: data
+            }
+        );
+        const json = await response.json();
+        return json;
+    } catch (error) {
+
+    }
+}
+const uploadImageInEditService = async (id, images) => {
+    try {
+        var data = new FormData();
+        for (let i = 0; i < images.length; i++) {
+            data.append("files", images[i]);
+        }
+        const response = await fetch(
+            API_URL + `/api/v1/admin/service/image/upload/${id}`,
+            {
+                method: 'POST',
+                credentials: 'include',
+                body: data
+            }
+        );
+        const json = await response.json();
+        return json;
+    } catch (error) {
+
+    }
+}
+const updateInfoService = async (id, params) => {
+    try {
+        if (params === undefined) return;
+        const respone = await fetch(API_URL + `/api/v1/admin/service/${id}`, {
+            method: 'PUT',
+            credentials: "include",
+            headers: {
+                "Accept": 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                serviceName: params.serviceName,
+                typeID: params.typeID,
+                description: params.description,
+                placeID: params.placeID,
+                address: params.address,
+                hotline: params.hotline,
+                latitude: params.latitude,
+                longitude: params.longitude,
+            })
+        });
+        const json = await respone.json();
+        return json;
+    } catch (error) {
+
+    }
+}
 export {
     getAllServices,
     getServiceAndImageByServiceID,
@@ -97,4 +173,7 @@ export {
     disableService,
     getAllTypeService,
     searchAllPlaceByCity,
+    addService,
+    uploadImageInEditService,
+    updateInfoService,
 }

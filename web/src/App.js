@@ -11,7 +11,7 @@ import EditPlace from '../src/Screen/placeManagement/EditPlace'
 import UserManagement from '../src/Screen/userManagement/UserManagement'
 import AddService from '../src/Screen/servicesManagement/AddService'
 import ServicesManagement from '../src/Screen/servicesManagement/ServicesManagement';
-
+import EditService from '../src/Screen/servicesManagement/EditService'
 function App() {
     return (
         // <div className="App">
@@ -36,7 +36,7 @@ function App() {
                 <Route exact path="/admin/usermanagement" component={UserManagement}/>
                 <Route exact path="/admin/servicemanagement" component={ServicesManagement}/>
                 <Route exact path="/admin/servicemanagement/addservice" component={AddService}/>
-                
+                <Route exact path="/admin/servicemanagement/editservice/:id" component={EditService}/>
 
             </Switch>
         </BrowserRouter>

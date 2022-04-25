@@ -30,6 +30,9 @@ const ServicesManagement = () => {
     const handleOnAddService = (id) => {
         history.push(`/admin/servicemanagement/addservice`)
     }
+    const handleOnEdit = (id) => {
+        history.push(`/admin/servicemanagement/editservice/${id}`)
+    }
     const filteredTables= listService === undefined ? [] : listService.filter(service => {
         var searchName = service.serviceName.toLowerCase().includes(searchfield.toLowerCase());
         var searchTypeService = service.typeService.toLowerCase().includes(searchfield.toLowerCase());
@@ -80,7 +83,7 @@ const ServicesManagement = () => {
                                     <td>{item.isDisabled ? "Bị vô hiệu hóa" : "Đang hoạt động"}</td>
                                     <td>
                                         <div className="action_button">
-                                            <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => {  }}><BiPencil /></button>
+                                            <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(item.serviceID)  }}><BiPencil /></button>
                                             {item.isDisabled ?
                                                 <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(item.serviceID)}}><TiTick /></button>
                                                 : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(item.serviceID) }}><IoBan /></button>}

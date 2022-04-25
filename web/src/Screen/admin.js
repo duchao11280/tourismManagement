@@ -53,7 +53,7 @@ const Admin = () => {
                     </li>
                     <li>
 
-                        <Link to="/admin/servicesmanagement">
+                        <Link to="/admin/servicemanagement">
                             <a >
                                 <FaConciergeBell className="icon-Admin" />
                                 <div>Dịch Vụ</div>

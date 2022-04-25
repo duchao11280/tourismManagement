@@ -1,8 +1,28 @@
-.province_place{
+/* .province_place{
     display: flex;
     flex-direction: row;
+    
 }
 
-#placeName option{
-    min-width: 200px;
+.as_mgl20{
+    margin-left: 20px;
+} */
+.btn_add_service{
+    
+    margin:5px;
+    padding:5px;
+
+}
+
+.add_service{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.box_add_service{
+    width: 55%;
+}
+.box_add_image_service{
+    width:40%;
+    margin-bottom: 30px;
 }
