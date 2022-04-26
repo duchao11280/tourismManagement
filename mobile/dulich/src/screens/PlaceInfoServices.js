@@ -12,7 +12,7 @@ import { getAllCommentByPlaceID, deleteCommentByUser, addComment } from '../netw
 import ProvinceLocation from '../components/child/place/ProvinceLocation'
 import TabView from 'react-native-pager-view';
 
-const PlaceInfoDetail = ({ navigation, route }) => {
+const PlaceInfoServices = ({ navigation, route }) => {
 
     const [place, setPlace] = useState(route.params.place)
     const [isLoading, setLoading] = useState(true);
@@ -128,58 +128,59 @@ const PlaceInfoDetail = ({ navigation, route }) => {
 
 
     return (
-        <SafeAreaView>
-            {/* <Appbar.Header statusBarHeight={20} >
-                <Appbar.BackAction onPress={() => { navigation.pop() }} />
-                <Appbar.Content title="Thông tin du lịch" />
-            </Appbar.Header> */}
-            <View>
-                {isLoading ? <ActivityIndicator size="large" color='blue' /> :
-                    <FlatList
-                        data={listComment}
-                        keyExtractor={item => item.id.toString()}
+        // <SafeAreaView>
+        //     {/* <Appbar.Header statusBarHeight={20} >
+        //         <Appbar.BackAction onPress={() => { navigation.pop() }} />
+        //         <Appbar.Content title="Thông tin du lịch" />
+        //     </Appbar.Header> */}
+        //     <View>
+        //         {isLoading ? <ActivityIndicator size="large" color='blue' /> :
+        //             <FlatList
+        //                 data={listComment}
+        //                 keyExtractor={item => item.id.toString()}
 
-                        ListHeaderComponent={getHeader}
-                        ListFooterComponent={
-                            <View style={{ backgroundColor: 'white', flexDirection: 'row' }}>
-                                <TextInput
-                                    style={styles.inputText}
-                                    multiline
-                                    onChangeText={(value) => { setContent(value) }}
-                                    placeholder="Để lại bình luận..."
-                                    value={content}
-                                />
-                                <Pressable
-                                    onPress={() => { onSendComment() }}
-                                    style={styles.buttonSend}>
-                                    <Text>Gửi</Text>
-                                </Pressable>
-                            </View>
-                        }
-                        contentContainerStyle={{ paddingBottom: 400 }}
-                        renderItem={({ item, index }) => {
-                            return (
-                                <CommentItem
-                                    item={item} index={index}
-                                    handleDelete={deleteComment}
-                                >
+        //                 ListHeaderComponent={getHeader}
+        //                 ListFooterComponent={
+        //                     <View style={{ backgroundColor: 'white', flexDirection: 'row' }}>
+        //                         <TextInput
+        //                             style={styles.inputText}
+        //                             multiline
+        //                             onChangeText={(value) => { setContent(value) }}
+        //                             placeholder="Để lại bình luận..."
+        //                             value={content}
+        //                         />
+        //                         <Pressable
+        //                             onPress={() => { onSendComment() }}
+        //                             style={styles.buttonSend}>
+        //                             <Text>Gửi</Text>
+        //                         </Pressable>
+        //                     </View>
+        //                 }
+        //                 contentContainerStyle={{ paddingBottom: 400 }}
+        //                 renderItem={({ item, index }) => {
+        //                     return (
+        //                         <CommentItem
+        //                             item={item} index={index}
+        //                             handleDelete={deleteComment}
+        //                         >
 
-                                </CommentItem>
+        //                         </CommentItem>
 
-                            );
-                        }}
-                        refreshControl={
-                            <RefreshControl
-                                refreshing={refreshing}
-                                onRefresh={() => onRefresh()}
-                            />
-                        }
-                    >
-                    </FlatList>
-                }
-            </View>
-            {/* <TabDetailPlace /> */}
-        </SafeAreaView>
+        //                     );
+        //                 }}
+        //                 refreshControl={
+        //                     <RefreshControl
+        //                         refreshing={refreshing}
+        //                         onRefresh={() => onRefresh()}
+        //                     />
+        //                 }
+        //             >
+        //             </FlatList>
+        //         }
+        //     </View>
+        //     {/* <TabDetailPlace /> */}
+        // </SafeAreaView>
+        <Text>"Tien ich"</Text>
     )
 }
 const styles = StyleSheet.create({
@@ -213,4 +214,4 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
 })
-export default PlaceInfoDetail;
+export default PlaceInfoServices;

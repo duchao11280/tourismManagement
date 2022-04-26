@@ -36,7 +36,7 @@ const PlacesInfo = ({ navigation, route }) => {
         return search;
     })
     const gotoDetail = (place) => {
-        navigation.push('PlaceInfoDetail', { place: place })
+        navigation.push('TabDetailPlace', { place: place })
     }
     return (
         <SafeAreaView style={{ flex: 1 }}>
