@@ -11,7 +11,7 @@
  Target Server Version : 100421
  File Encoding         : 65001
 
- Date: 26/04/2022 17:38:23
+ Date: 26/04/2022 19:39:18
 */
 
 SET NAMES utf8mb4;
@@ -63,7 +63,7 @@ CREATE TABLE `image`  (
   INDEX `fk_image_place`(`placeID`) USING BTREE,
   INDEX `fk_image_contribute`(`serviceID`) USING BTREE,
   CONSTRAINT `fk_image_place` FOREIGN KEY (`placeID`) REFERENCES `place` (`placeID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of image
@@ -73,8 +73,6 @@ INSERT INTO `image` VALUES (8, '1650089335779_giangdien4.jpg', 30, NULL, 0);
 INSERT INTO `image` VALUES (11, '1650619782276_giangdien4.jpg', 1, NULL, 0);
 INSERT INTO `image` VALUES (12, '1650619782283_giangdien5.jpg', 1, NULL, 1);
 INSERT INTO `image` VALUES (13, '1650619879638_giangdien.jpg', 1, NULL, 0);
-INSERT INTO `image` VALUES (14, '1650813957819_Desktop1.png', NULL, 2, 0);
-INSERT INTO `image` VALUES (15, '1650814774026_stretched-1366-768-613924.jpg', NULL, 1, 0);
 INSERT INTO `image` VALUES (16, '1650893279651_Thac-Mai-1.jpg', 73, NULL, 0);
 INSERT INTO `image` VALUES (17, '1650893279657_746_thac_mai.jpg', 73, NULL, 0);
 INSERT INTO `image` VALUES (18, '1650893279669_khu-du-lich-thac-mai.png', 73, NULL, 0);
@@ -87,6 +85,8 @@ INSERT INTO `image` VALUES (24, '1650895559237_887681_ZmaVWyRBAYcA1b3bPUBzWdfw3j
 INSERT INTO `image` VALUES (25, '1650895980538_download (1).jpg', 76, NULL, 0);
 INSERT INTO `image` VALUES (26, '1650895980538_download.jpg', 76, NULL, 0);
 INSERT INTO `image` VALUES (27, '1650895980539_images.jpg', 76, NULL, 0);
+INSERT INTO `image` VALUES (29, '1650975699042_homestay-nam-cat-tien-dong-nai-13.jpg', NULL, 4, 0);
+INSERT INTO `image` VALUES (33, '1650976423303_homestay-nam-cat-tien-dong-nai-13.jpg', NULL, 3, 0);
 
 -- ----------------------------
 -- Table structure for notification
@@ -125,7 +125,7 @@ INSERT INTO `place` VALUES (2, 'Quảng trường Ba Đình', 'Quảng trường
 INSERT INTO `place` VALUES (3, 'Núi Chứa Chan', 'Ngọn núi cao thứ hai ở Đông Nam Bộ có nhiều rừng rậm, vách đá dựng đứng... được các bạn trẻ chọn để khám phá khi rảnh rỗi.', '', 'Đồng Nai', NULL, NULL, NULL, 0);
 INSERT INTO `place` VALUES (4, 'Vườn Xoài', 'Đây là một địa điểm du lịch ưa thích đối với các bạn trẻ thích một nơi cắm trại vui vẻ. Noi nay that dep\n', 'Many hinh\n', 'Đồng Nai', NULL, NULL, NULL, 0);
 INSERT INTO `place` VALUES (5, 'Công viên Văn hóa Đầm Sen', 'Nơi đây được ví là “ốc đảo xanh” với 36 thiết bị dưới nước hiện đại cùng nhiều trò chơi cảm giác mạnh đến nhẹ, phù hợp với mọi lứa tuổi. Vì vậy, bạn có thể vui chơi cả ngày mà không thấy chán.', 'Nên tắm sơ trước khi bơi để hạn chế khả năng hấp thu nước Clo trong hồ bơi.\nNgăn chặn tình trạng sạm da bằng cách dùng kem dưỡng ẩm, lotion và kem chống nắng.\nKhi tham gia máng trượt bạn nên mặc quần áo gọn gàng, không mang các vật dụng sắc nhọn để tránh ', 'Thành phố Hồ Chí Minh', NULL, NULL, NULL, 0);
-INSERT INTO `place` VALUES (6, 'Thác Đá Hàn', 'Khu du lịch thác Đá Hàn là một trong những điểm mới lạ để cho các bạn trẻ tới khám phá. Với vẻ đẹp thiên nhiên hoang sơ và hùng vĩ khó cưỡng, thác nước hữu tình điểm thêm vườn trái cây trĩu quả. Với những bạn yêu thích đi phượt thì địa điểm này hứa hẹn sẽ là điểm đến lý tưởng để dã ngoại, cắm trại những ngày cuối tuần.', 'Hãy mặc trang phục thoải mái, đi giày thể thao để bảo vệ sức khỏe trong thời gian di chuyển.\nCần mang thuốc xịt đề phòng côn trùng cắn', 'Đồng Nai', NULL, NULL, NULL, 0);
+INSERT INTO `place` VALUES (6, 'Thác Đá Hàn', 'Khu du lịch thác Đá Hàn là một trong những điểm mới lạ để cho các bạn trẻ tới khám phá. Với vẻ đẹp thiên nhiên hoang sơ và hùng vĩ khó cưỡng, thác nước hữu tình điểm thêm vườn trái cây trĩu quả. Với những bạn yêu thích đi phượt thì địa điểm này hứa hẹn sẽ là điểm đến lý tưởng để dã ngoại, cắm trại những ngày cuối tuần.', 'Hãy mặc trang phục thoải mái, đi giày thể thao để bảo vệ sức khỏe trong thời gian di chuyển.\nCần mang thuốc xịt đề phòng côn trùng cắn', 'Đồng Nai', NULL, '11.054820078965946', '107.40045249717184', 0);
 INSERT INTO `place` VALUES (30, 'Thác Yên tĩnh', 'Thác Nước Thác Nước', 'Thác NướcThác Nước Thác Nước', 'An Giang', NULL, NULL, NULL, 1);
 INSERT INTO `place` VALUES (73, 'Thác Mai', 'Thác Mai hay còn gọi đầy đủ là khu du lịch sinh thái bàu nước sôi – Thác Mai. Nằm trên địa phận xã Gia Canh, huyện Định Quán, tỉnh Đồng Nai và nằm cách thành phố Hồ Chí Minh tầm 130km. Đây là điểm du lịch nằm sâu trong rừng nguyên sinh bạt ngạt sẽ rất thích hợp với những bạn mê phượt.\r\nTrên ranh giới giữa hai tỉnh Bình Thuận, Đồng Nai, Thác Mai là một địa điểm thiên nhiên kỳ thú, còn lưu giữ được vẻ hoang sơ.\r\nThác rất lớn, có chiều dài khoảng 2 km, được hợp thành từ vô số dòng suối, thác và sông con. Thác Mai gai góc, lởm chởm và bí hiểm. Nước nối tiếp nhau xô vào đá, đá nối tiếp nhau trùng điệp, như dòng thác không có chỗ tận cùng\r\n', 'Nếu bạn nào định tìm đường tới Thác Mai bằng Google Map thì cần phải hết sức lưu ý. Bởi vì bản đồ sẽ hướng dẫn chúng ta đi con đường ngắn hơn, tuy nhiên điểm đến lại là đường cụt ngay bờ sông và thác Mai lại ở bên kia sông. Chính vì vậy bạn cần phải có một hướng dẫn viên có kinh nghiệm đầy đặn', 'Đồng Nai', 'Gia Canh, Định Quán, Đồng Nai', '11.054820078965946', '107.40045249717184', 0);
 INSERT INTO `place` VALUES (74, 'Rừng Quốc Gia Nam Cát Tiên', 'Nam Cát Tiên là tên gọi một vùng đất nằm trọn trong đoạn uốn khúc của sông Đồng Nai, tọa lạc ngay trên ranh giới của cả ba tỉnh Đồng Nai, Bình Phước và Lâm Đồng. Khu rừng cấm Nam Cát Tiên có diện tích 36.000ha, đại diện cho cả hệ thực vật và động vật Nam Bộ.\r\nNơi đây có cảnh thiên nhiên đa dạng: Vừa có đồi, vừa có bãi ven sông, vừa có các trảng rộng lớn bằng phẳng, lại có các dòng chảy dốc. \r\nRừng ở đây có nhiều cây cổ thụ như bằng lăng, gỗ đỏ và hơn 600 loài thực vật.\r\nVề động vật có 240 loài chim, có những loài chim quý hiếm như trĩ lông đỏ, cò quắm xanh, tê giác một sừng,...', 'Thời điểm thích hợp để du lịch từ là vào khoảng tháng 12 – tháng 5. Bởi vì trong thời gian, tại rừng Nam Cát Tiên ít mưa, rừng khô ráo.\r\nVới những bạn thích đi phượt và có kinh phí hạn hẹp thì có thể lựa chọn mang theo lều trại để cắm trại trong rừng, chắ', 'Đồng Nai', 'Nam Cát Tiên, Tân Phú, Đồng Nai', '11.423294791892964', '107.43066356749813', 0);
@@ -165,13 +165,15 @@ CREATE TABLE `services`  (
   `longitude` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'kinh do',
   `isDisabled` tinyint(1) NULL DEFAULT NULL,
   PRIMARY KEY (`serviceID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of services
 -- ----------------------------
-INSERT INTO `services` VALUES (1, 'L\'indochine Cafe', 2, 'Một nơi uống cafe yên tĩnh, thích hợp để thư giãn.', 6, '3/7A Đồng Khởi, Tam Hiệp, Tp. Biên Hòa, Đồng Nai', '0911758140', '10.956512', '106.860789', 0);
+INSERT INTO `services` VALUES (1, 'L\'indochine Cafe', 1, 'Một nơi uống cafe yên tĩnh, thích hợp để thư giãn.', 6, '3/7A Đồng Khởi, Tam Hiệp, Tp. Biên Hòa, Đồng Nai', '0911758140', '10.956512', '106.860789', 0);
 INSERT INTO `services` VALUES (2, '1', 2, '3', 4, '5', '6', '10.8745', '108.7555', 0);
+INSERT INTO `services` VALUES (3, 'Nam Cát Tiên Homestay', 1, 'Tọa lạc tại huyện Cát Tiên, \n    Nam Cat Tien Homestay có tầm nhìn ra khu vườn, nhà hàng, quầy lễ tân 24 giờ, quầy bar, khu vườn, sân chơi trẻ em và sân hiên tắm nắng. Homestay này có cả WiFi lẫn chỗ đỗ xe riêng miễn phí.\n    Mỗi phòng nghỉ tại đây đều đư', 1, '825 Ấp 1 Xã Nam Cát Tiên, huyện Tân Phú, Vườn Quốc Gia Cát Tiên, Đồng Nai, Vietnam', '0977468492', '11.425475737926927', '107.43513511066607', 0);
+INSERT INTO `services` VALUES (4, 'Green Hope Lodge', 1, '    Green Hope Lodge cung cấp chỗ nghỉ mộc mạc, giản dị với phòng tắm riêng và khu vực tiếp khách tiện nghi. Chỗ nghỉ này có nhà hàng và lễ tân 24 giờ trong khuôn viên. Khách có thể truy cập WiFi miễn phí trong toàn bộ lodge.\r\n    Tọa lạc bên Sông Đồng Na', 74, 'Cát Tiên Hamlet 1, Đồng Nai, Vietnam', '0972184683', '11.426663402268858', '107.43440091066603', 0);
 
 -- ----------------------------
 -- Table structure for typeservice

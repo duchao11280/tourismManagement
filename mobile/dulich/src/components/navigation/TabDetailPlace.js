@@ -14,36 +14,6 @@ import HotelNavigator from '../../components/navigation/HotelNavigator'
 import { Appbar } from 'react-native-paper';
 const Tab = createMaterialTopTabNavigator();
 
-function Test1() {
-    return (
-        <View>
-            {/* <Appbar.Header statusBarHeight={20}>
-                <Appbar.BackAction onPress={() => { navigation.pop() }} />
-                <Appbar.Content title="Thông tin du lịch" />
-            </Appbar.Header> */}
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>Settings!</Text>
-            </View>
-        </View>
-    )
-}
-
-function Test2() {
-    return (
-        <View>
-            {/* <Appbar.Header statusBarHeight={20}>
-                <Appbar.BackAction onPress={() => { navigation.pop() }} />
-                <Appbar.Content title="Thông tin du lịch" />
-            </Appbar.Header> */}
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>Settings!</Text>
-            </View>
-        </View>
-
-    );
-}
-
-
 const TabDetailPlace = ({ navigation, route }) => {
 
     return (
@@ -69,7 +39,7 @@ const TabDetailPlace = ({ navigation, route }) => {
                         <Pressable
                             onPress={() => {
                                 if (props.state.index != 1) {
-                                    navigation.navigate(props.state.routes[1].name);
+                                    navigation.navigate(props.state.routes[1].name, {});
                                 }
                             }}
                         ><Text style={styles.shortText}>Nơi ở</Text></Pressable>

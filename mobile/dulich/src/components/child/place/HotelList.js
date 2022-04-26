@@ -4,7 +4,7 @@ import { View, Text, Image, Pressable, StyleSheet, Alert, Dimensions, ImageBackg
 
 
 const HotelList = (props) => {
-    const nameService = props.services;
+    const service = props.services;
 
     const windowHeight = Dimensions.get('window').height;
     return (
@@ -16,13 +16,10 @@ const HotelList = (props) => {
             </Pressable>
 
             <View style={Styles.containerInfo}>
-                <Text style={Styles.nameHotel}>{nameService}</Text>
-                <Text style={Styles.infoText}>So dien thoai</Text>
-                <Text style={Styles.infoText}>Dia chi</Text>
+                <Text style={Styles.nameHotel}>{service.serviceName}</Text>
+                <Text style={Styles.infoText}>{service.hotline}</Text>
+                <Text style={Styles.infoText}>{service.address}</Text>
             </View>
-
-
-
         </View>
     );
 }
@@ -30,7 +27,7 @@ const HotelList = (props) => {
 const Styles = StyleSheet.create({
 
     container: {
-        // alignItems: 'center',
+        alignItems: 'center',
         backgroundColor: "#e8ffee",
         borderRadius: 20,
         marginTop: 10,
@@ -38,12 +35,14 @@ const Styles = StyleSheet.create({
         marginRight: 15,
         elevation: 10,
         flexDirection: "row",
-        paddingLeft: 8
+        paddingLeft: 8,
     },
     containerInfo: {
         flexDirection: "column",
+        width: "60%",
         paddingTop: 5,
-        paddingLeft: 10
+        paddingLeft: 10,
+
     },
     image: {
         width: Dimensions.get('window').width * 0.4,
@@ -54,11 +53,15 @@ const Styles = StyleSheet.create({
     nameHotel: {
         fontSize: 16,
         color: `#000080`,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        lineHeight: 20,
+        marginRight: 15,
     },
     infoText: {
         fontSize: 13,
         color: `#000080`,
+        lineHeight: 20,
+        marginRight: 15,
     }
 })
 export default HotelList;

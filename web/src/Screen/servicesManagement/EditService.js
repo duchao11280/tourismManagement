@@ -107,7 +107,7 @@ const EditService = () => {
     }
     const handleDeleteImage = (id) => {
         disableImage(id)
-            .then((response) => { alert(response.message) })
+            .then((response) => { alert(response.message); setRefresh(!refresh) })
             .catch(() => { alert("Err") })
     }
     const handleClose = () => {
@@ -128,20 +128,20 @@ const EditService = () => {
                 alert(response?.message);
                 setRefresh(!refresh)
             })
-            .catch(() => {
-                alert("Xảy ra lỗi, vui lòng thử lại sau!")
+            .catch((err) => {
+                alert(err)
             })
     }
     const handleOnEdit = () => {
         updateInfoService(id, values)
-            .then((response) => { if (response !== undefined) alert(response.message) })
+            .then((response) => { if (response !== undefined) { alert(response.message); setRefresh(!refresh) } })
             .catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau") })
     }
     return (
-        <>
+        <div className="containerWithsideBar">
             <Admin />
-            <div className="container">
-                <h2>Chỉnh sửa địa điểm</h2>
+            <div className="container-manager">
+                <h2>Chỉnh sửa dịch vụ</h2>
                 <div className="edit_service">
 
                     <div className="box_edit_service">
@@ -229,10 +229,11 @@ const EditService = () => {
                             />
                         </div>
                         <div className="input_text">
-                            <label htmlFor="description">Mô tả</label>
+                            <label htmlFor="description">Mô tả:</label>
 
                             <textarea
                                 id="description"
+                                value={values.description}
                                 name="description"
                                 aria-multiline="true"
                                 rows="5"
@@ -260,8 +261,8 @@ const EditService = () => {
                             <h3>Ảnh</h3>
                             <label htmlFor="input_image_service" className="button_add_image">
                                 <AiOutlinePlus />
-                            Thêm ảnh
-                            <input id="input_image_service" type="file" name="images" style={{ display: "none" }} multiple accept="image/*" onChange={handleChangeImage} />
+                                Thêm ảnh
+                                <input id="input_image_service" type="file" name="images" style={{ display: "none" }} multiple accept="image/*" onChange={handleChangeImage} />
 
                             </label>
                         </div>
@@ -312,7 +313,7 @@ const EditService = () => {
                             <Modal.Footer>
                                 <Button variant="secondary" onClick={handleClose}>
                                     Hủy bỏ
-                            </Button>
+                                </Button>
                                 <Button variant="primary" onClick={handleUploadImage}>Đồng ý</Button>
                             </Modal.Footer>
                         </Modal>
@@ -320,7 +321,10 @@ const EditService = () => {
 
                 </div>
 
-            </div></>
+            </div>
+        </div>
+
+
     )
 }
 
