@@ -14,35 +14,81 @@ import ProvinceLocation from '../components/child/place/ProvinceLocation'
 
 const DetailHotel = ({ navigation, route }) => {
 
-    console.log(route);
-    // const [place, setPlace] = useState(route.params.place)
-    // const [isLoading, setLoading] = useState(true);
-    const [listComment, setListComment] = useState([]);
+    console.log(route.params.item);
+    const [service, setService] = useState(route.params.item)
+    const [isLoading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
     const [content, setContent] = useState('');
+
     const goBack = () => {
         navigation.pop();
     }
 
-    // useEffect(() => {
+    /////////////////////////////////////
 
 
-    // }, [])
+    useEffect(() => {
+
+        // getCommentFromServer();
+    }, [])
 
 
 
 
+    const onRefresh = () => { setRefreshing(true); }
+    const getHeader = () => (
+        <View>
+            <Text style={styles.title}>Tên địa điểm:</Text>
+            <Text style={styles.content}>{service.serviceName}</Text>
+            <Text style={styles.title}>Địa chỉ:</Text>
+            <Text style={styles.content}>{service.address}</Text>
+            <ProvinceLocation lat={service.latitude} long={service.longitude} />
+            <Text style={styles.title}>Mô tả:</Text>
+            <Text style={styles.content}>{service.description}</Text>
+            <FlatList
+                data={service.images}
+                horizontal
+                keyExtractor={item => item.id.toString()}
+                renderItem={({ item, index }) => {
+                    return (
+                        <Pressable
+                            onPress={() => { }}
+                        >
+                            <ImageCard item={item} index={index}>
+                            </ImageCard>
+                        </Pressable>
+                    );
+                }}
+            >
+            </FlatList>
+        </View>
+    )
 
 
     return (
         <SafeAreaView>
-
             <View>
-                <Pressable onPress={() => { goBack() }}>
-                    <Icon name="arrow-back-outline" size={40} color="#000" /></Pressable>
+
+                <View>
+                    <Pressable onPress={() => { goBack() }}>
+                        <Icon name="arrow-back-outline" size={40} color="#000" /></Pressable>
+                </View>
+
+                <FlatList
+                    // data={listComment}
+                    keyExtractor={item => item.id.toString()}
+                    ListHeaderComponent={getHeader}
+                    contentContainerStyle={{ paddingBottom: 400 }}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={() => onRefresh()}
+                        />
+                    }
+                >
+                </FlatList>
 
             </View>
-
 
 
         </SafeAreaView>

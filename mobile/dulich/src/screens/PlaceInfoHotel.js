@@ -16,11 +16,12 @@ const PlaceInfoHotel = ({ navigation, route }) => {
     const [refreshing, setRefreshing] = useState(false);
 
     const [searchfield, setSearchfield] = useState('');
+    const [content, setContent] = useState('noi dung');
 
 
 
-    const handleGotoDetailHotel = () => {
-        navigation.push("DetailHotel", { content: content });
+    const handleGotoDetailHotel = (item) => {
+        navigation.push("DetailHotel", { item: item });
     }
 
     useEffect(() => {
@@ -73,7 +74,7 @@ const PlaceInfoHotel = ({ navigation, route }) => {
                         renderItem={({ item, index }) => {
                             return (
                                 // <View><Text>{item.provinceName}</Text></View>
-                                <HotelList services={item} />
+                                <Pressable onPress={() => { handleGotoDetailHotel(item) }}><HotelList services={item} /></Pressable>
                             )
                         }}
                         refreshControl={

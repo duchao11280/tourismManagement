@@ -7,9 +7,10 @@ const HotelList = (props) => {
     const service = props.services;
 
     const windowHeight = Dimensions.get('window').height;
+
     return (
         <View style={Styles.container}>
-            <Pressable>
+            <Pressable >
                 <Image style={Styles.image}
                     source={require('../../../resources/imgs/defau.jpg')}>
                 </Image>

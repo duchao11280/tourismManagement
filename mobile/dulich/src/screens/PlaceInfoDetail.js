@@ -19,7 +19,7 @@ const PlaceInfoDetail = ({ navigation, route }) => {
     const [listComment, setListComment] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [content, setContent] = useState('');
-    let userID;
+
 
 
     useEffect(() => {
