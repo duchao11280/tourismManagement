@@ -127,6 +127,7 @@ const EditService = () => {
                 console.log(response)
                 alert(response?.message);
                 setRefresh(!refresh)
+                setShowModal(false)
             })
             .catch((err) => {
                 alert(err)
@@ -276,8 +277,8 @@ const EditService = () => {
                             :
                             <div className="box_edit_image_service">
                                 <div className="expanded_image">
-                                    <span className="btn_delete_img" onClick={() => { handleDeleteImage(currImg.id) }}><BsTrash /></span>
-                                    <img className="image" src={currImg.imgURL} alt="" />
+                                    <span className="btn_delete_img" onClick={() => { handleDeleteImage(currImg?.id) }}><BsTrash /></span>
+                                    <img className="image" src={currImg?.imgURL} alt="" />
                                 </div>
                                 <div className="list_image">
                                     <Scroll>

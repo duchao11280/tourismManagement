@@ -93,7 +93,7 @@ export const province = [
     },
     {
         "id": 24,
-        "provinceName": "Hà Nội "
+        "provinceName": "Hà Nội"
     },
     {
         "id": 25,

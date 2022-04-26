@@ -6,7 +6,7 @@ const checkRole = require('../middleware/checkRole');
 const verifyToken = require('../middleware/verifyToken');
 const notificationController = require('../controllers/notification_controller')
 // Notification
-router.get('/',[verifyToken.verifyToken,checkRole.isUser],notificationController.getAllNotification)
+router.get('/',[verifyToken.verifyToken],notificationController.getAllNotification)
 
 
 module.exports = router;
