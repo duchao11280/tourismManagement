@@ -1,7 +1,15 @@
-.container{
-    width: 90%;
+
+
+.containerWithsideBar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.container-manager{
+    width: 60%;
     margin:auto;
-    /* padding-left: 11%; */
+
 }
 .title{
     text-align: center;

@@ -101,163 +101,166 @@ const EditPlace = () => {
     }
     const handleOnEdit = () => {
         updateInfoPlace(id, values)
-            .then((response) => { if (response !== undefined) alert(response.message) })
+            .then((response) => { if (response !== undefined) alert(response.message); history.goBack(); })
             .catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau") })
     }
     return (
-        <><Admin /><div className="container">
-            <h2>Chỉnh sửa địa điểm</h2>
-            <div className="edit_place">
+        <div>
+            <Admin />
+            <div className="container-manager">
+                <h2>Chỉnh sửa địa điểm</h2>
+                <div className="edit_place">
 
-                <div className="box_edit_place">
-                    <div className="input_text">
-                        <label htmlFor="placeName">Tên địa điểm(*)</label>
+                    <div className="box_edit_place">
+                        <div className="input_text">
+                            <label htmlFor="placeName">Tên địa điểm(*)</label>
 
-                        <input
-                            id="placeName"
-                            type="text"
-                            name="placeName"
-                            value={values.placeName}
-                            placeholder="Nhập tên địa điểm"
-                            autoFocus
-                            onChange={handleChange} />
-                    </div>
-                    <div>
-                        <label htmlFor="province">Tỉnh thành(*)</label>
-                        <br />
-                        <select id="province" name="city" value={values.city} onChange={handleChange}>
-                            {province.map((item) => <option
-                                key={item.id}
-                                value={item.provinceName}
-                            >{item.provinceName}</option>
-                            )}
-                        </select>
-                    </div>
-                    <div className="input_text">
-                    <label htmlFor="address">Địa chỉ(*)</label>
-                    <input 
-                        id="address"
-                        type="text" 
-                        name="address" 
-                        value={values.address}
-                        placeholder="Nhập địa chỉ" 
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="input_text">
-                    <label htmlFor="latitude">Vĩ độ(*)</label>
-                    <input 
-                        id="latitude"
-                        type="text" 
-                        name="latitude" 
-                        value={values.latitude}
-                        placeholder="Nhập vĩ độ..." 
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="input_text">
-                    <label htmlFor="longitude">Kinh độ(*)</label>
-                    <input 
-                        id="longitude"
-                        type="text" 
-                        name="longitude" 
-                        value={values.longitude}
-                        placeholder="Nhập kinh độ..." 
-                        onChange={handleChange}
-                    />
-                </div>
-                    <div className="input_text">
-                        <label htmlFor="description">Mô tả</label>
-
-                        <textarea
-                            id="description"
-                            name="description"
-                            aria-multiline="true"
-                            value={values.description}
-                            rows="5"
-                            onChange={handleChange} />
-                    </div>
-                    <div className="input_text">
-                        <label htmlFor="tips">Gợi ý</label>
-                        <textarea
-                            id="tips"
-                            name="tips"
-                            aria-multiline="true"
-                            value={values.tips}
-                            rows="5"
-                            onChange={handleChange} />
-                    </div>
-                    <div className="box_btn_edit">
-                        <button onClick={() => { handleOnEdit() }} className="btn_edit_place">Chỉnh sửa</button>
-                        <button className="btn_back" onClick={() => handleGoback()}>Quay lại</button>
-                    </div>
-                </div>
-                <div className="section_image_editplace">
-                    <div className="header_add_image">
-                        <h3>Ảnh</h3>
-                        <label htmlFor="input_image_place" className="button_add_image">
-                            <AiOutlinePlus />
-                            Thêm ảnh
-                            <input id="input_image_place" type="file" name="images" style={{ display: "none" }} multiple accept="image/*" onChange={handleChangeImage} />
-
-                        </label>
-                    </div>
-
-                    {imgs.length === 0 ?
-
-                        <div>
-
-                            <h1>Chưa có hình ảnh</h1>
+                            <input
+                                id="placeName"
+                                type="text"
+                                name="placeName"
+                                value={values.placeName}
+                                placeholder="Nhập tên địa điểm"
+                                autoFocus
+                                onChange={handleChange} />
                         </div>
-                        :
-                        <div className="box_edit_image_place">
-                            <div className="expanded_image">
-                                <span className="btn_delete_img" onClick={() => { handleDeleteImage(currImg.id) }}><BsTrash /></span>
-                                <img className="image" src={currImg.imgURL} alt="" />
-                            </div>
-                            <div className="list_image">
-                                <Scroll>
-                                    {imgs.map((item, i) => {
-                                        return (
-                                            <img key={i} src={item.imgURL} alt={item.id} onClick={() => { handleClickImage(item) }} />
-                                        )
-                                    })}
-                                </Scroll>
-                            </div>
-                        </div>}
-                    <Modal
-                        show={showModal}
-                        onHide={handleClose}
-                        backdrop="static"
-                        keyboard={false}
-                    >
-                        <Modal.Header closeButton>
-                            <Modal.Title>Đồng ý tải ảnh này lên?</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <div className="box_image_inmodal">
-                                {imageURLs.map((imageURL, i) => {
-                                    return (
-
-                                        <img key={i} src={imageURL} alt="" className="image_inmodal" />
-
-                                    )
-                                }
+                        <div>
+                            <label htmlFor="province">Tỉnh thành(*)</label>
+                            <br />
+                            <select id="province" name="city" value={values.city} onChange={handleChange}>
+                                {province.map((item) => <option
+                                    key={item.id}
+                                    value={item.provinceName}
+                                >{item.provinceName}</option>
                                 )}
+                            </select>
+                        </div>
+                        <div className="input_text">
+                            <label htmlFor="address">Địa chỉ(*)</label>
+                            <input
+                                id="address"
+                                type="text"
+                                name="address"
+                                value={values.address}
+                                placeholder="Nhập địa chỉ"
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="input_text">
+                            <label htmlFor="latitude">Vĩ độ(*)</label>
+                            <input
+                                id="latitude"
+                                type="text"
+                                name="latitude"
+                                value={values.latitude}
+                                placeholder="Nhập vĩ độ..."
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="input_text">
+                            <label htmlFor="longitude">Kinh độ(*)</label>
+                            <input
+                                id="longitude"
+                                type="text"
+                                name="longitude"
+                                value={values.longitude}
+                                placeholder="Nhập kinh độ..."
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="input_text">
+                            <label htmlFor="description">Mô tả</label>
+
+                            <textarea
+                                id="description"
+                                name="description"
+                                aria-multiline="true"
+                                value={values.description}
+                                rows="5"
+                                onChange={handleChange} />
+                        </div>
+                        <div className="input_text">
+                            <label htmlFor="tips">Gợi ý</label>
+                            <textarea
+                                id="tips"
+                                name="tips"
+                                aria-multiline="true"
+                                value={values.tips}
+                                rows="5"
+                                onChange={handleChange} />
+                        </div>
+                        <div className="box_btn_edit">
+                            <button onClick={() => { handleOnEdit() }} className="btn_edit_place">Chỉnh sửa</button>
+                            <button className="btn_back" onClick={() => handleGoback()}>Quay lại</button>
+                        </div>
+                    </div>
+                    <div className="section_image_editplace">
+                        <div className="header_add_image">
+                            <h3>Ảnh</h3>
+                            <label htmlFor="input_image_place" className="button_add_image">
+                                <AiOutlinePlus />
+                                Thêm ảnh
+                                <input id="input_image_place" type="file" name="images" style={{ display: "none" }} multiple accept="image/*" onChange={handleChangeImage} />
+
+                            </label>
+                        </div>
+
+                        {imgs.length === 0 ?
+
+                            <div>
+
+                                <h1>Chưa có hình ảnh</h1>
                             </div>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClose}>
-                                Hủy bỏ
-                            </Button>
-                            <Button variant="primary" onClick={handleUploadImage}>Đồng ý</Button>
-                        </Modal.Footer>
-                    </Modal>
+                            :
+                            <div className="box_edit_image_place">
+                                <div className="expanded_image">
+                                    <span className="btn_delete_img" onClick={() => { handleDeleteImage(currImg.id) }}><BsTrash /></span>
+                                    <img className="image" src={currImg.imgURL} alt="" />
+                                </div>
+                                <div className="list_image">
+                                    <Scroll>
+                                        {imgs.map((item, i) => {
+                                            return (
+                                                <img key={i} src={item.imgURL} alt={item.id} onClick={() => { handleClickImage(item) }} />
+                                            )
+                                        })}
+                                    </Scroll>
+                                </div>
+                            </div>}
+                        <Modal
+                            show={showModal}
+                            onHide={handleClose}
+                            backdrop="static"
+                            keyboard={false}
+                        >
+                            <Modal.Header closeButton>
+                                <Modal.Title>Đồng ý tải ảnh này lên?</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <div className="box_image_inmodal">
+                                    {imageURLs.map((imageURL, i) => {
+                                        return (
+
+                                            <img key={i} src={imageURL} alt="" className="image_inmodal" />
+
+                                        )
+                                    }
+                                    )}
+                                </div>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    Hủy bỏ
+                                </Button>
+                                <Button variant="primary" onClick={handleUploadImage}>Đồng ý</Button>
+                            </Modal.Footer>
+                        </Modal>
+                    </div>
+
                 </div>
 
             </div>
-
-        </div></>
+        </div>
     )
 }
 

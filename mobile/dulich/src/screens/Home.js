@@ -18,7 +18,10 @@ const Home = ({ navigation }) => {
         setSearchfield(text);
 
     };
-
+    const filteredProvince = province == undefined ? [] : province.filter(item => {
+        var searchName = item.provinceName.toLowerCase().includes(searchfield.toLowerCase());
+        return searchName;
+    })
     const gotoPlaceByProvince = (province) => {
         navigation.push('PlacesInfo', { province: province })
     }
@@ -84,8 +87,9 @@ const Home = ({ navigation }) => {
                     <Text style={styles.content}>Khám phá các địa điểm tại các thành phố:</Text>
                 </View>
                 <FlatList
-                    data={province}
+                    data={filteredProvince}
                     numColumns={2}
+                    // ListFooterComponent={<View style={{ paddingBottom: 300 }} />}
                     keyExtractor={item => item.id.toString()}
                     renderItem={({ item, index }) => {
                         return (
@@ -95,7 +99,7 @@ const Home = ({ navigation }) => {
                     }}
                 ></FlatList>
             </View >
-        </SafeAreaView>
+        </SafeAreaView >
     )
 }
 
@@ -103,7 +107,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#e6f2ff',
-        paddingTop: 40
+        paddingTop: 40,
+        paddingLeft: 5,
+        paddingRight: 5,
     },
     BeachImage: {
         flexDirection: 'column',

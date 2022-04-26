@@ -20,7 +20,7 @@ const PlacesInfo = ({ navigation, route }) => {
     }, []);
 
     const getPlaceFromServer = () => {
-        getAllPlaces().then((listPlaces) => { setListPlaces(listPlaces); })
+        getAllPlaces(route.params.province).then((listPlaces) => { setListPlaces(listPlaces); })
             .catch((err) => { Alert.alert("Thông báo", "Kết nối thất bại") })
             .finally(() => { setLoading(false), setRefreshing(false); });
     }
@@ -36,7 +36,7 @@ const PlacesInfo = ({ navigation, route }) => {
         return search;
     })
     const gotoDetail = (place) => {
-        navigation.push('PlaceInfoDetail', { place: place })
+        navigation.push('TabDetailPlace', { place: place })
     }
     return (
         <SafeAreaView style={{ flex: 1 }}>

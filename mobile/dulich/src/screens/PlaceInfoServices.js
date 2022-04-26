@@ -10,9 +10,9 @@ import CommentItem from '../components/child/place/CommentItem'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAllCommentByPlaceID, deleteCommentByUser, addComment } from '../networking/commentNetworking'
 import ProvinceLocation from '../components/child/place/ProvinceLocation'
+import TabView from 'react-native-pager-view';
 
-
-const PlaceInfoDetail = ({ navigation, route }) => {
+const PlaceInfoServices = ({ navigation, route }) => {
 
     const [place, setPlace] = useState(route.params.place)
     const [isLoading, setLoading] = useState(true);
@@ -21,7 +21,24 @@ const PlaceInfoDetail = ({ navigation, route }) => {
     const [content, setContent] = useState('');
     let userID;
 
+    const [index, setIndex] = React.useState(0);
 
+    const [routes] = React.useState([
+
+        { key: 'first', title: 'First' },
+
+        { key: 'second', title: 'Second' },
+
+    ]);
+
+    const renderra = ({ route }) => {
+        switch (route.key) {
+            case 'first':
+                return <View style={[styles.scene, { backgroundColor: '#ff4081' }]} />;
+            case 'second':
+                return <View style={[styles.scene, { backgroundColor: '#673ab7' }]} />;
+        }
+    }
     useEffect(() => {
 
         getCommentFromServer();
@@ -111,58 +128,59 @@ const PlaceInfoDetail = ({ navigation, route }) => {
 
 
     return (
-        <SafeAreaView>
-            {/* <Appbar.Header statusBarHeight={20} >
-                <Appbar.BackAction onPress={() => { navigation.pop() }} />
-                <Appbar.Content title="Thông tin du lịch" />
-            </Appbar.Header> */}
-            <View>
-                {isLoading ? <ActivityIndicator size="large" color='blue' /> :
-                    <FlatList
-                        data={listComment}
-                        keyExtractor={item => item.id.toString()}
+        // <SafeAreaView>
+        //     {/* <Appbar.Header statusBarHeight={20} >
+        //         <Appbar.BackAction onPress={() => { navigation.pop() }} />
+        //         <Appbar.Content title="Thông tin du lịch" />
+        //     </Appbar.Header> */}
+        //     <View>
+        //         {isLoading ? <ActivityIndicator size="large" color='blue' /> :
+        //             <FlatList
+        //                 data={listComment}
+        //                 keyExtractor={item => item.id.toString()}
 
-                        ListHeaderComponent={getHeader}
-                        ListFooterComponent={
-                            <View style={{ backgroundColor: 'white', flexDirection: 'row' }}>
-                                <TextInput
-                                    style={styles.inputText}
-                                    multiline
-                                    onChangeText={(value) => { setContent(value) }}
-                                    placeholder="Để lại bình luận..."
-                                    value={content}
-                                />
-                                <Pressable
-                                    onPress={() => { onSendComment() }}
-                                    style={styles.buttonSend}>
-                                    <Text>Gửi</Text>
-                                </Pressable>
-                            </View>
-                        }
-                        contentContainerStyle={{ paddingBottom: 400 }}
-                        renderItem={({ item, index }) => {
-                            return (
-                                <CommentItem
-                                    item={item} index={index}
-                                    handleDelete={deleteComment}
-                                >
+        //                 ListHeaderComponent={getHeader}
+        //                 ListFooterComponent={
+        //                     <View style={{ backgroundColor: 'white', flexDirection: 'row' }}>
+        //                         <TextInput
+        //                             style={styles.inputText}
+        //                             multiline
+        //                             onChangeText={(value) => { setContent(value) }}
+        //                             placeholder="Để lại bình luận..."
+        //                             value={content}
+        //                         />
+        //                         <Pressable
+        //                             onPress={() => { onSendComment() }}
+        //                             style={styles.buttonSend}>
+        //                             <Text>Gửi</Text>
+        //                         </Pressable>
+        //                     </View>
+        //                 }
+        //                 contentContainerStyle={{ paddingBottom: 400 }}
+        //                 renderItem={({ item, index }) => {
+        //                     return (
+        //                         <CommentItem
+        //                             item={item} index={index}
+        //                             handleDelete={deleteComment}
+        //                         >
 
-                                </CommentItem>
+        //                         </CommentItem>
 
-                            );
-                        }}
-                        refreshControl={
-                            <RefreshControl
-                                refreshing={refreshing}
-                                onRefresh={() => onRefresh()}
-                            />
-                        }
-                    >
-                    </FlatList>
-                }
-            </View>
-            {/* <TabDetailPlace /> */}
-        </SafeAreaView>
+        //                     );
+        //                 }}
+        //                 refreshControl={
+        //                     <RefreshControl
+        //                         refreshing={refreshing}
+        //                         onRefresh={() => onRefresh()}
+        //                     />
+        //                 }
+        //             >
+        //             </FlatList>
+        //         }
+        //     </View>
+        //     {/* <TabDetailPlace /> */}
+        // </SafeAreaView>
+        <Text>"Tien ich"</Text>
     )
 }
 const styles = StyleSheet.create({
@@ -196,4 +214,4 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
 })
-export default PlaceInfoDetail;
+export default PlaceInfoServices;
