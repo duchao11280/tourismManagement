@@ -3,13 +3,14 @@ import { View, Text, Image, Pressable, StyleSheet, Alert, Dimensions, ImageBackg
 
 
 
-const HotelList = (props) => {
+const ServiceList = (props) => {
     const service = props.services;
 
     const windowHeight = Dimensions.get('window').height;
+
     return (
         <View style={Styles.container}>
-            <Pressable>
+            <Pressable >
                 <Image style={Styles.image}
                     source={require('../../../resources/imgs/defau.jpg')}>
                 </Image>
@@ -64,4 +65,4 @@ const Styles = StyleSheet.create({
         marginRight: 15,
     }
 })
-export default HotelList;
+export default ServiceList;
