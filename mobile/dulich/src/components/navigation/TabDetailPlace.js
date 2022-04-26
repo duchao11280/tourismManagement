@@ -11,6 +11,7 @@ import PlaceInfoDetail from '../../screens/PlaceInfoDetail'
 import PlaceInfoHotel from '../../screens/PlaceInfoHotel'
 import PlaceInfoServices from '../../screens/PlaceInfoServices'
 import HotelNavigator from '../../components/navigation/HotelNavigator'
+import ServiceNavigator from '../../components/navigation/ServiceNavigator';
 import { Appbar } from 'react-native-paper';
 const Tab = createMaterialTopTabNavigator();
 
@@ -61,7 +62,7 @@ const TabDetailPlace = ({ navigation, route }) => {
         } >
             <Tab.Screen name="PlaceInfoDetail" component={PlaceInfoDetail} initialParams={route.params} options={{ title: "Thông tin Du lịch" }} />
             <Tab.Screen name="HotelNavigator" component={HotelNavigator} initialParams={route.params} options={{ title: "Thông tin Khách sạn" }} />
-            <Tab.Screen name="PlaceInfoServices" component={PlaceInfoServices} initialParams={route.params} options={{ title: "Thông tin tiện ích" }} />
+            <Tab.Screen name="ServiceNavigator" component={ServiceNavigator} initialParams={route.params} options={{ title: "Thông tin tiện ích" }} />
         </Tab.Navigator>
     )
 }

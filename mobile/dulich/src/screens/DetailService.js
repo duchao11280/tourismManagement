@@ -12,7 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAllCommentByPlaceID, deleteCommentByUser, addComment } from '../networking/commentNetworking'
 import ProvinceLocation from '../components/child/place/ProvinceLocation'
 
-const DetailHotel = ({ navigation, route }) => {
+const DetailService = ({ navigation, route }) => {
 
     console.log(route.params.item);
     const [service, setService] = useState(route.params.item)
@@ -24,12 +24,12 @@ const DetailHotel = ({ navigation, route }) => {
         navigation.pop();
     }
 
-    /////////////////////////////////////
+
 
 
     useEffect(() => {
 
-        // getCommentFromServer();
+
     }, [])
 
 
@@ -40,12 +40,11 @@ const DetailHotel = ({ navigation, route }) => {
         <View>
             <Text style={styles.title}>Tên địa điểm:</Text>
             <Text style={styles.content}>{service.serviceName}</Text>
-            <Text style={styles.title}>Số điện thoại:</Text>
-            <Text style={styles.content}>{service.hotline}</Text>
             <Text style={styles.title}>Địa chỉ:</Text>
             <Text style={styles.content}>{service.address}</Text>
             <ProvinceLocation lat={service.latitude} long={service.longitude} />
-
+            <Text style={styles.title}>Số điện thoại:</Text>
+            <Text style={styles.content}>{service.hotline}</Text>
             <Text style={styles.title}>Mô tả:</Text>
             <Text style={styles.content}>{service.description}</Text>
             <FlatList
@@ -128,4 +127,4 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
 })
-export default DetailHotel;
+export default DetailService;

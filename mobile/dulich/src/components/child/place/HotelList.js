@@ -3,7 +3,7 @@ import { View, Text, Image, Pressable, StyleSheet, Alert, Dimensions, ImageBackg
 
 
 
-const HotelList = (props) => {
+const ServiceList = (props) => {
     const service = props.services;
 
     const windowHeight = Dimensions.get('window').height;
@@ -65,4 +65,4 @@ const Styles = StyleSheet.create({
         marginRight: 15,
     }
 })
-export default HotelList;
+export default ServiceList;

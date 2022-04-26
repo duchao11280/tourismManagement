@@ -7,7 +7,7 @@ import { Appbar } from 'react-native-paper';
 import { SearchBar } from "react-native-elements";
 import { getAllServiceByPlaceID } from '../networking/servicesNetworking'
 import { hotelvalue } from '../resources/values/hotelvalue'
-import HotelList from '../components/child/place/HotelList'
+import ServiceList from '../components/child/place/HotelList'
 
 const PlaceInfoHotel = ({ navigation, route }) => {
     console.log(route.params.place.placeID)
@@ -16,7 +16,7 @@ const PlaceInfoHotel = ({ navigation, route }) => {
     const [refreshing, setRefreshing] = useState(false);
 
     const [searchfield, setSearchfield] = useState('');
-    const [content, setContent] = useState('noi dung');
+
 
 
 
@@ -43,9 +43,7 @@ const PlaceInfoHotel = ({ navigation, route }) => {
         var searchName = item.serviceName.toLowerCase().includes(searchfield.toLowerCase());
         return searchName;
     })
-    const gotoDetail = (place) => {
-        navigation.push('TabDetailPlace', { place: place })
-    }
+
 
 
 
@@ -61,9 +59,7 @@ const PlaceInfoHotel = ({ navigation, route }) => {
                 onChangeText={handleSearch}
                 value={searchfield}
             />
-            <Pressable
-                onPress={() => { handleGotoDetailHotel() }}
-            ><Text>"Noi o"</Text></Pressable>
+
 
             <View>
                 {isLoading ? <ActivityIndicator size="large" color='blue' /> :
@@ -74,7 +70,7 @@ const PlaceInfoHotel = ({ navigation, route }) => {
                         renderItem={({ item, index }) => {
                             return (
                                 // <View><Text>{item.provinceName}</Text></View>
-                                <Pressable onPress={() => { handleGotoDetailHotel(item) }}><HotelList services={item} /></Pressable>
+                                <Pressable onPress={() => { handleGotoDetailHotel(item) }}><ServiceList services={item} /></Pressable>
                             )
                         }}
                         refreshControl={
