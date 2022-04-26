@@ -27,6 +27,7 @@ app.get('/public/images/:filename', (req, res) => {
 const userRoutes = require('./src/routes/user_route');
 const adminRoutes = require('./src/routes/admin_route');
 const placeRoutes = require('./src/routes/place_route');
+const serviceRoutes = require('./src/routes/service_route');
 
 const notificationRoutes = require('./src/routes/notification_route')
 const commentRoutes = require('./src/routes/comment_route')
@@ -34,7 +35,8 @@ const commentRoutes = require('./src/routes/comment_route')
 app.use('/api/v1/user', userRoutes);
 // route cho place
 app.use('/api/v1/place', placeRoutes);
-
+// route cho service
+app.use('/api/v1/service', serviceRoutes);
 // route cho admin
 app.use('/api/v1/admin', adminRoutes);
 

@@ -69,14 +69,14 @@ Service.getAllServices = (result) => {
 }
 // Get all service Enable by placeID
 
-Service.getAllServicesEnableByPlaceID = (id,result) => {
+Service.getAllServicesEnableByPlaceIDAndTypeService = (id,typeService,result) => {
     dbConn.query(`Select services.serviceID, services.serviceName, services.typeID, 
         typeservice.typeService,services.description, services.placeID, place.placeName,
         services.address, services.hotline, place.city,
         services.latitude, services.longitude, services.isDisabled 
         From services, typeservice, place
         Where services.placeID = place.placeID and services.typeID = typeservice.typeID 
-        and services.isDisabled = 0 and placeID =${id}`,
+        and services.isDisabled = 0 and services.placeID =${id} and typeservice.typeService=?`,[typeService],
         (err, res) => {
             result(err, res);
         }
