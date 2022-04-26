@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : Duchao
+ Source Server         : dulich
  Source Server Type    : MySQL
- Source Server Version : 100414
+ Source Server Version : 100421
  Source Host           : localhost:3306
  Source Schema         : tourismmanagement
 
  Target Server Type    : MySQL
- Target Server Version : 100414
+ Target Server Version : 100421
  File Encoding         : 65001
 
- Date: 25/04/2022 18:47:19
+ Date: 26/04/2022 17:38:23
 */
 
 SET NAMES utf8mb4;
@@ -22,13 +22,13 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `userID` int NULL DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` int(11) NULL DEFAULT NULL,
   `content` varchar(1000) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `placeID` int NULL DEFAULT NULL,
-  `time` datetime NULL DEFAULT NULL,
+  `placeID` int(11) NULL DEFAULT NULL,
+  `time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of comment
@@ -40,34 +40,30 @@ INSERT INTO `comment` VALUES (12, 1, 'Nơi này mát lắm\n', 1, '2022-04-04 12
 -- ----------------------------
 DROP TABLE IF EXISTS `feedback`;
 CREATE TABLE `feedback`  (
-  `feedbackID` int NOT NULL AUTO_INCREMENT,
+  `feedbackID` int(11) NOT NULL AUTO_INCREMENT,
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `userID` int NULL DEFAULT NULL,
+  `userID` int(11) NULL DEFAULT NULL,
   `title` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `userName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`feedbackID`) USING BTREE,
-  INDEX `fk_feedback_place`(`userID` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of feedback
--- ----------------------------
+  INDEX `fk_feedback_place`(`userID`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for image
 -- ----------------------------
 DROP TABLE IF EXISTS `image`;
 CREATE TABLE `image`  (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `placeID` int NULL DEFAULT NULL,
-  `serviceID` int NULL DEFAULT NULL,
+  `placeID` int(11) NULL DEFAULT NULL,
+  `serviceID` int(11) NULL DEFAULT NULL,
   `isDeleted` tinyint(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `fk_image_place`(`placeID` ASC) USING BTREE,
-  INDEX `fk_image_contribute`(`serviceID` ASC) USING BTREE,
+  INDEX `fk_image_place`(`placeID`) USING BTREE,
+  INDEX `fk_image_contribute`(`serviceID`) USING BTREE,
   CONSTRAINT `fk_image_place` FOREIGN KEY (`placeID`) REFERENCES `place` (`placeID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of image
@@ -79,57 +75,70 @@ INSERT INTO `image` VALUES (12, '1650619782283_giangdien5.jpg', 1, NULL, 1);
 INSERT INTO `image` VALUES (13, '1650619879638_giangdien.jpg', 1, NULL, 0);
 INSERT INTO `image` VALUES (14, '1650813957819_Desktop1.png', NULL, 2, 0);
 INSERT INTO `image` VALUES (15, '1650814774026_stretched-1366-768-613924.jpg', NULL, 1, 0);
+INSERT INTO `image` VALUES (16, '1650893279651_Thac-Mai-1.jpg', 73, NULL, 0);
+INSERT INTO `image` VALUES (17, '1650893279657_746_thac_mai.jpg', 73, NULL, 0);
+INSERT INTO `image` VALUES (18, '1650893279669_khu-du-lich-thac-mai.png', 73, NULL, 0);
+INSERT INTO `image` VALUES (19, '1650894886344_images.jpg', 74, NULL, 0);
+INSERT INTO `image` VALUES (20, '1650894886345_1629348197-vuon-quoc-gia-cat-tien4-width670height486.jpg', 74, NULL, 0);
+INSERT INTO `image` VALUES (21, '1650894886347_download.jpg', 74, NULL, 0);
+INSERT INTO `image` VALUES (22, '1650895559230_chua-buu-phong-2.jpg', 75, NULL, 0);
+INSERT INTO `image` VALUES (23, '1650895559236_chua-buu-long-ivivu-1.jpg', 75, NULL, 0);
+INSERT INTO `image` VALUES (24, '1650895559237_887681_ZmaVWyRBAYcA1b3bPUBzWdfw3jMbYQwHLDqR-PZHHcc.jpg', 75, NULL, 0);
+INSERT INTO `image` VALUES (25, '1650895980538_download (1).jpg', 76, NULL, 0);
+INSERT INTO `image` VALUES (26, '1650895980538_download.jpg', 76, NULL, 0);
+INSERT INTO `image` VALUES (27, '1650895980539_images.jpg', 76, NULL, 0);
 
 -- ----------------------------
 -- Table structure for notification
 -- ----------------------------
 DROP TABLE IF EXISTS `notification`;
 CREATE TABLE `notification`  (
-  `notificationID` int NOT NULL AUTO_INCREMENT,
+  `notificationID` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `time` datetime(6) NULL DEFAULT NULL,
   PRIMARY KEY (`notificationID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of notification
--- ----------------------------
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for place
 -- ----------------------------
 DROP TABLE IF EXISTS `place`;
 CREATE TABLE `place`  (
-  `placeID` int NOT NULL AUTO_INCREMENT,
+  `placeID` int(11) NOT NULL AUTO_INCREMENT,
   `placeName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
-  `tips` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'meo khi di du lich tai dia diem',
+  `tips` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT 'meo khi di du lich tai dia diem',
   `city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `latitude` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `longitude` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `isDeleted` tinyint(1) NULL DEFAULT NULL,
   PRIMARY KEY (`placeID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 73 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 78 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of place
 -- ----------------------------
-INSERT INTO `place` VALUES (1, 'Thác Giang Điền', 'Thác Giang Điền là địa điểm thu hút rất nhiều bạn trẻ và các hộ gia đình kéo nhau về đây tổ chức cắm trại, tắm thác và tổ chức ăn uống. Với khung cảnh hoang sơ được bao bọc...', 'Mang theo đồ để cắm trại như: Thảm,  than, bếp nướng,...', 'Đồng Nai', '104/4 Khu Công Nghiệp Giang Điền, Giang Điền, Trảng Bom, Đồng Nai', '10.917393', '106.988355', 0);
+INSERT INTO `place` VALUES (1, 'Thác Giang Điền', 'Thác Giang Điền là địa điểm thu hút rất nhiều bạn trẻ và các hộ gia đình kéo nhau về đây tổ chức cắm trại, tắm thác và tổ chức ăn uống. Với khung cảnh hoang sơ được bao bọc...', 'Mang theo đồ để cắm trại như: Thảm,  than, bếp nướng,...', 'Đồng Nai', '104/4 Khu Công Nghiệp Giang Điền, Giang Điền, Trảng Bom, Đồng Nai', '11', '107', 0);
 INSERT INTO `place` VALUES (2, 'Quảng trường Ba Đình', 'Quảng trường Ba Đình là quảng trường lớn nhất Việt Nam, nằm trên đường Hùng Vương, quận Ba Đình và là nơi Lăng Chủ tịch Hồ Chí Minh được xây dựng.', 'Đi cùng bạn bè', 'Hà Nội', NULL, NULL, NULL, 0);
 INSERT INTO `place` VALUES (3, 'Núi Chứa Chan', 'Ngọn núi cao thứ hai ở Đông Nam Bộ có nhiều rừng rậm, vách đá dựng đứng... được các bạn trẻ chọn để khám phá khi rảnh rỗi.', '', 'Đồng Nai', NULL, NULL, NULL, 0);
 INSERT INTO `place` VALUES (4, 'Vườn Xoài', 'Đây là một địa điểm du lịch ưa thích đối với các bạn trẻ thích một nơi cắm trại vui vẻ. Noi nay that dep\n', 'Many hinh\n', 'Đồng Nai', NULL, NULL, NULL, 0);
-INSERT INTO `place` VALUES (5, 'Công viên Văn hóa Đầm Sen', 'Nơi đây được ví là “ốc đảo xanh” với 36 thiết bị dưới nước hiện đại cùng nhiều trò chơi cảm giác mạnh đến nhẹ, phù hợp với mọi lứa tuổi. Vì vậy, bạn có thể vui chơi cả ngày mà không thấy chán.', 'Nên tắm sơ trước khi bơi để hạn chế khả năng hấp thu nước Clo trong hồ bơi.\nNgăn chặn tình trạng sạm da bằng cách dùng kem dưỡng ẩm, lotion và kem chống nắng.\nKhi tham gia máng trượt bạn nên mặc quần áo gọn gàng, không mang các vật dụng sắc nhọn để tránh ', 'Tp.Hồ Chí Minh', NULL, NULL, NULL, 0);
+INSERT INTO `place` VALUES (5, 'Công viên Văn hóa Đầm Sen', 'Nơi đây được ví là “ốc đảo xanh” với 36 thiết bị dưới nước hiện đại cùng nhiều trò chơi cảm giác mạnh đến nhẹ, phù hợp với mọi lứa tuổi. Vì vậy, bạn có thể vui chơi cả ngày mà không thấy chán.', 'Nên tắm sơ trước khi bơi để hạn chế khả năng hấp thu nước Clo trong hồ bơi.\nNgăn chặn tình trạng sạm da bằng cách dùng kem dưỡng ẩm, lotion và kem chống nắng.\nKhi tham gia máng trượt bạn nên mặc quần áo gọn gàng, không mang các vật dụng sắc nhọn để tránh ', 'Thành phố Hồ Chí Minh', NULL, NULL, NULL, 0);
 INSERT INTO `place` VALUES (6, 'Thác Đá Hàn', 'Khu du lịch thác Đá Hàn là một trong những điểm mới lạ để cho các bạn trẻ tới khám phá. Với vẻ đẹp thiên nhiên hoang sơ và hùng vĩ khó cưỡng, thác nước hữu tình điểm thêm vườn trái cây trĩu quả. Với những bạn yêu thích đi phượt thì địa điểm này hứa hẹn sẽ là điểm đến lý tưởng để dã ngoại, cắm trại những ngày cuối tuần.', 'Hãy mặc trang phục thoải mái, đi giày thể thao để bảo vệ sức khỏe trong thời gian di chuyển.\nCần mang thuốc xịt đề phòng côn trùng cắn', 'Đồng Nai', NULL, NULL, NULL, 0);
 INSERT INTO `place` VALUES (30, 'Thác Yên tĩnh', 'Thác Nước Thác Nước', 'Thác NướcThác Nước Thác Nước', 'An Giang', NULL, NULL, NULL, 1);
+INSERT INTO `place` VALUES (73, 'Thác Mai', 'Thác Mai hay còn gọi đầy đủ là khu du lịch sinh thái bàu nước sôi – Thác Mai. Nằm trên địa phận xã Gia Canh, huyện Định Quán, tỉnh Đồng Nai và nằm cách thành phố Hồ Chí Minh tầm 130km. Đây là điểm du lịch nằm sâu trong rừng nguyên sinh bạt ngạt sẽ rất thích hợp với những bạn mê phượt.\r\nTrên ranh giới giữa hai tỉnh Bình Thuận, Đồng Nai, Thác Mai là một địa điểm thiên nhiên kỳ thú, còn lưu giữ được vẻ hoang sơ.\r\nThác rất lớn, có chiều dài khoảng 2 km, được hợp thành từ vô số dòng suối, thác và sông con. Thác Mai gai góc, lởm chởm và bí hiểm. Nước nối tiếp nhau xô vào đá, đá nối tiếp nhau trùng điệp, như dòng thác không có chỗ tận cùng\r\n', 'Nếu bạn nào định tìm đường tới Thác Mai bằng Google Map thì cần phải hết sức lưu ý. Bởi vì bản đồ sẽ hướng dẫn chúng ta đi con đường ngắn hơn, tuy nhiên điểm đến lại là đường cụt ngay bờ sông và thác Mai lại ở bên kia sông. Chính vì vậy bạn cần phải có một hướng dẫn viên có kinh nghiệm đầy đặn', 'Đồng Nai', 'Gia Canh, Định Quán, Đồng Nai', '11.054820078965946', '107.40045249717184', 0);
+INSERT INTO `place` VALUES (74, 'Rừng Quốc Gia Nam Cát Tiên', 'Nam Cát Tiên là tên gọi một vùng đất nằm trọn trong đoạn uốn khúc của sông Đồng Nai, tọa lạc ngay trên ranh giới của cả ba tỉnh Đồng Nai, Bình Phước và Lâm Đồng. Khu rừng cấm Nam Cát Tiên có diện tích 36.000ha, đại diện cho cả hệ thực vật và động vật Nam Bộ.\r\nNơi đây có cảnh thiên nhiên đa dạng: Vừa có đồi, vừa có bãi ven sông, vừa có các trảng rộng lớn bằng phẳng, lại có các dòng chảy dốc. \r\nRừng ở đây có nhiều cây cổ thụ như bằng lăng, gỗ đỏ và hơn 600 loài thực vật.\r\nVề động vật có 240 loài chim, có những loài chim quý hiếm như trĩ lông đỏ, cò quắm xanh, tê giác một sừng,...', 'Thời điểm thích hợp để du lịch từ là vào khoảng tháng 12 – tháng 5. Bởi vì trong thời gian, tại rừng Nam Cát Tiên ít mưa, rừng khô ráo.\r\nVới những bạn thích đi phượt và có kinh phí hạn hẹp thì có thể lựa chọn mang theo lều trại để cắm trại trong rừng, chắ', 'Đồng Nai', 'Nam Cát Tiên, Tân Phú, Đồng Nai', '11.423294791892964', '107.43066356749813', 0);
+INSERT INTO `place` VALUES (75, 'Chùa Bửu Phong', '      Chùa Bửu Phòng nằm trên núi Bửu Long, thuộc xã Tân Bửu, Tỉnh Đồng Nai, cách thành phố Biên Hòa 6km.\r\n       Chùa được xây dựng vào thế kỷ XVII, lúc đầu chùa chỉ là thảo am nhỏ, sau đó trùng tu mở rộng vào năm 1829 và các năm gần đây. Đây là ngôi chùa cổ kính có những pho tượng với những nét điêu khắc đặc biệt Á Đông', '    Chùarất rộng nên phải đi bộ nhiều, bạn nên mặc đồ mỏng, có chất liệu thoáng mát và nên sử dụng giày dép đế thấp tiện cho việc di chuyển.\r\n\r\n', 'Đồng Nai', 'B31, Huỳnh Văn Nghệ, Khu Phố 5, P, Thành phố Biên Hòa, Đồng Nai', '10.96774591813126', '106.79999308283477', 0);
+INSERT INTO `place` VALUES (76, 'Nhà Thờ Đức Bà', '    Nhà thờ Đức Bà là công trình kiến trúc lớn ở Quảng trường Công xã Pari, trung tâm thành phố, với hai tháp chuông cao 40m.\r\n    Ngày 7/10/1877, một cha cố người pháp tên là Colombert đã đặt viên đá đầu tiên và đến ngày 11/4/1880 thì khánh thành. Bản đồ án thiết kế vẽ từ bên Pháp, do kỹ sư người Pháp chỉ huy thực hiện với tổng số tiền là hai triệu rưỡi quan lúc bấy giờ. Ngày 7 và 8 tháng 12 năm 1959, theo sự chấp thuận của tòa thánh Vaticang, nhà thờ đã làm lễ xúc dầu, đặt tên là Vương Cung thánh đường', '    Nếu đến thăm nhà thờ, bạn hãy chuẩn bị sẵn một chút vụn bánh mì hoặc hạt. Bởi ở đây sẽ có những chú chim bồ câu cực “hiếu khách”, sẵn sàng tới chào bạn và nhảy lên tay chơi đùa cùng bạn đó.\r\n', 'Thành phố Hồ Chí Minh', '01 Công xã Paris, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh, Vietnam', '10.779911966388712', '106.69905108283332', 0);
+INSERT INTO `place` VALUES (77, 'Dinh Thống Nhất', '    Khi nói đến Sài Gòn, không ai không liên tưởng đến dinh Thống Nhất với vai trò lịch sử đối với dân tộc Việt Nam, vị trí được xác lập trong giao lưu kinh tế, trính trị, xã hội đối với toàn vùng Đông Nam Á cũng như trên thế giới.\r\n    Mặt tiền của dinh Thống Nhất nằm trên ngã ba đường Nam Kỳ Khởi Nghĩa và đường Lê Duẩn, khuôn viên rộng 15ha.\r\n    Sau chiến dịch Hồ Chí Minh, Dinh Độc Lập là nơi làm việc của ủy ban Quân Quản thành phố Sài Gòn. Tháng 12/1975 tại đây diễn ra hội nghị Hiệp thương thống nhất đất nước. Cũng tại nơi đây đã diễn ra những cuộc họp quan trọng của Trung ương Đảng Công sản Việt Nam và một số đoàn thể để bàn việc thống nhất các tổ chức. Với ý nghĩa lịch sử đó dinh Độc Lập đổi tên thành Hội trường Thống Nhất', '    Giá vé vào Dinh Độc Lập 2021: 40.000đ/ người lớn. Nếu tham quan thêm nhà trưng bày, bạn cần mua thêm vé 25.000đ nữa. Mình muốn đi cả hai nên tổng vé vào cửa của mình là 65.000đ. Có thẻ sinh viên được giảm giá nên nếu có hãy mang theo nhé!', 'Thành phố Hồ Chí Minh', '135 Đ. Nam Kỳ Khởi Nghĩa, Phường Bến Thành, Quận 1, Tp.HCM', '10.777836883913713', '106.69526516749279', 0);
 
 -- ----------------------------
 -- Table structure for role
 -- ----------------------------
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role`  (
-  `role` tinyint NOT NULL,
+  `role` tinyint(4) NOT NULL,
   `roleName` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`role`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
@@ -145,11 +154,11 @@ INSERT INTO `role` VALUES (1, 'Admin');
 -- ----------------------------
 DROP TABLE IF EXISTS `services`;
 CREATE TABLE `services`  (
-  `serviceID` int NOT NULL AUTO_INCREMENT,
+  `serviceID` int(11) NOT NULL AUTO_INCREMENT,
   `serviceName` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `typeID` int NULL DEFAULT NULL,
+  `typeID` int(11) NULL DEFAULT NULL,
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `placeID` int NULL DEFAULT NULL,
+  `placeID` int(11) NULL DEFAULT NULL,
   `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `hotline` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `latitude` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'vi do',
@@ -169,7 +178,7 @@ INSERT INTO `services` VALUES (2, '1', 2, '3', 4, '5', '6', '10.8745', '108.7555
 -- ----------------------------
 DROP TABLE IF EXISTS `typeservice`;
 CREATE TABLE `typeservice`  (
-  `typeID` int NOT NULL,
+  `typeID` int(11) NOT NULL,
   `typeService` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`typeID`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
@@ -185,18 +194,18 @@ INSERT INTO `typeservice` VALUES (2, 'Dịch vụ khác');
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
-  `userID` int NOT NULL AUTO_INCREMENT COMMENT 'moi user co 1 id rieng de phan biet',
+  `userID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'moi user co 1 id rieng de phan biet',
   `userName` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `fullName` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `phonenumber` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `role` int NULL DEFAULT NULL COMMENT '0 la nguoi dung, 1 la admin, 2 la khach san, 3 la nha hang ',
+  `role` int(11) NULL DEFAULT NULL COMMENT '0 la nguoi dung, 1 la admin, 2 la khach san, 3 la nha hang ',
   `isDisabled` tinyint(1) NULL DEFAULT NULL COMMENT 'Tai khoan co bi vo hieu hoa hay khong?',
-  `lastUpdate` datetime NULL DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `lastUpdate` datetime(0) NULL DEFAULT current_timestamp(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`userID`) USING BTREE,
-  INDEX `role`(`role` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+  INDEX `role`(`role`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
