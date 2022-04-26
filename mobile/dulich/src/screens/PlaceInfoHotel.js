@@ -4,13 +4,13 @@ import {
     ActivityIndicator, SafeAreaView, ScrollView, Modal, TextInput, Alert
 } from 'react-native';
 import { Appbar } from 'react-native-paper';
-import ImageCard from '../components/child/place/ImageCard'
-import TabDetailPlace from '../components/navigation/TabDetailPlace'
-import CommentItem from '../components/child/place/CommentItem'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getAllCommentByPlaceID, deleteCommentByUser, addComment } from '../networking/commentNetworking'
-import ProvinceLocation from '../components/child/place/ProvinceLocation'
-import TabView from 'react-native-pager-view';
+import { SearchBar } from "react-native-elements";
+import {
+    getAllPlaces
+} from '../networking/placeNetworking'
+import PlaceInfoItem from '../components/child/place/PlaceInfoItem'
+import { hotelvalue } from '../resources/values/hotelvalue'
+import HotelList from '../components/child/place/HotelList'
 
 const PlaceInfoHotel = ({ navigation, route }) => {
 
@@ -18,169 +18,76 @@ const PlaceInfoHotel = ({ navigation, route }) => {
     const [isLoading, setLoading] = useState(true);
     const [listComment, setListComment] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState('noi dung ');
+
+    const [listPlaces, setListPlaces] = useState([]);
+    const [searchfield, setSearchfield] = useState('');
+
     let userID;
 
-    const [index, setIndex] = React.useState(0);
-
-    const [routes] = React.useState([
-
-        { key: 'first', title: 'First' },
-
-        { key: 'second', title: 'Second' },
-
-    ]);
-
-    const renderra = ({ route }) => {
-        switch (route.key) {
-            case 'first':
-                return <View style={[styles.scene, { backgroundColor: '#ff4081' }]} />;
-            case 'second':
-                return <View style={[styles.scene, { backgroundColor: '#673ab7' }]} />;
-        }
+    const handleGotoDetailHotel = () => {
+        navigation.push("DetailHotel", { content: content });
     }
+
     useEffect(() => {
+        getPlaceFromServer();
 
-        getCommentFromServer();
-    }, [])
+    }, []);
 
-    const getUserID = async () => {
-        try {
-            const id = await AsyncStorage.getItem('userID')
-            userID = parseInt(id);
-        } catch (error) {
-            Alert.alert("Thông báo", "Hệ thống xảy ra lỗi, vui lòng thử lại sau")
-        }
-    }
-    const getCommentFromServer = () => {
-        getAllCommentByPlaceID(place.placeID).then((response) => { setListComment(response.data); })
+    const getPlaceFromServer = () => {
+        getAllPlaces(route.params.province).then((listPlaces) => { setListPlaces(listPlaces); })
             .catch((err) => { Alert.alert("Thông báo", "Kết nối thất bại") })
             .finally(() => { setLoading(false), setRefreshing(false); });
     }
-    const deleteComment = (id) => {
-        getUserID()
-            .then(() => deleteCommentByUser(id, userID)
-                .then((response) => {
-                    if (response !== undefined)
-                        Alert.alert("Thông báo", response.message)
+    const onRefresh = () => { setRefreshing(true); getPlaceFromServer() }
+    const handleSearch = (text) => {
+        setSearchfield(text);
 
-                    onRefresh();
-                })
-                .catch(() => {
-                    Alert.alert("Thông báo", "Hệ thống xảy ra lỗi, vui lòng thử lại sau")
-                })
-            )
-            .catch(() => { Alert.alert("Thông báo", "Hệ thống xảy ra lỗi, vui lòng thử lại sau") });
-    }
-    const onSendComment = () => {
-        if (content.trim().length == 0) {
-            Alert.alert("Thông báo", "Vui lòng nhập nội dung")
-            return;
-        } else {
-            getUserID()
-                .then(() => addComment(userID, content, place.placeID).then((response) => {
-
-                    onRefresh();
-                    setContent('');
-                }).catch((error) => {
-                    Alert.alert("Thông báo", "Xảy ra lỗi, vui lòng thử lại sau");
-                })
-                )
-                .catch(() => { Alert.alert("Thông báo", "Hệ thống xảy ra lỗi, vui lòng thử lại sau") });
-        }
+    };
+    // const filteredProvince = province == undefined ? [] : province.filter(item => {
+    //     var searchName = item.provinceName.toLowerCase().includes(searchfield.toLowerCase());
+    //     return searchName;
+    // })
+    const gotoDetail = (place) => {
+        navigation.push('TabDetailPlace', { place: place })
     }
 
-    const onRefresh = () => { setRefreshing(true); getCommentFromServer() }
-    const getHeader = () => (
-        <View>
-            <Text style={styles.title}>Tên địa điểm:</Text>
-            <Text style={styles.content}>{place.placeName}</Text>
-            <Text style={styles.title}>Địa chỉ:</Text>
-            <Text style={styles.content}>{place.address}</Text>
-            <ProvinceLocation lat={place.latitude} long={place.longitude} />
-            <Text style={styles.title}>Mô tả:</Text>
-            <Text style={styles.content}>{place.description}</Text>
-            <FlatList
-                data={place.images}
-                horizontal
-                keyExtractor={item => item.id.toString()}
-
-                renderItem={({ item, index }) => {
-                    return (
-                        <Pressable
-                            onPress={() => { }}
-                        >
-                            <ImageCard item={item} index={index}>
-                            </ImageCard>
-                        </Pressable>
-
-                    );
-                }}
-            >
-            </FlatList>
-            <Text style={styles.title}>Có thể bạn chưa biết:</Text>
-            <Text style={styles.content}>{place.tips}</Text>
 
 
-            <Text style={{ fontWeight: 'bold', margin: 15 }}>Bình luận: </Text>
-        </View>
-    )
 
 
     return (
-        // <SafeAreaView>
-        //     {/* <Appbar.Header statusBarHeight={20} >
-        //         <Appbar.BackAction onPress={() => { navigation.pop() }} />
-        //         <Appbar.Content title="Thông tin du lịch" />
-        //     </Appbar.Header> */}
-        //     <View>
-        //         {isLoading ? <ActivityIndicator size="large" color='blue' /> :
-        //             <FlatList
-        //                 data={listComment}
-        //                 keyExtractor={item => item.id.toString()}
 
-        //                 ListHeaderComponent={getHeader}
-        //                 ListFooterComponent={
-        //                     <View style={{ backgroundColor: 'white', flexDirection: 'row' }}>
-        //                         <TextInput
-        //                             style={styles.inputText}
-        //                             multiline
-        //                             onChangeText={(value) => { setContent(value) }}
-        //                             placeholder="Để lại bình luận..."
-        //                             value={content}
-        //                         />
-        //                         <Pressable
-        //                             onPress={() => { onSendComment() }}
-        //                             style={styles.buttonSend}>
-        //                             <Text>Gửi</Text>
-        //                         </Pressable>
-        //                     </View>
-        //                 }
-        //                 contentContainerStyle={{ paddingBottom: 400 }}
-        //                 renderItem={({ item, index }) => {
-        //                     return (
-        //                         <CommentItem
-        //                             item={item} index={index}
-        //                             handleDelete={deleteComment}
-        //                         >
+        <View>
+            <SearchBar
+                placeholder="Tìm địa điểm"
+                lightTheme
+                round // bo góc
+                onChangeText={handleSearch}
+                value={searchfield}
+            />
+            <Pressable
+                onPress={() => { handleGotoDetailHotel() }}
+            ><Text>"Noi o"</Text></Pressable>
 
-        //                         </CommentItem>
+            <View>
+                <FlatList
+                    data={hotelvalue}
+                    ListFooterComponent={<View style={{ paddingBottom: 400 }} />}
+                    keyExtractor={item => item.id.toString()}
+                    renderItem={({ item, index }) => {
+                        return (
+                            // <View><Text>{item.provinceName}</Text></View>
+                            <HotelList services={item.serviceName} />
+                        )
+                    }}
+                ></FlatList>
+            </View>
 
-        //                     );
-        //                 }}
-        //                 refreshControl={
-        //                     <RefreshControl
-        //                         refreshing={refreshing}
-        //                         onRefresh={() => onRefresh()}
-        //                     />
-        //                 }
-        //             >
-        //             </FlatList>
-        //         }
-        //     </View>
 
-        // </SafeAreaView>
-        <Text>"Noi o"</Text>
+
+        </View>
+
     )
 }
 const styles = StyleSheet.create({

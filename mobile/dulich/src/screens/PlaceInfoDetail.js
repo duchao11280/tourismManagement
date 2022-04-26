@@ -10,7 +10,7 @@ import CommentItem from '../components/child/place/CommentItem'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAllCommentByPlaceID, deleteCommentByUser, addComment } from '../networking/commentNetworking'
 import ProvinceLocation from '../components/child/place/ProvinceLocation'
-import TabView from 'react-native-pager-view';
+
 
 const PlaceInfoDetail = ({ navigation, route }) => {
 
@@ -21,24 +21,7 @@ const PlaceInfoDetail = ({ navigation, route }) => {
     const [content, setContent] = useState('');
     let userID;
 
-    const [index, setIndex] = React.useState(0);
 
-    const [routes] = React.useState([
-
-        { key: 'first', title: 'First' },
-
-        { key: 'second', title: 'Second' },
-
-    ]);
-
-    const renderra = ({ route }) => {
-        switch (route.key) {
-            case 'first':
-                return <View style={[styles.scene, { backgroundColor: '#ff4081' }]} />;
-            case 'second':
-                return <View style={[styles.scene, { backgroundColor: '#673ab7' }]} />;
-        }
-    }
     useEffect(() => {
 
         getCommentFromServer();

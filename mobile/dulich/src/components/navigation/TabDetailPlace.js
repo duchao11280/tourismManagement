@@ -10,6 +10,7 @@ import { useIsFocused } from '@react-navigation/native'
 import PlaceInfoDetail from '../../screens/PlaceInfoDetail'
 import PlaceInfoHotel from '../../screens/PlaceInfoHotel'
 import PlaceInfoServices from '../../screens/PlaceInfoServices'
+import HotelNavigator from '../../components/navigation/HotelNavigator'
 import { Appbar } from 'react-native-paper';
 const Tab = createMaterialTopTabNavigator();
 
@@ -89,7 +90,7 @@ const TabDetailPlace = ({ navigation, route }) => {
             </View>
         } >
             <Tab.Screen name="PlaceInfoDetail" component={PlaceInfoDetail} initialParams={route.params} options={{ title: "Thông tin Du lịch" }} />
-            <Tab.Screen name="PlaceInfoHotel" component={PlaceInfoHotel} initialParams={route.params} options={{ title: "Thông tin Khách sạn" }} />
+            <Tab.Screen name="HotelNavigator" component={HotelNavigator} initialParams={route.params} options={{ title: "Thông tin Khách sạn" }} />
             <Tab.Screen name="PlaceInfoServices" component={PlaceInfoServices} initialParams={route.params} options={{ title: "Thông tin tiện ích" }} />
         </Tab.Navigator>
     )
