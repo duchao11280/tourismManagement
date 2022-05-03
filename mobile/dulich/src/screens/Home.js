@@ -146,7 +146,7 @@ const Home = ({ navigation }) => {
                     </View>
 
                     <View >
-                        <Text style={styles.content}>Khám phá các khách sạn tại các thành phố:</Text>
+                        <Text style={styles.content}>Khám phá các khách sạn nổi bật:</Text>
                     </View>
                     <View style={styles.flatlistview}>
                         <FlatList
@@ -165,7 +165,7 @@ const Home = ({ navigation }) => {
                     </View>
 
                     <View >
-                        <Text style={styles.content}>Khám phá các khách sạn tại các thành phố:</Text>
+                        <Text style={styles.content}>Khám phá các tiện ích nổi bật khi du lịch:</Text>
                     </View>
                     <View style={styles.flatlistview}>
                         <FlatList

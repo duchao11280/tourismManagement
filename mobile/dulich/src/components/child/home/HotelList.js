@@ -40,8 +40,8 @@ const Styles = StyleSheet.create({
 
     container: {
         alignItems: 'center',
-        backgroundColor: "#e8ffee",
-        borderRadius: 20,
+        // backgroundColor: "#e8ffee",
+        borderRadius: 15,
         marginTop: 10,
         marginBottom: 20,
         marginRight: 15,
@@ -52,8 +52,7 @@ const Styles = StyleSheet.create({
     containerInfo: {
         flexDirection: "column",
         width: "60%",
-        paddingTop: 5,
-        paddingLeft: 10,
+
 
     },
     image: {
@@ -67,7 +66,7 @@ const Styles = StyleSheet.create({
         color: `#000080`,
         fontWeight: 'bold',
         lineHeight: 20,
-        marginRight: 15,
+
     },
     infoText: {
         fontSize: 13,
