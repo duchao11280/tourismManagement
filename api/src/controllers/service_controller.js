@@ -2,11 +2,11 @@ const ServiceModel = require('../models/service_model');
 const ImageModel = require('../models/image_model.js');
 
 exports.getAllServiceAndImagesByPlaceIDAndTypeService = (req, res) => {
-    ServiceModel.getAllServicesEnableByPlaceIDAndTypeService(req.params.id,req.body.typeService, (err, services) => {
+    ServiceModel.getAllServicesEnableByPlaceIDAndTypeService(req.params.id, req.body.typeService, (err, services) => {
         if (err) {
             res.status(500).json({ status: false, message: err, data: [] })
             return;
-        }else if(services[0] === undefined ) {
+        } else if (services[0] === undefined) {
             res.status(200).json({ status: false, message: "Không có dữ liệu", data: [] })
             return;
         }
@@ -52,5 +52,25 @@ exports.getAllServiceAndImagesByPlaceIDAndTypeService = (req, res) => {
             })
 
         }
+    });
+}
+
+exports.getAllHotel = (req, res) => {
+    ServiceModel.getAllHotel((err, services) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Lấy dữ liệu thành công', data: services })
+    });
+}
+
+exports.getAllOtherServices = (req, res) => {
+    ServiceModel.getAllOtherServices((err, services) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Lấy dữ liệu thành công', data: services })
     });
 }

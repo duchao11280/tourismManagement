@@ -13,8 +13,6 @@ const getToken = async () => {
 
 const getAllServiceByPlaceID = async (id, typeService) => {
     try {
-
-
         let accessToken = await getToken();
         const response = await fetch(
             API_URL + `/api/v1/service/${id}`,
@@ -37,6 +35,36 @@ const getAllServiceByPlaceID = async (id, typeService) => {
     }
 };
 
+const getAllHotel = async () => {
+    try {
+        const response = await fetch(
+            API_URL + `/api/v1/service/services/1`,
+            {
+                method: 'GET',
+                credentials: "include"
+            }
+        );
+        const json = await response.json();
+        return json;
+    } catch (error) {
 
+    }
+};
 
-export { getAllServiceByPlaceID }
+const getAllOtherServices = async () => {
+    try {
+        const response = await fetch(
+            API_URL + `/api/v1/service/services/2`,
+            {
+                method: 'GET',
+                credentials: "include"
+            }
+        );
+        const json = await response.json();
+        return json;
+    } catch (error) {
+
+    }
+};
+
+export { getAllServiceByPlaceID, getAllHotel, getAllOtherServices }

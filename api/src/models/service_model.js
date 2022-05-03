@@ -2,15 +2,15 @@ const dbConn = require("../../config/db.config")
 
 var Service = function (service) {
     this.serviceID = service.serviceID,
-    this.serviceName = service.serviceName,
-    this.description = service.description,
-    this.typeID = service.typeID,
-    this.placeID = service.placeID,
-    this.address = service.address,
-    this.hotline = service.hotline,
-    this.latitude = service.latitude,
-    this.longitude = service.longitude,
-    this.isDisabled = service.isDisabled
+        this.serviceName = service.serviceName,
+        this.description = service.description,
+        this.typeID = service.typeID,
+        this.placeID = service.placeID,
+        this.address = service.address,
+        this.hotline = service.hotline,
+        this.latitude = service.latitude,
+        this.longitude = service.longitude,
+        this.isDisabled = service.isDisabled
 
 }
 
@@ -30,7 +30,7 @@ Service.updateInfoService = (id, serviceName, typeID, description, placeID,
     address, hotline, latitude, longitude, result) => {
     dbConn.query(`Update services Set serviceName = ?, typeID =?, description = ?, placeID = ?, 
     address = ?, hotline = ?, latitude = ?, longitude =? where serviceID=${id}`,
-        [serviceName, typeID, description, placeID, address, hotline, 
+        [serviceName, typeID, description, placeID, address, hotline,
             latitude, longitude], (err, res) => {
                 result(err, res);
             }
@@ -67,16 +67,44 @@ Service.getAllServices = (result) => {
         }
     );
 }
+
+// get all hotel
+Service.getAllHotel = (result) => {
+    dbConn.query(`Select services.serviceID, services.serviceName, services.typeID, 
+        typeservice.typeService,services.description, services.placeID, place.placeName,
+        services.address, services.hotline, place.city,
+        services.latitude, services.longitude, isDisabled 
+        From services, typeservice, place
+        Where services.placeID = place.placeID and services.typeID = typeservice.typeID and services.typeID=1 `,
+        (err, res) => {
+            result(err, res);
+        }
+    );
+}
+
+// get all hotel
+Service.getAllOtherServices = (result) => {
+    dbConn.query(`Select services.serviceID, services.serviceName, services.typeID, 
+        typeservice.typeService,services.description, services.placeID, place.placeName,
+        services.address, services.hotline, place.city,
+        services.latitude, services.longitude, isDisabled 
+        From services, typeservice, place
+        Where services.placeID = place.placeID and services.typeID = typeservice.typeID and services.typeID=2`,
+        (err, res) => {
+            result(err, res);
+        }
+    );
+}
 // Get all service Enable by placeID
 
-Service.getAllServicesEnableByPlaceIDAndTypeService = (id,typeService,result) => {
+Service.getAllServicesEnableByPlaceIDAndTypeService = (id, typeService, result) => {
     dbConn.query(`Select services.serviceID, services.serviceName, services.typeID, 
         typeservice.typeService,services.description, services.placeID, place.placeName,
         services.address, services.hotline, place.city,
         services.latitude, services.longitude, services.isDisabled 
         From services, typeservice, place
         Where services.placeID = place.placeID and services.typeID = typeservice.typeID 
-        and services.isDisabled = 0 and services.placeID =${id} and typeservice.typeService=?`,[typeService],
+        and services.isDisabled = 0 and services.placeID =${id} and typeservice.typeService=?`, [typeService],
         (err, res) => {
             result(err, res);
         }

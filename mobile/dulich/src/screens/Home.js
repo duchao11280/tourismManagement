@@ -1,25 +1,58 @@
 import React, { Component, useEffect, useState } from 'react';
-import { Text, View, StyleSheet, Button, Image, TextInput, Pressable, FlatList, SafeAreaView } from 'react-native';
+import { Text, View, StyleSheet, Button, Image, TextInput, Pressable, FlatList, SafeAreaView, ScrollView } from 'react-native';
 import { FontAwesome5 } from 'react-native-vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { province } from '../resources/values/province'
 import Province from '../components/child/place/Province'
+import ServicesList from '../components/child/home/HotelList'
 import { Appbar } from 'react-native-paper';
 import { SearchBar } from "react-native-elements";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { getAllHotel, getAllOtherServices } from '../networking/servicesNetworking'
 
 
 
 const Home = ({ navigation }) => {
     const [searchfield, setSearchfield] = useState('');
+    const [listHotel, setListHotel] = useState([]);
+    const [listOtherServices, setListOtherServices] = useState([])
     // const [listProvince, setListProvinceName] = useState(province);
 
     const handleSearch = (text) => {
         setSearchfield(text);
 
     };
+
+    useEffect(() => {
+        getHotelFromServer();
+        getOtherServicesFromServer();
+
+    }, []);
+
+    const getHotelFromServer = () => {
+        getAllHotel().then((response) => { setListHotel(response.data); })
+            .catch((err) => { Alert.alert("Thông báo", "Kết nối thất bại"); setListHotel([]) })
+        // .finally(() => { setLoading(false), setRefreshing(false); });
+    }
+    const getOtherServicesFromServer = () => {
+        getAllOtherServices().then((response) => { setListOtherServices(response.data); })
+            .catch((err) => { Alert.alert("Thông báo", "Kết nối thất bại"); setListOtherServices([]) })
+        // .finally(() => { setLoading(false), setRefreshing(false); });
+    }
+
     const filteredProvince = province == undefined ? [] : province.filter(item => {
         var searchName = item.provinceName.toLowerCase().includes(searchfield.toLowerCase());
+        return searchName;
+    })
+
+    const filteredHotel = listHotel == undefined ? [] : listHotel.filter(item => {
+        var searchName = item.serviceName.toLowerCase().includes(searchfield.toLowerCase());
+        return searchName;
+    })
+
+    const filteredOtherServices = listOtherServices == undefined ? [] : listOtherServices.filter(item => {
+        var searchName = item.serviceName.toLowerCase().includes(searchfield.toLowerCase());
         return searchName;
     })
     const gotoPlaceByProvince = (province) => {
@@ -27,8 +60,9 @@ const Home = ({ navigation }) => {
     }
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <View style={styles.container}>
-                {/* <View style={styles.BeachImage}>
+            <KeyboardAwareScrollView>
+                <View style={styles.container}>
+                    {/* <View style={styles.BeachImage}>
                 <Image source={require('../resources/imgs/Beach.png')} />
             </View>
 
@@ -71,34 +105,103 @@ const Home = ({ navigation }) => {
 
 
             </View> */}
-                {/* <Appbar.Header statusBarHeight={1}>
+                    {/* <Appbar.Header statusBarHeight={1}>
                     <Appbar.Content title="Các tỉnh thành Việt Nam" />
                 </Appbar.Header> */}
-                <View>
-                    <SearchBar
-                        placeholder="Tìm địa điểm"
-                        lightTheme
-                        round // bo góc
-                        onChangeText={handleSearch}
-                        value={searchfield}
-                    />
-                </View>
-                <View >
-                    <Text style={styles.content}>Khám phá các địa điểm tại các thành phố:</Text>
-                </View>
-                <FlatList
-                    data={filteredProvince}
-                    numColumns={2}
-                    // ListFooterComponent={<View style={{ paddingBottom: 300 }} />}
-                    keyExtractor={item => item.id.toString()}
-                    renderItem={({ item, index }) => {
-                        return (
-                            // <View><Text>{item.provinceName}</Text></View>
-                            <Province province={item.provinceName} gotoPlace={gotoPlaceByProvince} />
-                        )
-                    }}
-                ></FlatList>
-            </View >
+                    <View>
+                        <SearchBar
+                            placeholder="Tìm địa điểm"
+                            lightTheme
+                            round // bo góc
+                            onChangeText={handleSearch}
+                            value={searchfield}
+                        />
+                    </View>
+
+                    <View >
+                        <Text style={styles.content}>Khám phá các địa điểm tại các thành phố:</Text>
+                    </View>
+                    <View style={styles.flatlistview}>
+                        <ScrollView
+                            horizontal
+                            // showsVerticalScrollIndicator={true}
+                            showsHorizontalScrollIndicator={true}
+                            contentContainerStyle={{ paddingVertical: 10 }}>
+
+                            <FlatList
+                                data={filteredProvince}
+                                numColumns={32}
+                                // ListFooterComponent={<View style={{ paddingBottom: 300 }} />}
+                                // flexDirection:rows
+                                keyExtractor={item => item.id.toString()}
+                                renderItem={({ item, index }) => {
+                                    return (
+                                        // <View><Text>{item.provinceName}</Text></View>
+                                        <Province province={item.provinceName} gotoPlace={gotoPlaceByProvince} />
+                                    )
+                                }}
+                            ></FlatList>
+                        </ScrollView>
+
+                    </View>
+
+                    <View >
+                        <Text style={styles.content}>Khám phá các khách sạn tại các thành phố:</Text>
+                    </View>
+                    <View style={styles.flatlistview}>
+                        <FlatList
+                            data={filteredHotel}
+                            horizontal
+
+                            keyExtractor={item => item.serviceID.toString()}
+                            renderItem={({ item, index }) => {
+                                return (
+                                    // <View><Text>{item.provinceName}</Text></View>
+                                    <ServicesList hotels={item} />
+                                )
+                            }}
+
+                        ></FlatList>
+                    </View>
+
+                    <View >
+                        <Text style={styles.content}>Khám phá các khách sạn tại các thành phố:</Text>
+                    </View>
+                    <View style={styles.flatlistview}>
+                        <FlatList
+                            data={filteredOtherServices}
+                            horizontal
+
+                            keyExtractor={item => item.serviceID.toString()}
+                            renderItem={({ item, index }) => {
+                                return (
+
+                                    <ServicesList hotels={item} />
+                                )
+                            }}
+
+                        ></FlatList>
+                    </View>
+
+                    {/* <View >
+                        <Text style={styles.content}>Khám phá các địa điểm tại các thành phố:</Text>
+                    </View>
+                    <View style={styles.flatlistview}>
+                        <FlatList
+                            data={filteredProvince}
+                            horizontal
+                            keyExtractor={item => item.id.toString()}
+                            renderItem={({ item, index }) => {
+                                return (
+                                    // <View><Text>{item.provinceName}</Text></View>
+                                    <Province province={item.provinceName} gotoPlace={gotoPlaceByProvince} />
+                                )
+                            }}
+                        ></FlatList>
+                    </View> */}
+                </View >
+            </KeyboardAwareScrollView>
+
         </SafeAreaView >
     )
 }
@@ -139,6 +242,11 @@ const styles = StyleSheet.create({
     content: {
         fontSize: 15,
         fontWeight: "bold"
+    },
+    flatlistview: {
+        // height: 100,
+        // backgroundColor: 'red',
+        flexGrow: 0
     }
 })
 
