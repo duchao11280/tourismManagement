@@ -190,6 +190,80 @@ const enableUser = async (id) => {
     }
 
 }
+// get notification
+const getAllNotification = async () => {
+    try {
+
+        const response = await fetch(
+            API_URL + `/api/v1/admin/notification`,
+            {
+                method: 'GET',
+                credentials: 'include'
+            }
+        );
+        const json = await response.json();
+        return json;
+    } catch (error) {
+
+    }
+}
+// delete notification
+const deleteNotification = async (id) => {
+    try {
+        const respone = await fetch(API_URL + `/api/v1/admin/notification/delete/${id}`, {
+            method: 'DELETE',
+            credentials: 'include'
+        });
+        const json = await respone.json();
+        return json;
+    } catch (error) {
+
+    }
+}
+// add new notification
+const addNotification = async (title, content) => {
+    try {
+        const respone = await fetch(
+            API_URL + `/api/v1/admin/notification/addnew`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                "Accept": 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                title: title,
+                content: content,
+            })
+        });
+        const json = await respone.json();
+        return json;
+    } catch (error) {
+
+    }
+}
+// update notification
+const updateNotification = async (id, title, content) => {
+    try {
+        const respone = await fetch(
+            API_URL + `/api/v1/admin/notification/update/${id}`, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {
+                "Accept": 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                title: title,
+                content: content
+            })
+        });
+        const json = await respone.json();
+        return json;
+    } catch (error) {
+
+    }
+}
 export {
     getAllPlaces,
     addPlace,
@@ -202,4 +276,8 @@ export {
     getAllUsers,
     disableUser,
     enableUser,
+    getAllNotification,
+    deleteNotification,
+    addNotification,
+    updateNotification,
 }

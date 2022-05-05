@@ -60,6 +60,14 @@ const Admin = () => {
                             </a></Link>
                     </li>
                     <li>
+
+                        <Link to="/admin/notificationmanagement">
+                            <a >
+                                <FaConciergeBell className="icon-Admin" />
+                                <div>Thông báo</div>
+                            </a></Link>
+                    </li>
+                    <li>
                         <a href="#">
                             <FaSignOutAlt className="icon-Admin" />
                             <div>Đăng Xuất</div>
