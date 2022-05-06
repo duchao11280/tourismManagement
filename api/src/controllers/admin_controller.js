@@ -50,6 +50,7 @@ exports.getPlaceAndImageByPlaceID = (req, res) => {
         })
     })
 }
+
 // get image by placeID
 exports.getImageByPlaceID = (req, res) => {
     ImageModel.getAllImageByPlaceID(req.params.id, (err, imgs) => {
@@ -177,6 +178,7 @@ exports.enablePlace = (req, res) => {
         res.json({ status: true, message: 'Kích hoạt địa điểm thành công' })
     })
 }
+
 //========================User================================//
 // get all user
 exports.getAllUsers = (req, res) => {
