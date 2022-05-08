@@ -71,7 +71,7 @@ const DetailService = ({ navigation, route }) => {
         <SafeAreaView>
             <View>
 
-                <View>
+                <View style={styles.paddingTop}>
                     <Pressable onPress={() => { goBack() }}>
                         <Icon name="arrow-back-outline" size={40} color="#000" /></Pressable>
                 </View>
@@ -91,8 +91,6 @@ const DetailService = ({ navigation, route }) => {
                 </FlatList>
 
             </View>
-
-
         </SafeAreaView>
     )
 }
@@ -126,5 +124,8 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginVertical: 10,
     },
+    paddingTop: {
+        paddingTop: 25,
+    }
 })
 export default DetailService;

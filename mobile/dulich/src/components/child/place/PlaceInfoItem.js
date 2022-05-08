@@ -1,14 +1,14 @@
 import React, { Component, useEffect, useState } from 'react';
 import {
     View, Text, Image, Pressable, RefreshControl, Alert,
-    ActivityIndicator, StyleSheet, FlatList, SafeAreaView, TouchableHighlight
+    ActivityIndicator, StyleSheet, FlatList, SafeAreaView, TouchableHighlight, Dimensions
 } from 'react-native';
 import ImageCard from './ImageCard';
 
 const PlaceInfoItem = (props) => {
     return (
         <View style={styles.container} >
-            <Text style={props.item.images.length?styles.text:styles.emptyImage}>{props.item.placeName}</Text>
+            <Text style={props.item.images.length ? styles.text : styles.emptyImage}>{props.item.placeName}</Text>
             <FlatList
                 data={props.item.images}
                 horizontal
@@ -30,21 +30,22 @@ const PlaceInfoItem = (props) => {
     )
 }
 const styles = StyleSheet.create({
-    container:{
+    container: {
         backgroundColor: '#e8ffee',
-        marginBottom:10,
+        marginBottom: 10,
     },
-    text:{
+    text: {
         fontSize: 20,
-        paddingLeft:15,
+        paddingLeft: 15,
         fontWeight: 'bold',
     },
-    emptyImage:{
+    emptyImage: {
         fontSize: 20,
-        paddingLeft:15,
+        paddingLeft: 15,
         fontWeight: 'bold',
-        paddingVertical:30,
-    }
+        paddingVertical: 30,
+    },
+
 })
 
 export default PlaceInfoItem;

@@ -22,16 +22,16 @@ const ServicesList = (props) => {
                 <Text style={Styles.infoText}>{service.address}</Text>
             </View> */}
 
-            <Pressable >
-                <View >
-                    <ImageBackground style={Styles.image}
-                        source={require('../../../resources/imgs/defau.jpg')}>
-                        <View style={{ position: 'absolute', top: 51, left: 0, right: 0, bottom: 0, marginLeft: 8 }}>
-                            <Text style={Styles.nameProvince}>{hotel.serviceName}</Text>
-                        </View>
-                    </ImageBackground>
-                </View>
-            </Pressable>
+
+            <View >
+                <ImageBackground style={Styles.image}
+                    source={require('../../../resources/imgs/defau.jpg')}>
+                    <View style={{ position: 'absolute', top: 51, left: 0, right: 0, bottom: 0, marginLeft: 8 }}>
+                        <Text style={Styles.nameProvince}>{hotel.serviceName}</Text>
+                    </View>
+                </ImageBackground>
+            </View>
+
         </View>
     );
 }

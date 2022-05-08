@@ -8,8 +8,8 @@ const ImageCard = (props) => {
             <View style={Styles.image}>
                 <Image
                     source={{
-                        height: 300,
-                        width: 300,
+                        height: Dimensions.get('window').width * 0.27,
+                        width: Dimensions.get('window').width * 0.27,
                         uri: props.item.image,
                     }}
                 />

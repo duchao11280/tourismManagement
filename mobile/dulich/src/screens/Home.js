@@ -24,6 +24,13 @@ const Home = ({ navigation }) => {
 
     };
 
+    const handleGotoDetailHotel = (item) => {
+        navigation.push("DetailHotel", { item: item });
+    }
+    const handleGotoDetailService = (item) => {
+        navigation.push("DetailService", { item: item });
+    }
+
     useEffect(() => {
         getHotelFromServer();
         getOtherServicesFromServer();
@@ -157,7 +164,7 @@ const Home = ({ navigation }) => {
                             renderItem={({ item, index }) => {
                                 return (
                                     // <View><Text>{item.provinceName}</Text></View>
-                                    <ServicesList hotels={item} />
+                                    <Pressable onPress={() => { handleGotoDetailHotel(item) }}><ServicesList hotels={item} /></Pressable>
                                 )
                             }}
 
@@ -175,8 +182,8 @@ const Home = ({ navigation }) => {
                             keyExtractor={item => item.serviceID.toString()}
                             renderItem={({ item, index }) => {
                                 return (
-
-                                    <ServicesList hotels={item} />
+                                    <Pressable onPress={() => { handleGotoDetailService(item) }}><ServicesList hotels={item} /></Pressable>
+                                    // <ServicesList hotels={item} />
                                 )
                             }}
 

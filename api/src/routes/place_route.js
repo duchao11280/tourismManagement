@@ -8,8 +8,10 @@ const verifyToken = require('../middleware/verifyToken');
 
 
 //search place by city
-router.post('/',[verifyToken.verifyToken], placeController.getAllPlaceAndImagesByCity);
+router.post('/', [verifyToken.verifyToken], placeController.getAllPlaceAndImagesByCity);
 // get place id and name
-router.get('/idandname',[verifyToken.verifyToken],placeController.getAllPlaceIDandName)
+router.get('/idandname', [verifyToken.verifyToken], placeController.getAllPlaceIDandName)
+
+router.get('/imgservice', [verifyToken.verifyToken], placeController.getImageService)
 
 module.exports = router;

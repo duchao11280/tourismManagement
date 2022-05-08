@@ -23,8 +23,8 @@ Place.getAllPlaces = (result) => {
     })
 }
 // lấy tất cả các địa điểm chưa bị vô hiệu hóa
-Place.getAllPlacesEnableByCity = (city,result) => {
-    dbConn.query('Select * From place Where isDeleted != 1 and city=?',[city], (err, res) => {
+Place.getAllPlacesEnableByCity = (city, result) => {
+    dbConn.query('Select * From place Where isDeleted != 1 and city=?', [city], (err, res) => {
         if (res) {
 
 
@@ -34,8 +34,8 @@ Place.getAllPlacesEnableByCity = (city,result) => {
         }
     })
 }
-Place.getPlaceByID = (id,result) =>{
-    dbConn.query(`Select * from place Where placeID=${id}`,(err,res)=>{
+Place.getPlaceByID = (id, result) => {
+    dbConn.query(`Select * from place Where placeID=${id}`, (err, res) => {
         if (res) {
             result(null, res);
         } else {
@@ -43,8 +43,8 @@ Place.getPlaceByID = (id,result) =>{
         }
     })
 }
-Place.getPlaceIDByPlaceName =(placeName,result)=>{
-    dbConn.query(`SELECT DISTINCT placeID from place WHERE placeName=${placeName}`,(err,res)=>{
+Place.getPlaceIDByPlaceName = (placeName, result) => {
+    dbConn.query(`SELECT DISTINCT placeID from place WHERE placeName=${placeName}`, (err, res) => {
         if (res) {
             result(null, res);
         } else {
@@ -52,8 +52,8 @@ Place.getPlaceIDByPlaceName =(placeName,result)=>{
         }
     })
 }
-Place.searchAllPlaceByCity =(city,result)=>{
-    dbConn.query(`SELECT * from place WHERE city=?`,[city],(err,res)=>{
+Place.searchAllPlaceByCity = (city, result) => {
+    dbConn.query(`SELECT * from place WHERE city=?`, [city], (err, res) => {
         if (res) {
             result(null, res);
         } else {
@@ -106,6 +106,13 @@ Place.enablePlace = (id, result) => {
 // get place and images
 Place.getAllPlaceAndImages = (result) => {
     dbConn.query('Select * from place LEFT JOIN image ON place.placeID = image.placeID', (err, res) => {
+        result(err, res);
+    })
+}
+
+
+Place.getImageService = (result) => {
+    dbConn.query('Select image, serviceID from image WHERE serviceID is not null and isDeleted !=1 GROUP BY serviceID', (err, res) => {
         result(err, res);
     })
 }

@@ -3,13 +3,13 @@ const ImageModel = require('../models/image_model.js');
 
 
 exports.getAllPlaceAndImagesByCity = (req, res) => {
-    PlaceModel.getAllPlacesEnableByCity(req.body.city,(err, places) => {
+    PlaceModel.getAllPlacesEnableByCity(req.body.city, (err, places) => {
         if (err || places[0] === undefined) {
             res.status(500).json({ status: false, message: "Thất bại", data: [] })
             return;
         } else {
             var data = []
-            var flag =0;
+            var flag = 0;
             places.forEach(place => {
                 var images = [];
                 ImageModel.getAllImageByPlaceID(place.placeID, (err, imgs) => {
@@ -35,23 +35,53 @@ exports.getAllPlaceAndImagesByCity = (req, res) => {
                         longitude: place.longitude,
                         images: images
                     })
-       
-                    if(flag == places.length){
+
+                    if (flag == places.length) {
                         res.json({ status: true, message: 'Lấy dữ liệu thành công', data: data })
                     }
                 })
 
             })
-            
+
         }
     });
 }
-exports.getAllPlaceIDandName = (req, res) =>{
-    PlaceModel.getPlaceIDandName((err,place)=>{
+
+exports.getImageService = (req, res) => {
+    PlaceModel.getImageService((err, places) => {
+
+        var data = [];
         if (err) {
-            res.status(500).json({status: false, message: "Thất bại"})
+            res.status(500).json({ status: false, message: "Thất bại" })
             return;
         };
-        res.json({status: true, message:'Lấy dữ liệu thành công', data: place})
+        places.forEach(image => {
+            var images = [];
+            images.push(
+                {
+                    serviceID: image.serviceID,
+                    image: process.env.DOMAIN + '/public/images/' + image.image
+                })
+            data.push({
+                images: images
+            })
+        })
+        res.json({ status: true, message: 'Lấy dữ liệu thành công', data: data })
+    })
+
+}
+
+
+
+
+
+exports.getAllPlaceIDandName = (req, res) => {
+    PlaceModel.getPlaceIDandName((err, place) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Lấy dữ liệu thành công', data: place })
     })
 }
+

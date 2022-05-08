@@ -8,6 +8,8 @@ import TabDetailPlace from '../navigation/TabDetailPlace'
 import PlaceInfoDetail from '../../screens/PlaceInfoDetail'
 import Hotel from '../../screens/Hotel'
 import Restaurant from '../../screens/Restaurant'
+import DetailHotel from '../../screens/DetailHotel'
+import DetailService from '../../screens/DetailService'
 const Stack = createNativeStackNavigator();
 const HomeNavigator = () => {
     return (
@@ -17,6 +19,8 @@ const HomeNavigator = () => {
             <Stack.Screen name="TabDetailPlace" component={TabDetailPlace} />
             <Stack.Screen name="Hotel" component={Hotel} />
             <Stack.Screen name="Restaurant" component={Restaurant} />
+            <Stack.Screen name="DetailHotel" component={DetailHotel} />
+            <Stack.Screen name="DetailService" component={DetailService} />
         </Stack.Navigator>
     )
 }
