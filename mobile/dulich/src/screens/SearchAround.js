@@ -3,13 +3,14 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native'
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
 import { getAllPlaceAround } from '../networking/placeNetworking'
-
+import { useIsFocused } from '@react-navigation/native';
 const { width, height } = Dimensions.get('window');
 const SearchAround = () => {
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
-    const [initialRegion, setInitialRegion] = useState({ latitude: 10, longitude: 106, latitudeDelta: 0.0922 / 30, longitudeDelta: 0.0421 / 30, });
+    const [initialRegion, setInitialRegion] = useState({ latitude: 10.8836, longitude: 106.7815, latitudeDelta: 0.03, longitudeDelta: 0.03, });
     const [listPlace, setListPlace] = useState([])
+    const isFocused = useIsFocused();
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -19,15 +20,16 @@ const SearchAround = () => {
             }
 
             let location = await Location.getCurrentPositionAsync({});
+            // console.log(location);
             setInitialRegion({
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude,
-                latitudeDelta: 0.0922 / 30,
-                longitudeDelta: 0.0421 / 30
+                latitudeDelta: 0.00001,
+                longitudeDelta: 0.00001
             });
 
         })();
-    }, []);
+    }, [isFocused]);
     useEffect(() => {
         getAllPlaceAround(initialRegion.latitude, initialRegion.longitude, 20)
             .then((response) => {

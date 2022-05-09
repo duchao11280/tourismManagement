@@ -29,7 +29,7 @@ const ServicesList = (props) => {
                 <Image style={Styles.image}
                     source={{ uri: hotel.images[0]?.image }}>
                 </Image>
-                <Text numberOfLines={2} ellipsizeMode="tail" style={Styles.nameProvince}>hotel in the morning morning morning</Text>
+                <Text numberOfLines={2} ellipsizeMode="tail" style={Styles.nameProvince}>{hotel.serviceName}</Text>
             </View>
 
         </View>
