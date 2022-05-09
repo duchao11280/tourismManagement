@@ -4,12 +4,14 @@ import { View, Text, Image, Pressable, StyleSheet, Alert, Dimensions, ImageBackg
 
 
 const ServicesList = (props) => {
+
     const hotel = props.hotels;
+
 
     const windowHeight = Dimensions.get('window').height;
 
     return (
-        <View style={Styles.container}>
+        <View >
             {/* <Pressable >
                 <Image style={Styles.image}
                     source={require('../../../resources/imgs/defau.jpg')}>
@@ -23,13 +25,11 @@ const ServicesList = (props) => {
             </View> */}
 
 
-            <View >
-                <ImageBackground style={Styles.image}
-                    source={require('../../../resources/imgs/defau.jpg')}>
-                    <View style={{ position: 'absolute', top: 51, left: 0, right: 0, bottom: 0, marginLeft: 8 }}>
-                        <Text style={Styles.nameProvince}>{hotel.serviceName}</Text>
-                    </View>
-                </ImageBackground>
+            <View style={Styles.container}>
+                <Image style={Styles.image}
+                    source={{ uri: hotel.images[0]?.image }}>
+                </Image>
+                <Text numberOfLines={1} ellipsizeMode="tail" style={Styles.nameProvince}>{hotel.serviceName}</Text>
             </View>
 
         </View>
@@ -40,14 +40,14 @@ const Styles = StyleSheet.create({
 
     container: {
         alignItems: 'center',
-        // backgroundColor: "#e8ffee",
-        borderRadius: 15,
-        marginTop: 10,
-        marginBottom: 20,
-        marginRight: 15,
-        elevation: 10,
-        flexDirection: "row",
-        paddingLeft: 8,
+        justifyContent: "center",
+        flexDirection: "column",
+        // borderRadius: 15,
+
+        paddingLeft: 5,
+        marginLeft: 10,
+        marginTop: 10
+
     },
     containerInfo: {
         flexDirection: "column",
@@ -59,7 +59,6 @@ const Styles = StyleSheet.create({
         width: Dimensions.get('window').width * 0.4,
         height: 80,
         borderRadius: 15,
-
     },
     nameHotel: {
         fontSize: 16,
@@ -68,15 +67,14 @@ const Styles = StyleSheet.create({
         lineHeight: 20,
 
     },
-    infoText: {
-        fontSize: 13,
-        color: `#000080`,
-        lineHeight: 20,
-        marginRight: 15,
-    },
+
     nameProvince: {
+
+
         fontSize: 17,
         color: `#000080`,
+        textAlign: 'justify',
+        marginBottom: 15,
     }
 })
 export default ServicesList;

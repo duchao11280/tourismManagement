@@ -112,7 +112,7 @@ Place.getAllPlaceAndImages = (result) => {
 
 
 Place.getImageService = (result) => {
-    dbConn.query('Select image, serviceID from image WHERE serviceID is not null and isDeleted !=1 GROUP BY serviceID', (err, res) => {
+    dbConn.query('SELECT services.serviceID, services.serviceName, image.image, image.isDeleted FROM image INNER JOIN services on image.serviceID = services.serviceID GROUP BY serviceID', (err, res) => {
         result(err, res);
     })
 }

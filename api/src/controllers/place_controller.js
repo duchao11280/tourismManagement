@@ -59,6 +59,7 @@ exports.getImageService = (req, res) => {
             var images = [];
             images.push(
                 {
+                    serviceName: image.serviceName,
                     serviceID: image.serviceID,
                     image: process.env.DOMAIN + '/public/images/' + image.image
                 })

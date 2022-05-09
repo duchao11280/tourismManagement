@@ -75,7 +75,7 @@ Service.getAllHotel = (result) => {
         services.address, services.hotline, place.city,
         services.latitude, services.longitude, isDisabled 
         From services, typeservice, place
-        Where services.placeID = place.placeID and services.typeID = typeservice.typeID and services.typeID=1 `,
+        Where services.isDisabled = 0 and services.placeID = place.placeID and services.typeID = typeservice.typeID and services.typeID=1 `,
         (err, res) => {
             result(err, res);
         }
@@ -89,7 +89,7 @@ Service.getAllOtherServices = (result) => {
         services.address, services.hotline, place.city,
         services.latitude, services.longitude, isDisabled 
         From services, typeservice, place
-        Where services.placeID = place.placeID and services.typeID = typeservice.typeID and services.typeID=2`,
+        Where services.isDisabled = 0 and services.placeID = place.placeID and services.typeID = typeservice.typeID and services.typeID=2`,
         (err, res) => {
             result(err, res);
         }
