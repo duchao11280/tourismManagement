@@ -22,6 +22,17 @@ Place.getAllPlaces = (result) => {
         }
     })
 }
+Place.getAllPlacesEnable = (result) => {
+    dbConn.query('Select * From place where isDeleted != 1', (err, res) => {
+        if (res) {
+
+
+            result(null, res);
+        } else {
+            result(err, null);
+        }
+    })
+}
 // lấy tất cả các địa điểm chưa bị vô hiệu hóa
 Place.getAllPlacesEnableByCity = (city, result) => {
     dbConn.query('Select * From place Where isDeleted != 1 and city=?', [city], (err, res) => {

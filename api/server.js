@@ -14,7 +14,9 @@ app.use(express.urlencoded({
 }));
 
 
+
 app.use(cors({ credentials: true, origin: ["http://192.168.1.9:4000", "http://10.0.132.51:4000"] }));
+
 
 
 app.get('/', function (req, res) {

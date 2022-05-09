@@ -14,4 +14,6 @@ router.get('/idandname', [verifyToken.verifyToken], placeController.getAllPlaceI
 
 router.get('/imgservice', [verifyToken.verifyToken], placeController.getImageService)
 
+// Search for places within X radius with latitude and longitude
+router.get('/searchwithinradius/:latitude/:longitude/:distance', [verifyToken.verifyToken], placeController.searchPlacesWithinRadiusWithLatLong)
 module.exports = router;

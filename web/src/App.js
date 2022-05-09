@@ -12,6 +12,7 @@ import UserManagement from '../src/Screen/userManagement/UserManagement'
 import AddService from '../src/Screen/servicesManagement/AddService'
 import ServicesManagement from '../src/Screen/servicesManagement/ServicesManagement';
 import EditService from '../src/Screen/servicesManagement/EditService'
+import NotificationManagement from '../src/Screen/notification/NotificationManagement'
 function App() {
     return (
         // <div className="App">
@@ -37,7 +38,7 @@ function App() {
                 <Route exact path="/admin/servicemanagement" component={ServicesManagement}/>
                 <Route exact path="/admin/servicemanagement/addservice" component={AddService}/>
                 <Route exact path="/admin/servicemanagement/editservice/:id" component={EditService}/>
-
+                <Route exact path="/admin/notificationmanagement" component={NotificationManagement}/>
             </Switch>
         </BrowserRouter>
     )

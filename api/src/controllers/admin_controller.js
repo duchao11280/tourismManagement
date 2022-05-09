@@ -50,6 +50,7 @@ exports.getPlaceAndImageByPlaceID = (req, res) => {
         })
     })
 }
+
 // get image by placeID
 exports.getImageByPlaceID = (req, res) => {
     ImageModel.getAllImageByPlaceID(req.params.id, (err, imgs) => {
@@ -68,8 +69,8 @@ exports.getImageByPlaceID = (req, res) => {
     })
 }
 
-exports.searchAllPlaceByCity = (req,res) =>{
-    PlaceModel.searchAllPlaceByCity(req.body.city,(err, places) => {
+exports.searchAllPlaceByCity = (req, res) => {
+    PlaceModel.searchAllPlaceByCity(req.body.city, (err, places) => {
         if (err) {
             res.status(500).json({ status: false, message: "Thất bại" })
             return;
@@ -148,7 +149,7 @@ exports.insertPlace = async (req, res) => {
 exports.updateInfoPlace = (req, res) => {
     var placeReq = new PlaceModel(req.body);
     PlaceModel.updateInfoPlace(req.params.id, placeReq.placeName, placeReq.description,
-        placeReq.tips, placeReq.city,placeReq.address,placeReq.latitude,placeReq.longitude, (err, data) => {
+        placeReq.tips, placeReq.city, placeReq.address, placeReq.latitude, placeReq.longitude, (err, data) => {
             if (err) {
                 res.status(500).json({ status: false, message: "Thất bại" })
                 return;
@@ -177,6 +178,7 @@ exports.enablePlace = (req, res) => {
         res.json({ status: true, message: 'Kích hoạt địa điểm thành công' })
     })
 }
+
 //========================User================================//
 // get all user
 exports.getAllUsers = (req, res) => {
@@ -220,7 +222,10 @@ exports.enableUser = (req, res) => {
 exports.addNotification = (req, res) => {
     var title = req.body.title;
     var content = req.body.content;
-    var time = req.body.time;
+    var now = new Date();
+    var month = now.getMonth() + 1;
+    var time = (now.getFullYear() + "-" + month + "-" + now.getDate() +
+        " " + now.getHours() + ":" + now.getMinutes());
     NotificationModel.insertNotification(title, content, time, (err, data) => {
         if (err) {
             res.status(500).json({ status: false, message: "Thất bại" })
@@ -234,7 +239,10 @@ exports.updateNotification = (req, res) => {
     var id = req.params.id;
     var title = req.body.title;
     var content = req.body.content;
-    var time = req.body.time;
+    var now = new Date();
+    var month = now.getMonth() + 1;
+    var time = (now.getFullYear() + "-" + month + "-" + now.getDate() +
+        " " + now.getHours() + ":" + now.getMinutes());
     NotificationModel.updateNotification(id, title, content, time, (err, data) => {
         if (err) {
             res.status(500).json({ status: false, message: "Thất bại" })
@@ -266,8 +274,8 @@ exports.getAllServices = (req, res) => {
 // update info service
 exports.updateInfoService = (req, res) => {
     var service = new ServiceModel(req.body);
-    ServiceModel.updateInfoService(req.params.id, service.serviceName, 
-        service.typeID, service.description, service.placeID, service.address, 
+    ServiceModel.updateInfoService(req.params.id, service.serviceName,
+        service.typeID, service.description, service.placeID, service.address,
         service.hotline, service.latitude, service.longitude, (err, data) => {
             if (err) {
                 res.status(500).json({ status: false, message: "Thất bại" })
@@ -303,9 +311,9 @@ exports.insertService = async (req, res) => {
     try {
         var service = new ServiceModel(req.body);
         let serviceID;
-        ServiceModel.insertService(service.serviceName, service.typeID, 
-            service.description, service.placeID, service.address, 
-            service.hotline, service.latitude, service.longitude, 
+        ServiceModel.insertService(service.serviceName, service.typeID,
+            service.description, service.placeID, service.address,
+            service.hotline, service.latitude, service.longitude,
             (err, data) => {
                 if (err) {
                     res.status(500).json({ status: false, message: "Thất bại" })
@@ -405,6 +413,6 @@ exports.getAllTypeService = (req, res) => {
             res.status(500).json({ status: false, message: "Thất bại" })
             return;
         };
-        res.json({ status: true, message: 'Vô hiệu hóa thành công', data : type })
+        res.json({ status: true, message: 'Vô hiệu hóa thành công', data: type })
     })
 }
