@@ -29,7 +29,7 @@ const ServicesList = (props) => {
                 <Image style={Styles.image}
                     source={{ uri: hotel.images[0]?.image }}>
                 </Image>
-                <Text numberOfLines={1} ellipsizeMode="tail" style={Styles.nameProvince}>{hotel.serviceName}</Text>
+                <Text numberOfLines={2} ellipsizeMode="tail" style={Styles.nameProvince}>hotel in the morning morning morning</Text>
             </View>
 
         </View>
@@ -43,7 +43,7 @@ const Styles = StyleSheet.create({
         justifyContent: "center",
         flexDirection: "column",
         // borderRadius: 15,
-
+        width: 200,
         paddingLeft: 5,
         marginLeft: 10,
         marginTop: 10
@@ -56,8 +56,8 @@ const Styles = StyleSheet.create({
 
     },
     image: {
-        width: Dimensions.get('window').width * 0.4,
-        height: 80,
+        width: Dimensions.get('window').width * 0.5,
+        height: 100,
         borderRadius: 15,
     },
     nameHotel: {
