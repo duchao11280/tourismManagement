@@ -3,13 +3,9 @@ import { View, Text, Pressable, StyleSheet, Dimensions } from 'react-native'
 import { Icon } from 'react-native-elements'
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-import HomeNavigator from './HomeNavigator'
-import UserNavigator from './UserNavigator'
-import { useIsFocused } from '@react-navigation/native'
+
 import PlaceInfoDetail from '../../screens/PlaceInfoDetail'
-import PlaceInfoHotel from '../../screens/PlaceInfoHotel'
-import PlaceInfoServices from '../../screens/PlaceInfoServices'
+
 import HotelNavigator from '../../components/navigation/HotelNavigator'
 import ServiceNavigator from '../../components/navigation/ServiceNavigator';
 import { Appbar } from 'react-native-paper';

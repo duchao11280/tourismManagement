@@ -11,4 +11,8 @@ router.get('/services/1', [verifyToken.verifyToken], serviceController.getAllHot
 
 
 router.get('/services/2', [verifyToken.verifyToken], serviceController.getAllOtherServices);
+
+// search around
+router.get('/searchwithinradius/:latitude/:longitude/:distance', [verifyToken.verifyToken], serviceController.searchServicesWithinRadiusWithLatLong)
+
 module.exports = router;

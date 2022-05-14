@@ -82,7 +82,7 @@ Service.getAllHotel = (result) => {
     );
 }
 
-// get all hotel
+
 Service.getAllOtherServices = (result) => {
     dbConn.query(`Select services.serviceID, services.serviceName, services.typeID, 
         typeservice.typeService,services.description, services.placeID, place.placeName,
@@ -125,5 +125,16 @@ Service.getAllServiceByServiceID = (id, result) => {
         }
     );
 }
-
+Service.getAllServicesEnable = (result) => {
+    dbConn.query(`Select services.serviceID, services.serviceName, services.typeID, 
+        typeservice.typeService,services.description, services.placeID, place.placeName,
+        services.address, services.hotline, place.city,
+        services.latitude, services.longitude, isDisabled 
+        From services, typeservice, place
+        Where services.isDisabled = 0 and services.placeID = place.placeID and services.typeID = typeservice.typeID`,
+        (err, res) => {
+            result(err, res);
+        }
+    );
+}
 module.exports = Service;

@@ -6,18 +6,13 @@ import {
 import { Appbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImageCard from '../components/child/place/ImageCard'
-import TabDetailPlace from '../components/navigation/TabDetailPlace'
-import CommentItem from '../components/child/place/CommentItem'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getAllCommentByPlaceID, deleteCommentByUser, addComment } from '../networking/commentNetworking'
+
 import ProvinceLocation from '../components/child/place/ProvinceLocation'
 
 const DetailHotel = ({ navigation, route }) => {
 
-    console.log(route.params.item.images);
     const [service, setService] = useState(route.params.item)
     const [isLoading, setLoading] = useState(true);
-    const [refreshing, setRefreshing] = useState(false);
     const [content, setContent] = useState('');
 
     const goBack = () => {
@@ -32,10 +27,6 @@ const DetailHotel = ({ navigation, route }) => {
         // getCommentFromServer();
     }, [])
 
-
-
-
-    const onRefresh = () => { setRefreshing(true); }
     const getHeader = () => (
         <View>
             <Text style={styles.title}>Tên địa điểm:</Text>
@@ -82,12 +73,7 @@ const DetailHotel = ({ navigation, route }) => {
                     keyExtractor={item => item.id.toString()}
                     ListHeaderComponent={getHeader}
                     contentContainerStyle={{ paddingBottom: 400 }}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={refreshing}
-                            onRefresh={() => onRefresh()}
-                        />
-                    }
+                    
                 >
                 </FlatList>
 

@@ -1,15 +1,14 @@
 const mysql = require('mysql');
 
-const dbConn = mysql.createConnection({
+const dbConn = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: '',
+    port: '3306',
     database: 'tourismManagement',
+    connectionLimit:5,
 });
 
-dbConn.connect(function(error){
-    if(error) {console.log("fail"); return;};
-    console.log('Database connected successfully!')
-});
+
 
 module.exports = dbConn;

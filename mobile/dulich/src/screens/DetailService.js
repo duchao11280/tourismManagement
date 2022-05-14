@@ -14,7 +14,6 @@ import ProvinceLocation from '../components/child/place/ProvinceLocation'
 
 const DetailService = ({ navigation, route }) => {
 
-    console.log(route.params.item);
     const [service, setService] = useState(route.params.item)
     const [isLoading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
@@ -24,18 +23,6 @@ const DetailService = ({ navigation, route }) => {
         navigation.pop();
     }
 
-
-
-
-    useEffect(() => {
-
-
-    }, [])
-
-
-
-
-    const onRefresh = () => { setRefreshing(true); }
     const getHeader = () => (
         <View>
             <Text style={styles.title}>Tên địa điểm:</Text>
@@ -81,12 +68,7 @@ const DetailService = ({ navigation, route }) => {
                     keyExtractor={item => item.id.toString()}
                     ListHeaderComponent={getHeader}
                     contentContainerStyle={{ paddingBottom: 400 }}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={refreshing}
-                            onRefresh={() => onRefresh()}
-                        />
-                    }
+                    
                 >
                 </FlatList>
 
