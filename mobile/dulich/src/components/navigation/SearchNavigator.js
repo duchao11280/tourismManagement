@@ -16,7 +16,7 @@ const UserNavigator = () => {
                 options={{headerShown:true, title:"Chi tiết địa điểm"}}
             />
             <Stack.Screen
-                name="DetailHotelWithSearch"
+                name="DetailServiceWithSearch"
                 component={DetailHotel}
                 options={{headerShown:false}}
             />

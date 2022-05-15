@@ -151,7 +151,6 @@ const Home = ({ navigation }) => {
                         </ScrollView>
 
                     </View>
-
                     <View >
                         <Text style={styles.content}>Khám phá các khách sạn nổi bật:</Text>
                     </View>
