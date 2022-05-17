@@ -4,6 +4,7 @@ const UserModel = require('../models/user_model');
 const NotificationModel = require('../models/notification_model');
 const ServiceModel = require('../models/service_model');
 const TypeService = require('../models/typeservice_model')
+const TripModel = require('../models/trip_model')
 //========================PLace================================//
 //get all place
 exports.getAllPlaces = (req, res) => {
@@ -414,5 +415,40 @@ exports.getAllTypeService = (req, res) => {
             return;
         };
         res.json({ status: true, message: 'Vô hiệu hóa thành công', data: type })
+    })
+}
+
+exports.getAllTrip = (req, res) => {
+    TripModel.getAllTrip((err, data) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        }
+        if (data.length == 0) {
+            res.status(204).json({ status: true, message: 'Không có dữ liệu', data: data })
+        } else
+            res.status(200).json({ status: true, message: 'Lấy dữ liệu thành công', data: data })
+    })
+}
+
+// enable trip
+exports.enableTrip = (req, res) => {
+    TripModel.enableTrip(req.params.id, (err, trip) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Kích hoạt thành công' })
+    })
+}
+
+// disable trip
+exports.disableTrip = (req, res) => {
+    TripModel.disableTrip(req.params.id, (err, trip) => {
+        if (err) {
+            res.status(500).json({ status: false, message: err })
+            return;
+        };
+        res.json({ status: true, message: 'Vô hiệu hóa thành công' })
     })
 }
