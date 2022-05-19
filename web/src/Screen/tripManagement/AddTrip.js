@@ -98,8 +98,8 @@ const AddTrip = () => {
         setTripDetail(copiedTripDetail)
     }
     const handleDeleteLastTripDetail = () => {
-        tripDetailSorted.pop();
         let newTripDetailAfterDelete = tripDetailSorted;
+        newTripDetailAfterDelete.pop()
         setTripDetail(newTripDetailAfterDelete);
     }
     /**
