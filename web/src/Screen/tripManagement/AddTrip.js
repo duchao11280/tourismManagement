@@ -9,8 +9,11 @@ import ContextAwareToggle from '../../component/ContextAwareToggle'
 import { BsTrash } from 'react-icons/bs'
 import '../css/addtrip.css'
 import { getAllPlaces } from '../../networking/adminNetworking'
+import { removeItemInArray } from '../../utilities/removeItemArray'
 import Admin from '../admin'
 const AddTrip = () => {
+    let uId = new Date().getTime();
+    let hour = new Date().getHours() + ":" + new Date().getMinutes();
     const history = useHistory();
     const [listPlace, setListPlace] = useState([])
     const [values, setValues] = useState({
@@ -19,24 +22,32 @@ const AddTrip = () => {
     })
     const [tripDetail, setTripDetail] = useState([
         {
-            day: 2,
-            detail: [{
-                id: 1,
-                placeID: null,
-                timeClock: "",
-            }],
-        },
-        {
             day: 1,
             detail: [{
                 id: 1,
                 placeID: null,
-                timeClock: "",
+                timeClock: hour,
+                note: "",
             }],
+        },
+        {
+            day: 2,
+            detail: [{
+                id: 242,
+                placeID: null,
+                timeClock: "",
+                note: "",
+            },
+            {
+                id: 246,
+                placeID: null,
+                timeClock: "",
+                note: "",
+            }
+            ],
         }
     ])
-    let uId = new Date().getTime();
-    let hour = new Date().getHours() + ":" + new Date().getMinutes();
+
     useEffect(() => {
         getAllPlaces()
             .then((response) => { setListPlace(response); })
@@ -86,6 +97,21 @@ const AddTrip = () => {
         })
         setTripDetail(copiedTripDetail)
     }
+    const handleDeleteLastTripDetail = () => {
+        tripDetailSorted.pop();
+        let newTripDetailAfterDelete = tripDetailSorted;
+        setTripDetail(newTripDetailAfterDelete);
+    }
+    /**
+     * Xóa phần tử bên trong detail của 1 ngày tripdetail
+     * @param {*} day 
+     * @param {*} id 
+     */
+    const handleRemoveItemPlace = (day, id) => {
+        let tripDetailAfterRemoveItemPlace = tripDetailSorted;
+        removeItemInArray(tripDetailAfterRemoveItemPlace[day - 1].detail, id)
+        setTripDetail(tripDetailAfterRemoveItemPlace)
+    }
     const handleGoback = () => {
         history.goBack();
     }
@@ -98,42 +124,60 @@ const AddTrip = () => {
                             <div style={{ backgroundColor: "gray" }}>
                                 <div style={{ display: "flex", flex: 1, justifyContent: "space-between" }}>
                                     Ngày {tripDetailItem.day}
-                                    <div>
+                                    {tripDetailItem.day === tripDetail[tripDetail.length - 1].day && tripDetail.day !== 1 ?
+                                        <div>
+                                            <button className="btn" onClick={() => { handleDeleteLastTripDetail() }} style={{ backgroundColor: '#f64645' }}><BsTrash /></button>
+                                        </div>
+                                        : <div></div>
+                                    }
 
-                                        <button className="btn" onClick={() => { }} style={{ backgroundColor: '#f64645' }}><BsTrash /></button>
-                                    </div>
                                 </div>
                             </div>
                             <div key={i}>
                                 <div>
                                     {tripDetailItem.detail.map((detailPerItem, index) => (
-                                        <div key={detailPerItem.id} style={{ display: 'flex', justifyContent: 'space-around', border: '1px solid', margin: "15px", padding: "10px" }}>
-                                            <div>
-                                                <label>Địa điểm</label>
-                                                <br />
-                                                <select
-                                                    value={detailPerItem.placeID}
-                                                    name="placeID"
-                                                    onChange={(e) => { handleChangeDetailTrip(tripDetailItem.day, detailPerItem.id, e, 0) }}
-                                                    style={listPlace.length === 0 ? { width: 200, padding: "5px" } : { height: 30 }}>
-                                                    {listPlace.map((place) =>
-                                                        <option
-                                                            key={place.placeID}
-                                                            value={place.placeID}
-                                                        >{place.placeName}</option>
-                                                    )}
-                                                </select>
+                                        <div className="d-flex flex-row">
+                                            <div className="d-flex m-3 justify-content-around container-item-place-trip-detail-addtrip" key={detailPerItem.id} style={{}}>
+                                                <div>
+                                                    <label>Địa điểm</label>
+                                                    <br />
+                                                    <select
+                                                        value={detailPerItem.placeID}
+                                                        name="placeID"
+                                                        onChange={(e) => { handleChangeDetailTrip(tripDetailItem.day, detailPerItem.id, e, 0) }}
+                                                        style={listPlace.length === 0 ? { width: 200, padding: "5px" } : { height: 30 }}>
+                                                        {listPlace.map((place) =>
+                                                            <option
+                                                                key={place.placeID}
+                                                                value={place.placeID}
+                                                            >{place.placeName}</option>
+                                                        )}
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <label>Giờ:</label>
+                                                    <br />
+                                                    <input
+                                                        type="time"
+                                                        name="timeClock"
+                                                        value={detailPerItem.timeClock}
+                                                        style={{ height: 30 }}
+                                                        onChange={(e) => { handleChangeDetailTrip(tripDetailItem.day, detailPerItem.id, e, 1) }}
+                                                    />
+
+                                                </div>
+                                                <div>
+                                                    <textarea className="form-control" placeholder="Ghi chú" />
+                                                </div>
                                             </div>
-                                            <div>
-                                                <label>Giờ:</label>
-                                                <br />
-                                                <input
-                                                    type="time"
-                                                    name="timeClock"
-                                                    value={detailPerItem.timeClock}
-                                                    style={{ height: 30 }}
-                                                    onChange={(e) => { handleChangeDetailTrip(tripDetailItem.day, detailPerItem.id, e, 1) }}
-                                                />
+                                            <div className=" d-flex align-items-center justify-content-center ">
+
+                                                <button
+                                                    className="container-btn-remove-item-place-tripdetail-addtrip"
+                                                    onClick={() => { handleRemoveItemPlace(tripDetailItem.day, detailPerItem.id) }}
+                                                >
+                                                    <div className="text-btn-remove-item-place-tripdetail-addtrip">X</div>
+                                                </button>
 
                                             </div>
                                         </div>
