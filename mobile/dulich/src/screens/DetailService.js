@@ -14,7 +14,7 @@ import ProvinceLocation from '../components/child/place/ProvinceLocation'
 
 const DetailService = ({ navigation, route }) => {
 
-    console.log(route.params.item);
+
     const [service, setService] = useState(route.params.item)
     const [isLoading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);

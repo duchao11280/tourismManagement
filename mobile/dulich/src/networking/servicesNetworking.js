@@ -29,7 +29,7 @@ const getAllServiceByPlaceID = async (id, typeService) => {
             }
         );
         const json = await response.json();
-        console.log(json);
+        // console.log(json);
         return json;
     } catch (error) {
     }

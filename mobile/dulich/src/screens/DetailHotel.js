@@ -14,7 +14,7 @@ import ProvinceLocation from '../components/child/place/ProvinceLocation'
 import { AntDesign } from '@expo/vector-icons';
 const DetailHotel = ({ navigation, route }) => {
 
-    console.log(route.params.item.images);
+
     const [service, setService] = useState(route.params.item)
     const [isLoading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);

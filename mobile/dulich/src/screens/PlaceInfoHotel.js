@@ -10,7 +10,7 @@ import { hotelvalue } from '../resources/values/hotelvalue'
 import ServiceList from '../components/child/place/HotelList'
 
 const PlaceInfoHotel = ({ navigation, route }) => {
-    console.log(route.params.place.placeID)
+
     const [listService, setListService] = useState([])
     const [isLoading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
@@ -34,7 +34,7 @@ const PlaceInfoHotel = ({ navigation, route }) => {
             .catch((err) => { Alert.alert("Thông báo", "Kết nối thất bại"); setListService([]) })
             .finally(() => { setLoading(false), setRefreshing(false); });
     }
-    const onRefresh = () => { setRefreshing(true); getServiceFromServer(); console.log(listService) }
+    const onRefresh = () => { setRefreshing(true); getServiceFromServer(); }
     const handleSearch = (text) => {
         setSearchfield(text);
 

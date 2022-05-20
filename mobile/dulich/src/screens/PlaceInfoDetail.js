@@ -15,11 +15,13 @@ import ProvinceLocation from '../components/child/place/ProvinceLocation'
 
 const PlaceInfoDetail = ({ navigation, route }) => {
 
+
     const [place, setPlace] = useState(route.params.place)
     const [isLoading, setLoading] = useState(true);
     const [listComment, setListComment] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [content, setContent] = useState('');
+    const [isVoted, setIsVoted] = useState(true);
 
     const [defaultRating, setdefaultRating] = useState(3)
     const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5])
@@ -28,20 +30,52 @@ const PlaceInfoDetail = ({ navigation, route }) => {
     useEffect(() => {
 
         getCommentFromServer();
+
     }, [])
 
+    useEffect(() => {
+        checkVoted();
+    }, [listComment])
+
+    const checkVoted = () => {
+        getUserID().then(() => {
+            let myComment = listComment.filter((comment) => { return comment.userID === userID; })
+            if (myComment.length > 0) {
+                setIsVoted(true)
+
+            }
+            else {
+                setIsVoted(false)
+            }
+            console.log(myComment)
+            console.log("isvote" + isVoted);
+            // listComment.forEach(element => {
+            //     console.log(userID);
+            //     if (element.userID == userID) {
+
+            //         setIsVoted(true);
+
+
+
+            //     }
+            // });
+        }).catch((err) => { Alert.alert("Thông báo", "Kết nối thất bại"); })
+
+
+    }
     const getUserID = async () => {
         try {
             const id = await AsyncStorage.getItem('userID')
             userID = parseInt(id);
+
         } catch (error) {
             Alert.alert("Thông báo", "Hệ thống xảy ra lỗi, vui lòng thử lại sau")
         }
     }
     const getCommentFromServer = () => {
         getAllCommentByPlaceID(place.placeID).then((response) => { setListComment(response.data); })
-            .catch((err) => { Alert.alert("Thông báo", "Kết nối thất bại") })
-            .finally(() => { setLoading(false), setRefreshing(false); });
+            .catch((err) => { Alert.alert("Thông báo", "Kết nối thất bại"); })
+            .finally(() => { checkVoted(); setLoading(false), setRefreshing(false); });
     }
     const deleteComment = (id) => {
         getUserID()
@@ -57,6 +91,7 @@ const PlaceInfoDetail = ({ navigation, route }) => {
                 })
             )
             .catch(() => { Alert.alert("Thông báo", "Hệ thống xảy ra lỗi, vui lòng thử lại sau") });
+
     }
     const onSendComment = () => {
         if (content.trim().length == 0) {
@@ -121,6 +156,7 @@ const PlaceInfoDetail = ({ navigation, route }) => {
                 paddingBottom: 10
             }}>
                 <Text>Đánh giá của bạn:</Text>
+
                 <View style={styles.containerStar}>
                     {
                         maxRating.map((item, key) => {
@@ -161,61 +197,103 @@ const PlaceInfoDetail = ({ navigation, route }) => {
                 <Appbar.BackAction onPress={() => { navigation.pop() }} />
                 <Appbar.Content title="Thông tin du lịch" />
             </Appbar.Header> */}
-            <View>
-                {isLoading ? <ActivityIndicator size="large" color='blue' /> :
-                    <FlatList
-                        data={listComment}
-                        keyExtractor={item => item.id.toString()}
+            {isVoted === false ?
+                <View>
 
-                        ListHeaderComponent={getHeader}
-                        ListFooterComponent={
-                            <View style={{ backgroundColor: 'white', flexDirection: 'column' }}>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <TextInput
-                                        style={styles.inputText}
-                                        multiline
-                                        onChangeText={(value) => { setContent(value) }}
-                                        placeholder="Để lại bình luận..."
-                                        value={content}
+                    {isLoading ? <ActivityIndicator size="large" color='blue' /> :
+                        <FlatList
+                            data={listComment}
+                            keyExtractor={item => item.id.toString()}
 
-                                    />
+                            ListHeaderComponent={getHeader}
 
-                                    <Pressable
-                                        onPress={() => { onSendComment() }}
-                                        style={styles.buttonSend}>
-                                        <Text>Gửi</Text>
-                                    </Pressable>
+                            ListFooterComponent={
 
-                                </View>
-                                <CustomRating />
-                            </View>
+                                <View style={{ backgroundColor: 'white', flexDirection: 'column' }}>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <TextInput
+                                            style={styles.inputText}
+                                            multiline
+                                            onChangeText={(value) => { setContent(value) }}
+                                            placeholder="Để lại bình luận..."
+                                            value={content}
 
-                        }
-                        contentContainerStyle={{ paddingBottom: 400 }}
-                        renderItem={({ item, index }) => {
-                            return (
-                                <View>
-                                    <CommentItem
-                                        item={item} index={index}
-                                        handleDelete={deleteComment}
-                                    >
-                                    </CommentItem>
+                                        />
 
+                                        <Pressable
+                                            onPress={() => { onSendComment() }}
+                                            style={styles.buttonSend}>
+                                            <Text>Gửi</Text>
+                                        </Pressable>
+
+                                    </View>
+                                    <CustomRating />
                                 </View>
 
-                            );
-                        }}
-                        refreshControl={
-                            <RefreshControl
-                                refreshing={refreshing}
-                                onRefresh={() => onRefresh()}
-                            />
-                        }
-                    >
-                    </FlatList>
-                }
-            </View>
-            {/* <TabDetailPlace /> */}
+                            }
+                            contentContainerStyle={{ paddingBottom: 400 }}
+                            renderItem={({ item, index }) => {
+                                return (
+                                    <View>
+                                        <CommentItem
+                                            item={item} index={index}
+                                            handleDelete={deleteComment}
+                                        >
+                                        </CommentItem>
+
+                                    </View>
+
+                                );
+                            }}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={() => onRefresh()}
+                                />
+                            }
+                        >
+                        </FlatList>
+                    }
+                </View> :
+
+                <View>
+
+                    {isLoading ? <ActivityIndicator size="large" color='blue' /> :
+                        <FlatList
+                            data={listComment}
+                            keyExtractor={item => item.id.toString()}
+
+                            ListHeaderComponent={getHeader}
+
+
+                            contentContainerStyle={{ paddingBottom: 400 }}
+                            renderItem={({ item, index }) => {
+                                return (
+                                    <View>
+                                        <CommentItem
+                                            item={item} index={index}
+                                            handleDelete={deleteComment}
+                                        >
+                                        </CommentItem>
+
+                                    </View>
+
+                                );
+                            }}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={() => onRefresh()}
+                                />
+                            }
+                        >
+                        </FlatList>
+                    }
+                </View>
+
+
+            }
+
         </SafeAreaView>
     )
 }

@@ -10,7 +10,7 @@ import { hotelvalue } from '../resources/values/hotelvalue'
 import ServiceList from '../components/child/place/HotelList'
 
 const PlaceInfoServices = ({ navigation, route }) => {
-    console.log(route.params.place.placeID)
+
     const [listService, setListService] = useState([])
     const [isLoading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);

@@ -59,9 +59,9 @@ const getAllPlaceIDandName = async () => {
  * @param {*} long longitude degree 
  * @param {*} distance surrounding
  */
-const getAllPlaceAround = async (lat,long,distance) => {
+const getAllPlaceAround = async (lat, long, distance) => {
   try {
-    console.log(lat,long,distance);
+    // console.log(lat,long,distance);
     let accessToken = await getToken();
     const response = await fetch(
       API_URL + `/api/v1/place/searchwithinradius/${lat}/${long}/${distance}`,
