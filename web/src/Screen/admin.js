@@ -9,7 +9,7 @@ const Admin = () => {
 
 
     return (
-        <div class="container-Admin">
+        <div className="container-Admin">
             {/* <div class="topbar-Admin">
                 <div class="logo-Admin">
                     <h2>Brand.</h2> 
@@ -21,7 +21,7 @@ const Admin = () => {
 
 
             </div> */}
-            <div class="sidebar-Admin">
+            <div className="sidebar-Admin">
                 <ul>
                     <li>
 

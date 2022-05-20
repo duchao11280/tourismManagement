@@ -107,4 +107,5 @@ router.put('/trip/disable/:id', [verifyToken.verifyToken, checkRole.isAdmin], ad
 // enable trip
 router.put('/trip/enable/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.enableTrip)
 
+router.post('/trip/addtrip', [verifyToken.verifyToken, checkRole.isAdmin], adminController.addTrip)
 module.exports = router;

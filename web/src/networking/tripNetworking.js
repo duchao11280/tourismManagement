@@ -39,8 +39,32 @@ const disableTrip = async (id) => {
     } catch (error) {
     }
 }
+
+const addTrip = async (info, detailTrip) => {
+    try {
+        const respone = await fetch(
+            API_URL + `/api/v1/admin/trip/addtrip`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                "Accept": 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                tripName: info.tripName,
+                city: info.city,
+                tripDetail: detailTrip,
+            })
+        });
+        const json = await respone.json();
+        return json;
+    } catch (error) {
+
+    }
+}
 export {
     getAllTrip,
     enableTrip,
     disableTrip,
+    addTrip,
 }

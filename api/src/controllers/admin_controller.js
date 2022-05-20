@@ -452,3 +452,12 @@ exports.disableTrip = (req, res) => {
         res.json({ status: true, message: 'Vô hiệu hóa thành công' })
     })
 }
+exports.addTrip = (req, res) => {
+    TripModel.addTrip(req.body.tripName, req.body.city, req.body.tripDetail, req.userID, (err, data) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Thêm mới thành công' })
+    })
+}

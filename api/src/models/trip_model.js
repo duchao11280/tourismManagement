@@ -32,4 +32,55 @@ Trip.enableTrip = (id, result) => {
         }
     );
 }
+Trip.addTrip = (tripName, city, tripDetail, userID, result) => {
+    let numberOfDays = tripDetail?.length
+    dbConn.getConnection((err, connection) => {
+        if (err) {
+            result(err, null)
+        } else {
+            connection.beginTransaction((err) => {
+                if (err) {
+                    return connection.rollback(function () {
+                        result(err, null);
+                    });
+                }
+                else {
+                    var queryAddToTrip = `Insert INTO trip(tripName,city,numberOfDays,userID) values(?,?,?,?)`
+                    connection.query(queryAddToTrip, [tripName, city, numberOfDays, userID], (err, data) => {
+                        if (err) {
+                            return connection.rollback(function () {
+                                result(err, null);
+                            });
+                        } else {
+                            let tripID = data.insertId
+                            var queryAddToDetailTrip = `Insert INTO detailtrip(tripID,placeID,note,day,timeClock) values(?,?,?,?,?)`
+                            tripDetail.forEach((tripPerDay) => {
+                                tripPerDay.detail.forEach((place) => {
+                                    connection.query(queryAddToDetailTrip, [tripID, place.placeID, place.note, tripPerDay.day, place.timeClock], (err, data) => {
+                                        if (err) {
+                                            return connection.rollback(function () {
+                                                result(err, null);
+                                            });
+                                        }
+                                    })
+                                })
+
+                            })
+                            connection.commit((err) => {
+                                if (err) {
+                                    return connection.rollback(function () {
+                                        result(err, null);
+                                    });
+                                }
+                                result(null, "Thành công")
+                            })
+
+                        }
+                    })
+                }
+            })
+        }
+    });
+
+}
 module.exports = Trip;

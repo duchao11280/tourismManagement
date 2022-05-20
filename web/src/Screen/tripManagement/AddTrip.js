@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button'
 import { BsTrash } from 'react-icons/bs'
 import '../css/addtrip.css'
 import { getAllPlaces } from '../../networking/adminNetworking'
+import { addTrip } from '../../networking/tripNetworking'
 import Admin from '../admin'
 const AddTrip = () => {
     let uId = new Date().getTime();
@@ -16,33 +17,12 @@ const AddTrip = () => {
     const [listPlace, setListPlace] = useState([])
     const [values, setValues] = useState({
         tripName: "",
-        city: "",
+        city: province[0].provinceName,
     })
     const [tripDetail, setTripDetail] = useState([
         {
             day: 1,
-            detail: [{
-                id: 1,
-                placeID: null,
-                timeClock: hour,
-                note: "",
-            }],
-        },
-        {
-            day: 2,
-            detail: [{
-                id: 242,
-                placeID: null,
-                timeClock: "",
-                note: "",
-            },
-            {
-                id: 246,
-                placeID: null,
-                timeClock: "",
-                note: "",
-            }
-            ],
+            detail: [],
         }
     ])
 
@@ -51,6 +31,11 @@ const AddTrip = () => {
             .then((response) => { setListPlace(response); })
             .catch(() => { setListPlace([]) })
     }, [])
+    const handleAddTrip = () => {
+        addTrip(values, tripDetail)
+            .then((response) => { alert(response?.message); handleGoback() })
+            .catch((error) => { console.log(error) })
+    }
     const handleChange = (e) => {
         const { name, value } = e.target;
         setValues({
@@ -118,91 +103,7 @@ const AddTrip = () => {
     const handleGoback = () => {
         history.goBack();
     }
-    const RenderListDay = () => (
-        <div>
-            {
-                tripDetail.map((tripDetailItem, i) => {
-                    return (
-                        <div style={{ backgroundColor: "azure", border: "1px solid", marginBottom: "5px" }} key={i}>
-                            <div style={{ backgroundColor: "gray" }}>
-                                <div style={{ display: "flex", flex: 1, justifyContent: "space-between" }}>
-                                    Ngày {tripDetailItem.day}
-                                    {tripDetailItem.day === tripDetail[tripDetail.length - 1].day && tripDetail.day !== 1 ?
-                                        <div>
-                                            <button className="btn" onClick={() => { handleDeleteLastTripDetail() }} style={{ backgroundColor: '#f64645' }}><BsTrash /></button>
-                                        </div>
-                                        : <div></div>
-                                    }
 
-                                </div>
-                            </div>
-                            <div key={i}>
-                                <div>
-                                    {tripDetailItem.detail.map((detailPerItem, index) => (
-                                        <div className="d-flex flex-row">
-                                            <div className="d-flex m-3 justify-content-around container-item-place-trip-detail-addtrip" key={detailPerItem.id} style={{}}>
-                                                <div>
-                                                    <label>Địa điểm</label>
-                                                    <br />
-                                                    <select
-                                                        value={detailPerItem.placeID}
-                                                        name="placeID"
-                                                        onChange={(e) => { handleChangeDetailTrip(tripDetailItem.day, detailPerItem.id, e, 0) }}
-                                                        style={listPlace.length === 0 ? { width: 200, padding: "5px" } : { height: 30 }}>
-                                                        {listPlace.map((place) =>
-                                                            <option
-                                                                key={place.placeID}
-                                                                value={place.placeID}
-                                                            >{place.placeName}</option>
-                                                        )}
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    <label>Giờ:</label>
-                                                    <br />
-                                                    <input
-                                                        type="time"
-                                                        name="timeClock"
-                                                        value={detailPerItem.timeClock}
-                                                        style={{ height: 30 }}
-                                                        onChange={(e) => { handleChangeDetailTrip(tripDetailItem.day, detailPerItem.id, e, 1) }}
-                                                    />
-
-                                                </div>
-                                                <div>
-                                                    <textarea
-                                                        className="form-control"
-                                                        placeholder="Ghi chú"
-                                                        name="note"
-                                                        value={detailPerItem.note}
-                                                        onChange={(e) => { handleChangeDetailTrip(tripDetailItem.day, detailPerItem.id, e, 1) }}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className=" d-flex align-items-center justify-content-center ">
-
-                                                <button
-                                                    className="container-btn-remove-item-place-tripdetail-addtrip"
-                                                    onClick={() => { handleRemoveItemPlace(tripDetailItem.day, detailPerItem.id) }}
-                                                >
-                                                    <div className="text-btn-remove-item-place-tripdetail-addtrip">X</div>
-                                                </button>
-
-                                            </div>
-                                        </div>
-                                    ))}
-                                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <Button variant="primary" onClick={() => { addPlaceToDetailTrip(tripDetailItem.day) }}>Thêm địa điểm</Button>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    )
-                })
-            }
-        </div>
-    )
     return (
         <div className="containerWithsideBar">
             <Admin />
@@ -237,7 +138,89 @@ const AddTrip = () => {
                             </select>
                         </div>
                         <div>
-                            <RenderListDay />
+                            <div>
+                                {
+                                    tripDetail.map((tripDetailItem, i) => {
+                                        return (
+                                            <div style={{ backgroundColor: "azure", border: "1px solid", marginBottom: "5px" }} key={i}>
+                                                <div style={{ backgroundColor: "gray" }}>
+                                                    <div style={{ display: "flex", flex: 1, justifyContent: "space-between" }}>
+                                                        Ngày {tripDetailItem.day}
+                                                        {tripDetailItem.day === tripDetail[tripDetail.length - 1].day && tripDetail.day !== 1 ?
+                                                            <div>
+                                                                <button className="btn" onClick={() => { handleDeleteLastTripDetail() }} style={{ backgroundColor: '#f64645' }}><BsTrash /></button>
+                                                            </div>
+                                                            : <div></div>
+                                                        }
+
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div>
+                                                        {tripDetailItem.detail.map((detailPerItem, index) => (
+                                                            <div className="d-flex flex-row" key={index}>
+                                                                <div className="d-flex m-3 justify-content-around container-item-place-trip-detail-addtrip" key={detailPerItem.id} style={{}}>
+                                                                    <div>
+                                                                        <label>Địa điểm</label>
+                                                                        <br />
+                                                                        <select
+                                                                            value={detailPerItem.placeID}
+                                                                            name="placeID"
+                                                                            onChange={(e) => { handleChangeDetailTrip(tripDetailItem.day, detailPerItem.id, e, 0) }}
+                                                                            style={listPlace.length === 0 ? { width: 200, padding: "5px" } : { height: 30 }}>
+                                                                            {listPlace?.map((place) =>
+                                                                                <option
+                                                                                    key={place.placeID}
+                                                                                    value={place.placeID}
+                                                                                >{place.placeName}</option>
+                                                                            )}
+                                                                        </select>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label>Giờ:</label>
+                                                                        <br />
+                                                                        <input
+                                                                            type="time"
+                                                                            name="timeClock"
+                                                                            value={detailPerItem.timeClock}
+                                                                            style={{ height: 30 }}
+                                                                            onChange={(e) => { handleChangeDetailTrip(tripDetailItem.day, detailPerItem.id, e, 1) }}
+                                                                        />
+
+                                                                    </div>
+                                                                    <div>
+                                                                        <textarea
+                                                                            className="form-control"
+                                                                            placeholder="Ghi chú"
+                                                                            name="note"
+                                                                            value={detailPerItem.note}
+                                                                            onChange={(e) => { handleChangeDetailTrip(tripDetailItem.day, detailPerItem.id, e, 1) }}
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                                <div className=" d-flex align-items-center justify-content-center ">
+
+                                                                    <button
+                                                                        className="container-btn-remove-item-place-tripdetail-addtrip"
+                                                                        onClick={() => { handleRemoveItemPlace(tripDetailItem.day, detailPerItem.id) }}
+                                                                    >
+                                                                        <div className="text-btn-remove-item-place-tripdetail-addtrip">X</div>
+                                                                    </button>
+
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                                            <Button variant="primary" onClick={() => { addPlaceToDetailTrip(tripDetailItem.day) }}>Thêm địa điểm</Button>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
                         </div>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -245,7 +228,8 @@ const AddTrip = () => {
 
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                        <Button variant="primary" onClick={() => { console.log(tripDetail) }}>Đồng ý</Button>
+                        <Button variant="primary" onClick={() => { handleAddTrip() }}>Đồng ý</Button>
+                        <Button variant="secondary" onClick={() => { handleGoback() }}>Quay lại</Button>
 
                     </div>
                 </div>
