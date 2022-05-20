@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { } from '../../networking/tripNetworking'
 import { province } from '../../assets/values/province'
 import { useHistory } from 'react-router-dom'
-import Accordion from 'react-bootstrap/Accordion'
-import Card from 'react-bootstrap/Card'
+
 import Button from 'react-bootstrap/Button'
-import ContextAwareToggle from '../../component/ContextAwareToggle'
+
 import { BsTrash } from 'react-icons/bs'
 import '../css/addtrip.css'
 import { getAllPlaces } from '../../networking/adminNetworking'
-import { removeItemInArray } from '../../utilities/removeItemArray'
 import Admin from '../admin'
 const AddTrip = () => {
     let uId = new Date().getTime();
@@ -65,7 +63,7 @@ const AddTrip = () => {
      * @param {*} dayOfTrip 
      * @param {*} detailID 
      * @param {*} event 
-     * @param {*} type type = 0 is PlaceID, type = 1 is timeClock
+     * @param {*} type type = 0 is PlaceID, type = 1 are timeClock and Note
      */
     const handleChangeDetailTrip = (dayOfTrip, detailID, event, type) => {
         let copiedTripDetail = [...tripDetail];
@@ -73,7 +71,7 @@ const AddTrip = () => {
             if (tripDetail.day === dayOfTrip) {
                 tripDetail.detail.forEach(detailItem => {
                     if (detailItem.id === detailID) {
-                        detailItem[event.target.name] = type == 0 ? parseInt(event.target.value) : event.target.value
+                        detailItem[event.target.name] = type === 0 ? parseInt(event.target.value) : event.target.value
                     }
                 })
             }
@@ -81,11 +79,12 @@ const AddTrip = () => {
 
         setTripDetail(copiedTripDetail)
     }
-
-    let tripDetailSorted = tripDetail.sort((a, b) => { return a.day - b.day })
+    function sortByDay(input) {
+        return input.sort((a, b) => { return a.day - b.day })
+    }
     const addDetailTrip = () => {
 
-        setTripDetail([...tripDetail, { day: tripDetailSorted[tripDetailSorted.length - 1].day + 1, detail: [] }])
+        setTripDetail([...tripDetail, { day: sortByDay(tripDetail)[tripDetail.length - 1].day + 1, detail: [] }])
     }
     const addPlaceToDetailTrip = (day) => {
         let copiedTripDetail = [...tripDetail];
@@ -98,7 +97,8 @@ const AddTrip = () => {
         setTripDetail(copiedTripDetail)
     }
     const handleDeleteLastTripDetail = () => {
-        let newTripDetailAfterDelete = tripDetailSorted;
+        let copiedTripDetail = [...tripDetail];
+        let newTripDetailAfterDelete = sortByDay(copiedTripDetail);
         newTripDetailAfterDelete.pop()
         setTripDetail(newTripDetailAfterDelete);
     }
@@ -108,9 +108,12 @@ const AddTrip = () => {
      * @param {*} id 
      */
     const handleRemoveItemPlace = (day, id) => {
-        let tripDetailAfterRemoveItemPlace = tripDetailSorted;
-        removeItemInArray(tripDetailAfterRemoveItemPlace[day - 1].detail, id)
-        setTripDetail(tripDetailAfterRemoveItemPlace)
+
+        let copiedTripDetail = [...tripDetail];
+        let tripDetailAfterSorted = sortByDay(copiedTripDetail);
+        let arrayDetailOfDayRemove = tripDetailAfterSorted[day - 1].detail.filter(item => { return item.id !== id })
+        tripDetailAfterSorted[day - 1].detail = arrayDetailOfDayRemove;
+        setTripDetail(tripDetailAfterSorted)
     }
     const handleGoback = () => {
         history.goBack();
@@ -167,7 +170,13 @@ const AddTrip = () => {
 
                                                 </div>
                                                 <div>
-                                                    <textarea className="form-control" placeholder="Ghi chú" />
+                                                    <textarea
+                                                        className="form-control"
+                                                        placeholder="Ghi chú"
+                                                        name="note"
+                                                        value={detailPerItem.note}
+                                                        onChange={(e) => { handleChangeDetailTrip(tripDetailItem.day, detailPerItem.id, e, 1) }}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className=" d-flex align-items-center justify-content-center ">
