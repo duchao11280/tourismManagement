@@ -127,7 +127,7 @@ const PlaceInfoDetail = ({ navigation, route }) => {
                             return (
                                 <Pressable
                                     activeOpacity={0.7}
-                                    key={item}
+                                    key={key}
                                     onPress={() => { setdefaultRating(item) }}
                                 >
                                     <Image

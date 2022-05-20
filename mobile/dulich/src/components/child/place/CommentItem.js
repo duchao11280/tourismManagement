@@ -18,7 +18,6 @@ const CommentItem = (props) => {
                         {
                             maxRating.map((vote) => {
                                 return (
-
                                     <Image
                                         style={{
                                             width: 20,

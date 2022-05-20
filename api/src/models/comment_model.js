@@ -22,7 +22,7 @@ Comment.deleteComment = (id, result) => {
         })
 }
 Comment.getAllCommentByPlaceID = (id, result) => {
-    dbConn.query(`SELECT id,fullName, content,time,vote  FROM comment, user 
+    dbConn.query(`SELECT id,fullName,user.userID, content,time,vote  FROM comment, user 
         Where comment.userID = user.userID and placeID = ${id} and user.isDisabled !=1`, (err, res) => {
         result(err, res)
     })
