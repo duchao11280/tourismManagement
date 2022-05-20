@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {GLOBALS} from '../resources/values/globals'
+import { GLOBALS } from '../resources/values/globals'
 
 const API_URL = GLOBALS.API_URL;
 
@@ -55,7 +55,7 @@ const deleteCommentByUser = async (id, userID) => {
   }
 }
 // post comment
-const addComment = async (userID, content, placeID) => {
+const addComment = async (userID, content, placeID, vote) => {
   try {
     let accessToken = await getToken();
 
@@ -70,7 +70,8 @@ const addComment = async (userID, content, placeID) => {
       body: JSON.stringify({
         userID: userID,
         content: content,
-        placeID: placeID
+        placeID: placeID,
+        vote: vote,
       })
     });
     const json = await respone.json();

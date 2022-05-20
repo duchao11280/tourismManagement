@@ -4,6 +4,7 @@ import {
     ActivityIndicator, StyleSheet, FlatList, SafeAreaView, TouchableHighlight, Dimensions
 } from 'react-native';
 import ImageCard from './ImageCard';
+import SmallImageCard from '../place/SmallImageCard';
 
 const PlaceInfoItem = (props) => {
     return (
@@ -18,8 +19,8 @@ const PlaceInfoItem = (props) => {
                         <Pressable
                             onPress={() => { }}
                         >
-                            <ImageCard item={item} index={index}>
-                            </ImageCard>
+                            <SmallImageCard item={item} index={index}>
+                            </SmallImageCard>
                         </Pressable>
 
                     );

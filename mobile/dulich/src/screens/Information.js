@@ -4,7 +4,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { FontAwesome5 } from 'react-native-vector-icons';
 import { Appbar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { AntDesign } from '@expo/vector-icons';
 
 const Information = ({ navigation }) => {
 
@@ -23,12 +23,12 @@ const Information = ({ navigation }) => {
       setfullName(response);
     }).catch(() => { Alert.alert("Thông báo", "Có lỗi xảy ra vui lòng thử lại") });
   })
-  const Line = ()=>{
-      return(
-        <View style={{ height: 1, backgroundColor: 'black'}} />
-      )
+  const Line = () => {
+    return (
+      <View style={{ height: 1, backgroundColor: 'black' }} />
+    )
   }
-  const onLogOut = () =>{
+  const onLogOut = () => {
     navigation.navigate("LogIn")
     AsyncStorage.clear();
   }
@@ -59,6 +59,13 @@ const Information = ({ navigation }) => {
           <TouchableOpacity style={[{ flex: 0.5, flexDirection: 'row' }]} onPress={() => navigation.push('Profile')}>
             <FontAwesome5 name={'user'} size={20} />
             <Text style={styles.Title}>Thông tin của bạn</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.TitleView}>
+          <TouchableOpacity style={[{ flex: 0.5, flexDirection: 'row' }]} onPress={() => navigation.push('Feedback')}>
+            <AntDesign name="mail" size={20} color="black" />
+            <Text style={styles.Title}>Gửi góp ý</Text>
           </TouchableOpacity>
         </View>
 

@@ -9,7 +9,7 @@ const ImageCard = (props) => {
                 <Image
                     source={{
                         height: Dimensions.get('window').width * 0.27,
-                        width: Dimensions.get('window').width * 0.27,
+                        width: Dimensions.get('window').width * 0.4,
                         uri: props.item.image,
                     }}
                 />

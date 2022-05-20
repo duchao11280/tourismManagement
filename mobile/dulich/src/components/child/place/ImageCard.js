@@ -1,11 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, Modal } from 'react';
 import { View, Text, Image, Pressable, StyleSheet, Alert, Dimensions } from 'react-native';
 
 
 const ImageCard = (props) => {
+
     return (
         <View style={Styles.container}>
             <View style={Styles.image}>
+
+
+
                 <Image
                     source={{
                         height: 300,
@@ -13,6 +17,14 @@ const ImageCard = (props) => {
                         uri: props.item.image,
                     }}
                 />
+                {/* <ImageViewer
+                    imageUrls={props.item.image}
+
+                    enableImageZoom={true}
+                /> */}
+
+
+
             </View>
         </View>
     );
@@ -29,6 +41,8 @@ const Styles = StyleSheet.create({
         elevation: 10,
     },
     image: {
+        // height: 300,
+        // width: 300,
         padding: 10,
         marginHorizontal: 5,
     },

@@ -1,21 +1,52 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { View, Text, Image, Pressable, StyleSheet, Alert, SafeAreaView } from 'react-native';
 
 
 const CommentItem = (props) => {
+    const [defaultRating, setdefaultRating] = useState(props.item.vote)
+    const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5])
+    const vote = 0
     return (
         <SafeAreaView style={Styles.container}>
             <View style={Styles.comment}>
 
-                    <Text  style={{ fontSize:17,fontWeight:'600', fontStyle: 'italic'}}>
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ fontSize: 17, fontWeight: '600', fontStyle: 'italic' }}>
                         {props.item.fullName}:
                     </Text>
-                    <Text style={{ margin:10, fontSize:16}}>
-                        &nbsp;&nbsp;&nbsp;&nbsp;{props.item.content}
-                    </Text>
+                    <View style={Styles.containerStar}>
+                        {
+                            maxRating.map((vote) => {
+                                return (
+
+                                    <Image
+                                        style={{
+                                            width: 20,
+                                            height: 20,
+                                        }}
+                                        source={
+
+                                            vote <= defaultRating ?
+
+                                                require('../../../resources/imgs/star_filled.png') :
+                                                require('../../../resources/imgs/star_corner.png')
+
+                                        }
+                                    />
+
+                                )
+                            })
+                        }
+                    </View>
+                </View>
 
 
-                <Text style={{ textAlign:'right',justifyContent:'flex-end', color:'grey'}}>
+                <Text style={{ margin: 10, fontSize: 16 }}>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{props.item.content}
+                </Text>
+
+
+                <Text style={{ textAlign: 'right', justifyContent: 'flex-end', color: 'grey' }}>
                     {props.item.time.replace(/T/, ' ').replace(/\..+/, '')}
                 </Text>
             </View>
@@ -26,8 +57,8 @@ const CommentItem = (props) => {
                         "Cảnh báo",
                         "Bạn có muốn bình luận này?",
                         [
-                            { text: "Đồng ý", onPress: () => { props.handleDelete(props.item.id) }},
-                            { text: "Hủy bỏ", onPress: () => { }}
+                            { text: "Đồng ý", onPress: () => { props.handleDelete(props.item.id) } },
+                            { text: "Hủy bỏ", onPress: () => { } }
                         ]
                     )
                 }}
@@ -40,7 +71,7 @@ const CommentItem = (props) => {
 
 const Styles = StyleSheet.create({
     container: {
-        flex:1,
+        flex: 1,
 
         backgroundColor: "#e8ffee",
         borderRadius: 15,
@@ -51,7 +82,7 @@ const Styles = StyleSheet.create({
     },
     comment: {
         padding: 10,
-        
+
         marginHorizontal: 5,
     },
     delete: {
@@ -72,6 +103,11 @@ const Styles = StyleSheet.create({
         textAlign: "center",
         color: 'red',
 
-    }
+    },
+    containerStar: {
+        flex: 1,
+        flexDirection: 'row',
+        paddingLeft: 10
+    },
 })
 export default CommentItem;

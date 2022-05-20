@@ -1,7 +1,7 @@
 import React, { Component, useEffect, useState } from 'react';
 import {
     View, Text, Pressable, StyleSheet, FlatList, RefreshControl,
-    ActivityIndicator, SafeAreaView, ScrollView, Modal, TextInput, Alert
+    ActivityIndicator, SafeAreaView, ScrollView, Modal, TextInput, Alert, Image,
 } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import ImageCard from '../components/child/place/ImageCard'
@@ -12,6 +12,7 @@ import { getAllCommentByPlaceID, deleteCommentByUser, addComment } from '../netw
 import ProvinceLocation from '../components/child/place/ProvinceLocation'
 
 
+
 const PlaceInfoDetail = ({ navigation, route }) => {
 
     const [place, setPlace] = useState(route.params.place)
@@ -20,6 +21,8 @@ const PlaceInfoDetail = ({ navigation, route }) => {
     const [refreshing, setRefreshing] = useState(false);
     const [content, setContent] = useState('');
 
+    const [defaultRating, setdefaultRating] = useState(3)
+    const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5])
 
 
     useEffect(() => {
@@ -61,7 +64,7 @@ const PlaceInfoDetail = ({ navigation, route }) => {
             return;
         } else {
             getUserID()
-                .then(() => addComment(userID, content, place.placeID).then((response) => {
+                .then(() => addComment(userID, content, place.placeID, defaultRating).then((response) => {
 
                     onRefresh();
                     setContent('');
@@ -106,8 +109,50 @@ const PlaceInfoDetail = ({ navigation, route }) => {
 
 
             <Text style={{ fontWeight: 'bold', margin: 15 }}>Bình luận: </Text>
+
         </View>
     )
+
+
+    const CustomRating = () => {
+        return (
+            <View style={{
+                paddingLeft: 17,
+                paddingBottom: 10
+            }}>
+                <Text>Đánh giá của bạn:</Text>
+                <View style={styles.containerStar}>
+                    {
+                        maxRating.map((item, key) => {
+                            return (
+                                <Pressable
+                                    activeOpacity={0.7}
+                                    key={item}
+                                    onPress={() => { setdefaultRating(item) }}
+                                >
+                                    <Image
+                                        style={{
+                                            width: 25,
+                                            height: 25,
+                                        }}
+                                        source={
+
+                                            // item <= defaultRating ? { uri: starFill } : { uri: starUnFill }
+                                            item <= defaultRating ?
+                                                require('../resources/imgs/star_filled.png') :
+                                                require('../resources/imgs/star_corner.png')
+
+                                        }
+                                    />
+                                </Pressable>
+                            )
+                        })
+                    }
+                </View>
+            </View>
+
+        )
+    }
 
 
     return (
@@ -124,30 +169,39 @@ const PlaceInfoDetail = ({ navigation, route }) => {
 
                         ListHeaderComponent={getHeader}
                         ListFooterComponent={
-                            <View style={{ backgroundColor: 'white', flexDirection: 'row' }}>
-                                <TextInput
-                                    style={styles.inputText}
-                                    multiline
-                                    onChangeText={(value) => { setContent(value) }}
-                                    placeholder="Để lại bình luận..."
-                                    value={content}
-                                />
-                                <Pressable
-                                    onPress={() => { onSendComment() }}
-                                    style={styles.buttonSend}>
-                                    <Text>Gửi</Text>
-                                </Pressable>
+                            <View style={{ backgroundColor: 'white', flexDirection: 'column' }}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <TextInput
+                                        style={styles.inputText}
+                                        multiline
+                                        onChangeText={(value) => { setContent(value) }}
+                                        placeholder="Để lại bình luận..."
+                                        value={content}
+
+                                    />
+
+                                    <Pressable
+                                        onPress={() => { onSendComment() }}
+                                        style={styles.buttonSend}>
+                                        <Text>Gửi</Text>
+                                    </Pressable>
+
+                                </View>
+                                <CustomRating />
                             </View>
+
                         }
                         contentContainerStyle={{ paddingBottom: 400 }}
                         renderItem={({ item, index }) => {
                             return (
-                                <CommentItem
-                                    item={item} index={index}
-                                    handleDelete={deleteComment}
-                                >
+                                <View>
+                                    <CommentItem
+                                        item={item} index={index}
+                                        handleDelete={deleteComment}
+                                    >
+                                    </CommentItem>
 
-                                </CommentItem>
+                                </View>
 
                             );
                         }}
@@ -194,6 +248,10 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 20,
         marginVertical: 10,
+    },
+    containerStar: {
+        flex: 1,
+        flexDirection: 'row'
     },
 })
 export default PlaceInfoDetail;

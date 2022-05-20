@@ -1,6 +1,10 @@
 export const province = [
     {
         "id": 1,
+        "provinceName": "Đồng Nai"
+    },
+    {
+        "id": 19,
         "provinceName": "An Giang"
     },
     {
@@ -71,10 +75,7 @@ export const province = [
         "id": 18,
         "provinceName": "Điện Biên"
     },
-    {
-        "id": 19,
-        "provinceName": "Đồng Nai"
-    },
+
     {
         "id": 20,
         "provinceName": "Đồng Tháp"

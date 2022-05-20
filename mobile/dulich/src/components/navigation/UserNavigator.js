@@ -6,6 +6,7 @@ import Information from '../../screens/Information'
 import Profile from '../../screens/Profile'
 import ChangeInfo from '../../screens/ChangeInfo'
 import ChangePassword from '../../screens/ChangePassword'
+import Feedback from '../../screens/FeedBack'
 const Stack = createNativeStackNavigator();
 const UserNavigator = () => {
     return (
@@ -14,6 +15,7 @@ const UserNavigator = () => {
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="ChangeInfo" component={ChangeInfo} />
             <Stack.Screen name="ChangePassword" component={ChangePassword} />
+            <Stack.Screen name="Feedback" component={Feedback} />
         </Stack.Navigator>
     )
 }

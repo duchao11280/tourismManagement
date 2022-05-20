@@ -23,14 +23,17 @@ router.post('/signup', verifySignUp.verifyUserName, userController.signUp);
 // change password
 router.put("/changepassword/:id", [verifyToken.verifyToken], verifyChangePassword.verifyPassword, userController.changePassword);
 
+
+router.post('/sendfeedback/:id',
+    [verifyToken.verifyToken],
+    feedbackController.addNewFeedback)
+
 ///Login
 router.post("/login", userController.login)
 //Log out
-router.post('/logout',userController.logOut);
+router.post('/logout', userController.logOut);
 
-router.post('/sendfeedback/:id',
-    [verifyToken.verifyToken, checkRole.isUser],
-    feedbackController.addNewFeedback)
 
-    
+
+
 module.exports = router;

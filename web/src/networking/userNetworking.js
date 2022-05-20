@@ -67,11 +67,11 @@ const login = async (userName, password) => {
     try {
         const respone = await fetch(API_URL + `/api/v1/user/login`, {
             method: 'POST',
-            credentials:'include',
+            credentials: 'include',
             headers: {
                 "Accept": 'application/json',
                 'Content-Type': 'application/json',
-                
+
             },
             body: JSON.stringify({
                 userName: userName,
@@ -129,7 +129,8 @@ const sendFeedback = async (id, params) => {
             body: JSON.stringify({
                 content: params.content,
                 title: params.title,
-                userName: params.userName
+                userName: params.userName,
+                userID: params.userID
             })
         });
         const json = await respone.json();

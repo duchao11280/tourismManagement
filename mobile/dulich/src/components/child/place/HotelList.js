@@ -11,8 +11,11 @@ const ServiceList = (props) => {
     return (
         <View style={Styles.container}>
             <Pressable >
-                <Image style={Styles.image}
+                {/* <Image style={Styles.image}
                     source={require('../../../resources/imgs/defau.jpg')}>
+                </Image> */}
+                <Image style={Styles.image}
+                    source={{ uri: service.images[0]?.image }}>
                 </Image>
             </Pressable>
 

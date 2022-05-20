@@ -1,7 +1,7 @@
 import React, { Component, useEffect, useState } from 'react';
 import {
     View, Text, Pressable, StyleSheet, FlatList, RefreshControl,
-    ActivityIndicator, SafeAreaView, ScrollView, Modal, TextInput, Alert
+    ActivityIndicator, SafeAreaView, ScrollView, Modal, TextInput, Alert, Linking
 } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -11,7 +11,7 @@ import CommentItem from '../components/child/place/CommentItem'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAllCommentByPlaceID, deleteCommentByUser, addComment } from '../networking/commentNetworking'
 import ProvinceLocation from '../components/child/place/ProvinceLocation'
-
+import { AntDesign } from '@expo/vector-icons';
 const DetailHotel = ({ navigation, route }) => {
 
     console.log(route.params.item.images);
@@ -24,6 +24,20 @@ const DetailHotel = ({ navigation, route }) => {
         navigation.pop();
     }
 
+    const makeCall = () => {
+        let phone = service.hotline;
+        let phoneNumber = '';
+        if (Platform.OS == 'android') {
+
+            phoneNumber = 'tel:${'.concat(service.hotline, '}');
+        }
+        else {
+            phoneNumber = 'telprompt:${0934164220}';
+            phoneNumber = 'telprompt:${'.concat(service.hotline, '}');
+        }
+
+        Linking.openURL(phoneNumber);
+    }
     /////////////////////////////////////
 
 
@@ -41,7 +55,17 @@ const DetailHotel = ({ navigation, route }) => {
             <Text style={styles.title}>Tên địa điểm:</Text>
             <Text style={styles.content}>{service.serviceName}</Text>
             <Text style={styles.title}>Số điện thoại:</Text>
-            <Text style={styles.content}>{service.hotline}</Text>
+            {/* <View style={styles.phone}>
+                <Pressable onPress={makeCall}>
+                    <AntDesign name="phone" size={24} color="black" />
+                    <Text style={styles.content}>{service.hotline}</Text>
+                </Pressable>
+            </View> */}
+            <Pressable style={[{ flex: 0.5, flexDirection: 'row', paddingLeft: 15 }]} onPress={makeCall}>
+                <AntDesign name="phone" size={20} color="black" />
+                <Text style={styles.phone}>{service.hotline}</Text>
+            </Pressable>
+
             <Text style={styles.title}>Địa chỉ:</Text>
             <Text style={styles.content}>{service.address}</Text>
             <ProvinceLocation lat={service.latitude} long={service.longitude} />
@@ -129,6 +153,13 @@ const styles = StyleSheet.create({
     },
     paddingTop: {
         paddingTop: 25,
+    },
+    phone: {
+        fontSize: 18,
+        lineHeight: 25,
+        // marginHorizontal: 18,
+        textAlign: 'justify',
+        marginLeft: 10
     }
 })
 export default DetailHotel;
