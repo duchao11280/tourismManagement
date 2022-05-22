@@ -20,15 +20,16 @@ DetailTrip.addPlaceToDetailTrip = (tripID, day, placeID, note, timeClock, result
 }
 DetailTrip.getTripDetailByTripID = (id, result) => {
     dbConn.query(`Select detailtrip.id, detailtrip.tripID, detailtrip.placeID,
-        place.placeName, detailtrip.note, detailtrip.day, detailtrip.timeClock 
-        from detailtrip, place where tripID = ? and 
-        detailtrip.placeID = place.placeID and place.isDeleted != 1 
+        detailtrip.note, detailtrip.day, detailtrip.timeClock, detailtrip.serviceID,
+        detailtrip.type, place.placeName , services.serviceName
+        from detailtrip  LEFT JOIN place ON detailtrip.placeID = place.placeID LEFT JOIN services ON detailtrip.serviceID = services.serviceID
+        WHERE tripID =?
         ORDER BY day, timeClock`, [id], (err, res) => {
         result(err, res);
     })
 }
-DetailTrip.updateDetailTripItem = (id, placeID, note, timeClock, result) => {
-    dbConn.query(`UPDATE detailtrip set placeID = ?, note = ?, timeClock = ? WHERE id=${id}`, [placeID, note, timeClock], (err, res) => {
+DetailTrip.updateDetailTripItem = (id, placeID, serviceID, note, timeClock, result) => {
+    dbConn.query(`UPDATE detailtrip set placeID = ?, serviceID = ?, note = ?, timeClock = ? WHERE id=${id}`, [placeID, serviceID, note, timeClock], (err, res) => {
         result(err, res)
     })
 }

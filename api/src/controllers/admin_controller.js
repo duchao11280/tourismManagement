@@ -282,6 +282,15 @@ exports.getAllServices = (req, res) => {
         res.json({ status: true, message: 'Lấy dữ liệu thành công', data: services })
     });
 }
+exports.getAllServicesEnable = (req, res) => {
+    ServiceModel.getAllServicesEnable((err, services) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Lấy dữ liệu thành công', data: services })
+    });
+}
 // update info service
 exports.updateInfoService = (req, res) => {
     var service = new ServiceModel(req.body);
@@ -524,8 +533,9 @@ exports.getDetailTripByID = (req, res) => {
 exports.updateBasicInfoTrip = (req, res) => {
     let id = req.params.id;
     let tripName = req.body.tripName;
+    let numberOfDays = req.body.numberOfDays;
     let city = req.body.city;
-    TripModel.updateBasicInfoTrip(id, tripName, city, (err, data) => {
+    TripModel.updateBasicInfoTrip(id, tripName, numberOfDays, city, (err, data) => {
         if (err) {
             res.status(500).json({ status: false, message: "Thất bại" })
             return;
@@ -536,9 +546,10 @@ exports.updateBasicInfoTrip = (req, res) => {
 exports.updateDetailTripItem = (req, res) => {
     let id = req.params.id;
     let placeID = req.body.placeID;
+    let serviceID = req.body.serviceID;
     let note = req.body.note;
     let timeClock = req.body.timeClock;
-    DetailTripModel.updateDetailTripItem(id, placeID, note, timeClock, (err, data) => {
+    DetailTripModel.updateDetailTripItem(id, placeID, serviceID, note, timeClock, (err, data) => {
         if (err) {
             res.status(500).json({ status: false, message: "Thất bại" })
             return;
@@ -567,5 +578,17 @@ exports.addPlaceToDetailTrip = (req, res) => {
             return;
         };
         res.json({ status: true, message: 'Thêm thành công' })
+    })
+}
+// delete day of detail trip
+exports.deleteDayOfDetailTrip = (req, res) => {
+    let tripID = req.params.tripid
+    let day = req.params.day;
+    TripModel.deleteDayOfDetailTrip(tripID, day, (err, result) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Xóa thành công' })
     })
 }

@@ -91,10 +91,53 @@ Trip.getTripByID = (id, result) => {
     })
 }
 
-Trip.updateBasicInfoTrip = (id, tripName, city, result) => {
-    dbConn.query(`UPDATE trip set tripName = ?, city = ? WHERE tripID=${id}`, [tripName, city], (err, res) => {
+Trip.updateBasicInfoTrip = (id, tripName, numberOfDays, city, result) => {
+    dbConn.query(`UPDATE trip set tripName = ?,numberOfDays = ?, city = ? WHERE tripID=${id}`, [tripName, numberOfDays, city], (err, res) => {
         result(err, res)
     })
 }
-
+Trip.deleteDayOfDetailTrip = (tripID, day, result) => {
+    dbConn.getConnection((err, connection) => {
+        if (err) {
+            result(err, null)
+        } else {
+            connection.beginTransaction((err) => {
+                if (err) {
+                    return connection.rollback(function () {
+                        result(err, null);
+                    });
+                }
+                else {
+                    var queryDeleteDetailTrip = `DELETE From detailtrip WHERE tripID=? and day= ?`
+                    connection.query(queryDeleteDetailTrip, [tripID, day], (err, data) => {
+                        if (err) {
+                            return connection.rollback(function () {
+                                result(err, null);
+                            });
+                        } else {
+                            var querySubDayTrip = `Update trip set numberOfDays = numberOfDays - 1 where tripID=${tripID}`
+                            connection.query(querySubDayTrip, (err, data) => {
+                                if (err) {
+                                    return connection.rollback(function () {
+                                        result(err, null);
+                                    });
+                                }
+                                else {
+                                    connection.commit((err) => {
+                                        if (err) {
+                                            return connection.rollback(function () {
+                                                result(err, null);
+                                            });
+                                        }
+                                        result(null, "Thành công")
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        }
+    });
+}
 module.exports = Trip;

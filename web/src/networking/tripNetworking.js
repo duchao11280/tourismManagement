@@ -77,7 +77,7 @@ const getTripDetailByTripID = async (id) => {
     }
 }
 // update basic info trip
-const updateBasicInfoTrip = async (id, tripName, city) => {
+const updateBasicInfoTrip = async (id, tripName, numberOfDays, city) => {
     try {
         const respone = await fetch(
             API_URL + `/api/v1/admin/trip/updatebasicinfo/${id}`, {
@@ -89,6 +89,7 @@ const updateBasicInfoTrip = async (id, tripName, city) => {
             },
             body: JSON.stringify({
                 tripName: tripName,
+                numberOfDays: numberOfDays,
                 city: city,
             })
         });
@@ -99,7 +100,7 @@ const updateBasicInfoTrip = async (id, tripName, city) => {
     }
 }
 // update detail trip
-const updateDetailTrip = async (id, placeID, note, timeClock) => {
+const updateDetailTrip = async (id, placeID, serviceID, note, timeClock) => {
     try {
         const respone = await fetch(
             API_URL + `/api/v1/admin/trip/updatedetailtrip/${id}`, {
@@ -111,6 +112,7 @@ const updateDetailTrip = async (id, placeID, note, timeClock) => {
             },
             body: JSON.stringify({
                 placeID: placeID,
+                serviceID: serviceID,
                 note: note,
                 timeClock: timeClock,
             })
@@ -159,6 +161,20 @@ const addPlaceToDetailTrip = async (id, day, placeID, note, timeClock) => {
 
     }
 }
+const deleteDayOfTrip = async (tripID, day) => {
+    try {
+        const respone = await fetch(
+            API_URL + `/api/v1/admin/trip/deletedayoftrip/${tripID}/${day}`, {
+            method: 'DELETE',
+            credentials: 'include',
+
+        });
+        const json = await respone.json();
+        return json;
+    } catch (error) {
+
+    }
+}
 export {
     getAllTrip,
     enableTrip,
@@ -169,4 +185,5 @@ export {
     updateDetailTrip,
     deleteDetailTripItem,
     addPlaceToDetailTrip,
+    deleteDayOfTrip,
 }

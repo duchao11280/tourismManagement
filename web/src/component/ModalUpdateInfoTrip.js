@@ -17,7 +17,7 @@ const ModalUpdateInfoTrip = (props) => {
         setTripDetailInfo(props.tripDetailInfo)
     }, [showModal])
     const onSubmit = () => {
-        updateBasicInfoTrip(tripDetailInfo.tripID, tripDetailInfo.tripName, tripDetailInfo.city)
+        updateBasicInfoTrip(tripDetailInfo.tripID, tripDetailInfo.tripName, tripDetailInfo.numberOfDays, tripDetailInfo.city)
             .then((response) => { alert(response?.message) })
             .catch(() => { alert("Hệ thống bị lỗi, vui lòng thử lại.") })
             .finally(() => { props.handleCloseModal() })

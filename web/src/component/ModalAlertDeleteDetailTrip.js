@@ -29,7 +29,7 @@ const ModalAlertDeleteDetailTrip = (props) => {
                 <Modal.Title>Cảnh báo</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                Bạn có chắc muốn xóa Địa điểm {tripDetailInfo?.placeName} lúc {tripDetailInfo?.timeClock} tại ngày {tripDetailInfo?.day} không?
+                Bạn có chắc muốn xóa không?
 
             </Modal.Body>
             <Modal.Footer>

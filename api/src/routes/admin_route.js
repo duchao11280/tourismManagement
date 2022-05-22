@@ -80,6 +80,9 @@ router.get('/feedback',
 //======================Services=====================//
 // Get all services
 router.get('/services', [verifyToken.verifyToken, checkRole.isAdmin], adminController.getAllServices);
+//Get all services enable
+router.get('/services/enable', [verifyToken.verifyToken, checkRole.isAdmin], adminController.getAllServicesEnable);
+
 // get service by service id
 router.get('/service/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.getServiceAndImageByServiceID)
 // Update service by id
@@ -120,4 +123,6 @@ router.put('/trip/updatedetailtrip/:id', [verifyToken.verifyToken, checkRole.isA
 router.delete('/trip/deletedetailtripitem/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.deleteDetailTripItem)
 // add place to detail trip
 router.post('/detailtrip/addnew/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.addPlaceToDetailTrip)
+//delete day Of Trip
+router.delete('/trip/deletedayoftrip/:tripid/:day', [verifyToken.verifyToken, checkRole.isAdmin], adminController.deleteDayOfDetailTrip)
 module.exports = router;

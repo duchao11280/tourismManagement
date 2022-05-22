@@ -8,18 +8,21 @@ import { BiPencil } from "react-icons/bi";
 import { BsTrash } from 'react-icons/bs'
 import '../css/edittrip.css'
 import { getAllPlacesEnable } from '../../networking/adminNetworking'
-import { getTripDetailByTripID } from '../../networking/tripNetworking'
+import { getTripDetailByTripID, updateBasicInfoTrip, deleteDayOfTrip } from '../../networking/tripNetworking'
+import { getAllServicesEnable } from '../../networking/servicesNetworking'
 import Admin from '../admin'
 import ModalUpdateInfoTrip from '../../component/ModalUpdateInfoTrip';
 import ModalUpdateDetailTrip from '../../component/ModalUpdateDetailTrip';
 import ModalAlertDeleteDetailTrip from '../../component/ModalAlertDeleteDetailTrip'
 import ModalAddDetailTrip from '../../component/ModalAddDetailTrip'
+import ModalAlert from '../../component/ModalAlert'
 const EditTrip = () => {
     let { id } = useParams()
     const history = useHistory();
     const [refresh, setRefresh] = useState(true);
     const [tripDetail, setTripDetail] = useState({});
     const [listPlace, setListPlace] = useState([]);
+    const [listService, setListService] = useState([])
     const [isLoading, setLoading] = useState(true)
     const [showModalUpdateBasicInfo, setShowModalUpdateBasicInfo] = useState(false)
     const [showModalUpdateDetailTripItem, setShowModalUpdateDetailTripItem] = useState(false)
@@ -28,9 +31,19 @@ const EditTrip = () => {
     const [currItemDelete, setCurrItemDelete] = useState({})
     const [showModalAddDetailTrip, setShowModalAddDetailTrip] = useState(false)
     const [dayAddPlaceDetail, setDayAddPlaceDetail] = useState(null)
+    const [showModalAlert, setShowModalAlert] = useState(false);
+    const [dayDelete, setDayDelete] = useState(null);
     useEffect(() => {
         getAllPlacesEnable()
-            .then((response) => { setListPlace(response); })
+            .then((response) => {
+                setListPlace(response);
+                getAllServicesEnable()
+                    .then((response) => {
+                        setListService(response.data);
+
+                    })
+                    .catch(() => { setListService([]) })
+            })
             .catch(() => { setListPlace([]) })
     }, [])
     useEffect(() => {
@@ -83,6 +96,28 @@ const EditTrip = () => {
     const handleCloseModalAddDetailTrip = () => {
         setRefresh(!refresh);
         setShowModalAddDetailTrip(false);
+    }
+    const onAcceptDeleteDayOfTrip = () => {
+        deleteDayOfTrip(id, dayDelete)
+            .then((response) => { alert(response?.message || "Xảy ra vấn đề, vui lòng thử lại sau!") })
+            .catch(() => { alert("Hệ thống bị lỗi, vui lòng thử lại.") })
+            .finally(() => { setRefresh(!refresh); handleCloseModalAlert() })
+    }
+    const handleCloseModalAlert = () => {
+        setRefresh(!refresh);
+        setShowModalAlert(false);
+    }
+
+    const handleDeleteLastTripDetail = (day) => {
+        setDayDelete(day)
+        setShowModalAlert(true);
+    }
+    // Add day
+    const addDay = () => {
+        updateBasicInfoTrip(tripDetail.tripID, tripDetail.tripName, tripDetail.numberOfDays + 1, tripDetail.city)
+            .then((response) => { alert("Thêm thành công") })
+            .catch(() => { alert("Hệ thống bị lỗi, vui lòng thử lại.") })
+            .finally(() => { setRefresh(!refresh) })
     }
     const handleGoback = () => {
         history.goBack();
@@ -145,7 +180,7 @@ const EditTrip = () => {
                                                             Ngày {tripDetailItem.day}
                                                             {tripDetailItem.day === tripDetail?.detail[tripDetail?.detail.length - 1].day && tripDetailItem.day !== 1 ?
                                                                 <div>
-                                                                    <button className="btn" onClick={() => { /* handleDeleteLastTripDetail() */ }} style={{ backgroundColor: '#f64645' }}><BsTrash /></button>
+                                                                    <button className="btn" onClick={() => { handleDeleteLastTripDetail(tripDetailItem.day) }} style={{ backgroundColor: '#f64645' }}><BsTrash /></button>
                                                                 </div>
                                                                 : <div></div>
                                                             }
@@ -157,23 +192,44 @@ const EditTrip = () => {
                                                             {tripDetailItem.detail.map((detailPerItem, index) => (
                                                                 <div className="d-flex flex-row" key={index}>
                                                                     <div className="d-flex m-3 justify-content-around container-item-place-trip-detail-addtrip" key={detailPerItem.id} style={{}}>
-                                                                        <div>
-                                                                            <label>Địa điểm</label>
-                                                                            <br />
-                                                                            <select
-                                                                                value={detailPerItem.placeID}
-                                                                                name="placeID"
-                                                                                disabled
+                                                                        {
+                                                                            detailPerItem.type == 0 ?
+                                                                                <div>
+                                                                                    <label>Địa điểm</label>
+                                                                                    <br />
+                                                                                    <select
+                                                                                        value={detailPerItem.placeID}
+                                                                                        name="placeID"
+                                                                                        disabled
 
-                                                                                style={listPlace.length === 0 ? { width: 200, padding: "5px" } : { height: 30 }}>
-                                                                                {listPlace?.map((place) =>
-                                                                                    <option
-                                                                                        key={place.placeID}
-                                                                                        value={place.placeID}
-                                                                                    >{place.placeName}</option>
-                                                                                )}
-                                                                            </select>
-                                                                        </div>
+                                                                                        style={listPlace.length === 0 ? { width: 200, padding: "5px" } : { height: 30 }}>
+                                                                                        {listPlace?.map((place) =>
+                                                                                            <option
+                                                                                                key={place.placeID}
+                                                                                                value={place.placeID}
+                                                                                            >{place.placeName}</option>
+                                                                                        )}
+                                                                                    </select>
+                                                                                </div>
+                                                                                :
+                                                                                <div>
+                                                                                    <label>Dịch vụ:</label>
+                                                                                    <br />
+                                                                                    <select
+                                                                                        value={detailPerItem.serviceID}
+                                                                                        name="serviceID"
+                                                                                        disabled
+
+                                                                                        style={listService.length === 0 ? { width: 200, padding: "5px" } : { height: 30 }}>
+                                                                                        {listService?.map((service) =>
+                                                                                            <option
+                                                                                                key={service.serviceID}
+                                                                                                value={service.serviceID}
+                                                                                            >{service.serviceName}</option>
+                                                                                        )}
+                                                                                    </select>
+                                                                                </div>
+                                                                        }
                                                                         <div>
                                                                             <label>Giờ:</label>
                                                                             <br />
@@ -192,7 +248,7 @@ const EditTrip = () => {
                                                                                 placeholder="Ghi chú"
                                                                                 disabled
                                                                                 name="note"
-                                                                                value={detailPerItem.note}
+                                                                                defaultValue={detailPerItem.note}
                                                                             />
                                                                         </div>
                                                                     </div>
@@ -227,11 +283,11 @@ const EditTrip = () => {
                             </div>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <Button variant="primary" onClick={() => { /*addDetailTrip()*/ }}>Thêm ngày</Button>
+                            <Button variant="primary" onClick={() => { addDay() }}>Thêm ngày</Button>
 
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                            <Button variant="primary" onClick={() => { }}>Đồng ý</Button>
+                            {/* <Button variant="primary" onClick={() => { }}>Đồng ý</Button> */}
                             <Button variant="secondary" onClick={() => { handleGoback() }}>Quay lại</Button>
                         </div>
                         <ModalUpdateInfoTrip
@@ -243,6 +299,7 @@ const EditTrip = () => {
                             isShow={showModalUpdateDetailTripItem}
                             tripDetailItem={currItemUpdate}
                             listPlace={listPlace}
+                            listService={listService}
                             handleCloseModal={handleCloseModalUpdateDetailTripItem}
                         />
                         <ModalAlertDeleteDetailTrip
@@ -257,6 +314,12 @@ const EditTrip = () => {
                             listPlace={listPlace}
                             tripID={id}
                             handleCloseModal={handleCloseModalAddDetailTrip}
+                        />
+                        <ModalAlert
+                            isShow={showModalAlert}
+                            content="Bạn chắc muốn xóa ngày này chứ?"
+                            onAccept={onAcceptDeleteDayOfTrip}
+                            handleCloseModal={handleCloseModalAlert}
                         />
                     </div>
                 </div>
