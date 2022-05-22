@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { } from '../../networking/tripNetworking'
 import { province } from '../../assets/values/province'
 import { useHistory } from 'react-router-dom'
 
@@ -7,12 +6,12 @@ import Button from 'react-bootstrap/Button'
 
 import { BsTrash } from 'react-icons/bs'
 import '../css/addtrip.css'
-import { getAllPlaces } from '../../networking/adminNetworking'
+import { getAllPlacesEnable } from '../../networking/adminNetworking'
 import { addTrip } from '../../networking/tripNetworking'
 import Admin from '../admin'
 const AddTrip = () => {
     let uId = new Date().getTime();
-    let hour = new Date().getHours() + ":" + new Date().getMinutes();
+
     const history = useHistory();
     const [listPlace, setListPlace] = useState([])
     const [values, setValues] = useState({
@@ -27,7 +26,7 @@ const AddTrip = () => {
     ])
 
     useEffect(() => {
-        getAllPlaces()
+        getAllPlacesEnable()
             .then((response) => { setListPlace(response); })
             .catch(() => { setListPlace([]) })
     }, [])
@@ -76,7 +75,11 @@ const AddTrip = () => {
         copiedTripDetail.forEach(tripDetail => {
             if (tripDetail.day === day) {
                 uId++
-                tripDetail.detail.push({ id: uId, placeID: listPlace[0].placeID, timeClock: hour })
+                tripDetail.detail.push({
+                    id: uId,
+                    laceID: listPlace[0].placeID,
+                    timeClock: `0${new Date().getHours()}`.slice(-2) + ":" + `0${new Date().getMinutes()}`.slice(-2)
+                })
             }
         })
         setTripDetail(copiedTripDetail)
@@ -146,7 +149,7 @@ const AddTrip = () => {
                                                 <div style={{ backgroundColor: "gray" }}>
                                                     <div style={{ display: "flex", flex: 1, justifyContent: "space-between" }}>
                                                         Ngày {tripDetailItem.day}
-                                                        {tripDetailItem.day === tripDetail[tripDetail.length - 1].day && tripDetail.day !== 1 ?
+                                                        {tripDetailItem.day === tripDetail[tripDetail.length - 1].day && tripDetailItem.day !== 1 ?
                                                             <div>
                                                                 <button className="btn" onClick={() => { handleDeleteLastTripDetail() }} style={{ backgroundColor: '#f64645' }}><BsTrash /></button>
                                                             </div>

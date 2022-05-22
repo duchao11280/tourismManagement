@@ -15,6 +15,7 @@ import EditService from '../src/Screen/servicesManagement/EditService'
 import NotificationManagement from '../src/Screen/notification/NotificationManagement';
 import TripManagement from '../src/Screen/tripManagement/TripManagement'
 import AddTrip from '../src/Screen/tripManagement/AddTrip'
+import EditTrip from '../src/Screen/tripManagement/EditTrip'
 function App() {
     return (
         // <div className="App">
@@ -43,6 +44,7 @@ function App() {
                 <Route exact path="/admin/notificationmanagement" component={NotificationManagement} />
                 <Route exact path="/admin/tripmanagement" component={TripManagement} />
                 <Route exact path="/admin/tripmanagement/addtrip" component={AddTrip} />
+                <Route exact path="/admin/tripmanagement/edittrip/:id" component={EditTrip} />
             </Switch>
         </BrowserRouter>
     )

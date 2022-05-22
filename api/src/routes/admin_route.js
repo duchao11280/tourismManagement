@@ -29,6 +29,8 @@ router.put('/place/enable/:id', [verifyToken.verifyToken, checkRole.isAdmin], ad
 
 // get All Place
 router.get('/places', [verifyToken.verifyToken, checkRole.isAdmin], adminController.getAllPlaces);
+// get All Place enable
+router.get('/places/enable', [verifyToken.verifyToken, checkRole.isAdmin], adminController.getAllPlacesEnable);
 // get places by city
 router.post('/places/bycity', [verifyToken.verifyToken], adminController.searchAllPlaceByCity)
 // get place info and image by place id
@@ -108,4 +110,14 @@ router.put('/trip/disable/:id', [verifyToken.verifyToken, checkRole.isAdmin], ad
 router.put('/trip/enable/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.enableTrip)
 
 router.post('/trip/addtrip', [verifyToken.verifyToken, checkRole.isAdmin], adminController.addTrip)
+
+router.get('/trip/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.getDetailTripByID)
+// update basic info
+router.put('/trip/updatebasicinfo/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.updateBasicInfoTrip)
+// update detail trip 
+router.put('/trip/updatedetailtrip/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.updateDetailTripItem)
+// delete detail trip by id
+router.delete('/trip/deletedetailtripitem/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.deleteDetailTripItem)
+// add place to detail trip
+router.post('/detailtrip/addnew/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.addPlaceToDetailTrip)
 module.exports = router;

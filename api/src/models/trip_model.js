@@ -1,6 +1,7 @@
 let dbConn = require('../../config/db.config');
 
 let Trip = function (trip) {
+    this.id = trip.id;
     this.tripID = trip.tripID;
     this.tripName = trip.tripName;
     this.city = trip.city;
@@ -83,4 +84,17 @@ Trip.addTrip = (tripName, city, tripDetail, userID, result) => {
     });
 
 }
+
+Trip.getTripByID = (id, result) => {
+    dbConn.query(`Select * from trip Where tripID = ?`, [id], (err, res) => {
+        result(err, res);
+    })
+}
+
+Trip.updateBasicInfoTrip = (id, tripName, city, result) => {
+    dbConn.query(`UPDATE trip set tripName = ?, city = ? WHERE tripID=${id}`, [tripName, city], (err, res) => {
+        result(err, res)
+    })
+}
+
 module.exports = Trip;

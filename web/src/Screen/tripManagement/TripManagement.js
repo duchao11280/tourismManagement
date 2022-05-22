@@ -32,7 +32,7 @@ const TripManagement = () => {
         history.push(`/admin/tripmanagement/addtrip`)
     }
     const handleOnEdit = (id) => {
-
+        history.push(`/admin/tripmanagement/edittrip/${id}`)
     }
     const filteredTables = listTrip === undefined ? [] : listTrip.filter(trip => {
         var searchName = trip.tripName.toLowerCase().includes(searchfield.toLowerCase());
