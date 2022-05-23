@@ -54,16 +54,28 @@ Trip.addTrip = (tripName, city, tripDetail, userID, result) => {
                             });
                         } else {
                             let tripID = data.insertId
-                            var queryAddToDetailTrip = `Insert INTO detailtrip(tripID,placeID,note,day,timeClock) values(?,?,?,?,?)`
+                            var queryAddPlaceToDetailTrip = `Insert INTO detailtrip(tripID,placeID,note,day,timeClock,type) values(?,?,?,?,?,0)`
+                            var queryAddServiceToDetailTrip = `Insert INTO detailtrip(tripID,serviceID,note,day,timeClock,type) values(?,?,?,?,?,1)`
+
                             tripDetail.forEach((tripPerDay) => {
-                                tripPerDay.detail.forEach((place) => {
-                                    connection.query(queryAddToDetailTrip, [tripID, place.placeID, place.note, tripPerDay.day, place.timeClock], (err, data) => {
-                                        if (err) {
-                                            return connection.rollback(function () {
-                                                result(err, null);
-                                            });
-                                        }
-                                    })
+                                tripPerDay.detail.forEach((detailtrip) => {
+                                    if (detailtrip.type === 0) {
+                                        connection.query(queryAddPlaceToDetailTrip, [tripID, detailtrip.placeID, detailtrip.note, tripPerDay.day, detailtrip.timeClock], (err, data) => {
+                                            if (err) {
+                                                return connection.rollback(function () {
+                                                    result(err, null);
+                                                });
+                                            }
+                                        })
+                                    } else {
+                                        connection.query(queryAddServiceToDetailTrip, [tripID, detailtrip.serviceID, detailtrip.note, tripPerDay.day, detailtrip.timeClock], (err, data) => {
+                                            if (err) {
+                                                return connection.rollback(function () {
+                                                    result(err, null);
+                                                });
+                                            }
+                                        })
+                                    }
                                 })
 
                             })

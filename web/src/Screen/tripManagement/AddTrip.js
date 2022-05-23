@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button'
 import { BsTrash } from 'react-icons/bs'
 import '../css/addtrip.css'
 import { getAllPlacesEnable } from '../../networking/adminNetworking'
+import { getAllServicesEnable } from '../../networking/servicesNetworking'
 import { addTrip } from '../../networking/tripNetworking'
 import Admin from '../admin'
 const AddTrip = () => {
@@ -14,6 +15,7 @@ const AddTrip = () => {
 
     const history = useHistory();
     const [listPlace, setListPlace] = useState([])
+    const [listService, setListService] = useState([])
     const [values, setValues] = useState({
         tripName: "",
         city: province[0].provinceName,
@@ -27,7 +29,15 @@ const AddTrip = () => {
 
     useEffect(() => {
         getAllPlacesEnable()
-            .then((response) => { setListPlace(response); })
+            .then((response) => {
+                setListPlace(response);
+                getAllServicesEnable()
+                    .then((response) => {
+                        setListService(response.data);
+
+                    })
+                    .catch(() => { setListService([]) })
+            })
             .catch(() => { setListPlace([]) })
     }, [])
     const handleAddTrip = () => {
@@ -47,7 +57,7 @@ const AddTrip = () => {
      * @param {*} dayOfTrip 
      * @param {*} detailID 
      * @param {*} event 
-     * @param {*} type type = 0 is PlaceID, type = 1 are timeClock and Note
+     * @param {*} type type = 0 is PlaceID and serviceID, type = 1 are timeClock and Note
      */
     const handleChangeDetailTrip = (dayOfTrip, detailID, event, type) => {
         let copiedTripDetail = [...tripDetail];
@@ -78,6 +88,22 @@ const AddTrip = () => {
                 tripDetail.detail.push({
                     id: uId,
                     placeID: listPlace[0].placeID,
+                    type: 0,
+                    timeClock: `0${new Date().getHours()}`.slice(-2) + ":" + `0${new Date().getMinutes()}`.slice(-2)
+                })
+            }
+        })
+        setTripDetail(copiedTripDetail)
+    }
+    const addServiceToDetailTrip = (day) => {
+        let copiedTripDetail = [...tripDetail];
+        copiedTripDetail.forEach(tripDetail => {
+            if (tripDetail.day === day) {
+                uId++
+                tripDetail.detail.push({
+                    id: uId,
+                    serviceID: listService[0].serviceID,
+                    type: 1,
                     timeClock: `0${new Date().getHours()}`.slice(-2) + ":" + `0${new Date().getMinutes()}`.slice(-2)
                 })
             }
@@ -163,22 +189,42 @@ const AddTrip = () => {
                                                         {tripDetailItem.detail.map((detailPerItem, index) => (
                                                             <div className="d-flex flex-row" key={index}>
                                                                 <div className="d-flex m-3 justify-content-around container-item-place-trip-detail-addtrip" key={detailPerItem.id} style={{}}>
-                                                                    <div>
-                                                                        <label>Địa điểm</label>
-                                                                        <br />
-                                                                        <select
-                                                                            value={detailPerItem.placeID}
-                                                                            name="placeID"
-                                                                            onChange={(e) => { handleChangeDetailTrip(tripDetailItem.day, detailPerItem.id, e, 0) }}
-                                                                            style={listPlace.length === 0 ? { width: 200, padding: "5px" } : { height: 30 }}>
-                                                                            {listPlace?.map((place) =>
-                                                                                <option
-                                                                                    key={place.placeID}
-                                                                                    value={place.placeID}
-                                                                                >{place.placeName}</option>
-                                                                            )}
-                                                                        </select>
-                                                                    </div>
+                                                                    {detailPerItem.type === 0 ?
+                                                                        <div>
+                                                                            <label>Địa điểm</label>
+                                                                            <br />
+                                                                            <select
+                                                                                value={detailPerItem.placeID}
+                                                                                name="placeID"
+                                                                                onChange={(e) => { handleChangeDetailTrip(tripDetailItem.day, detailPerItem.id, e, 0) }}
+                                                                                style={listPlace.length === 0 ? { width: 200, padding: "5px" } : { height: 30 }}>
+                                                                                {listPlace?.map((place) =>
+                                                                                    <option
+                                                                                        key={place.placeID}
+                                                                                        value={place.placeID}
+                                                                                    >{place.placeName}</option>
+                                                                                )}
+                                                                            </select>
+                                                                        </div>
+                                                                        :
+                                                                        <div>
+                                                                            <label>Dịch vụ:</label>
+                                                                            <br />
+                                                                            <select
+                                                                                value={detailPerItem.serviceID}
+                                                                                name="serviceID"
+
+                                                                                onChange={(e) => { handleChangeDetailTrip(tripDetailItem.day, detailPerItem.id, e, 0) }}
+                                                                                style={listService.length === 0 ? { width: 200, padding: "5px" } : { height: 30 }}>
+                                                                                {listService?.map((service) =>
+                                                                                    <option
+                                                                                        key={service.serviceID}
+                                                                                        value={service.serviceID}
+                                                                                    >{service.serviceName}</option>
+                                                                                )}
+                                                                            </select>
+                                                                        </div>
+                                                                    }
                                                                     <div>
                                                                         <label>Giờ:</label>
                                                                         <br />
@@ -215,7 +261,7 @@ const AddTrip = () => {
                                                         ))}
                                                         <div style={{ display: 'flex', justifyContent: 'center' }}>
                                                             <Button variant="primary" onClick={() => { addPlaceToDetailTrip(tripDetailItem.day) }}>Thêm địa điểm</Button>
-
+                                                            <button className="mx-3 p-1 border border-danger" onClick={() => { addServiceToDetailTrip(tripDetailItem.day) }}>Thêm dịch vụ</button>
                                                         </div>
                                                     </div>
                                                 </div>

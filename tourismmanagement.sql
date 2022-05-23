@@ -11,7 +11,7 @@
  Target Server Version : 100414
  File Encoding         : 65001
 
- Date: 20/05/2022 14:17:01
+ Date: 23/05/2022 16:01:26
 */
 
 SET NAMES utf8mb4;
@@ -25,6 +25,7 @@ CREATE TABLE `comment`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `userID` int NULL DEFAULT NULL,
   `content` varchar(1000) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `vote` int NULL DEFAULT NULL,
   `placeID` int NULL DEFAULT NULL,
   `time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
@@ -33,26 +34,42 @@ CREATE TABLE `comment`  (
 -- ----------------------------
 -- Records of comment
 -- ----------------------------
-INSERT INTO `comment` VALUES (12, 1, 'Nơi này mát lắm\n', 1, '2022-04-04 12:28:00');
+INSERT INTO `comment` VALUES (12, 1, 'Nơi này mát lắm\n', NULL, 1, '2022-04-04 12:28:00');
 
 -- ----------------------------
 -- Table structure for detailtrip
 -- ----------------------------
 DROP TABLE IF EXISTS `detailtrip`;
 CREATE TABLE `detailtrip`  (
-  `tripID` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `tripID` int NOT NULL,
   `placeID` int NOT NULL,
+  `serviceID` int NULL DEFAULT NULL,
+  `type` tinyint NULL DEFAULT 0 COMMENT '0 is place, 1 is service',
   `note` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
   `day` int NULL DEFAULT NULL,
   `timeClock` time NULL DEFAULT NULL,
   `createAt` datetime NULL DEFAULT current_timestamp,
   `updateAt` datetime NULL DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`tripID`, `placeID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of detailtrip
 -- ----------------------------
+INSERT INTO `detailtrip` VALUES (1, 8, 1, NULL, 0, 'Đi sớm', 1, '10:30:00', '2022-05-20 23:21:06', '2022-05-23 01:10:07');
+INSERT INTO `detailtrip` VALUES (2, 8, 74, NULL, 0, 'Căm trại', 1, '15:00:00', '2022-05-20 23:21:06', '2022-05-22 12:50:42');
+INSERT INTO `detailtrip` VALUES (3, 8, 6, NULL, 0, 'Khởi đầu ngày thứ hai tại Thác đá hàn ,Khởi đầu ngày thứ hai tại Thác đá hàn', 2, '09:11:00', '2022-05-20 23:21:06', '2022-05-22 13:10:39');
+INSERT INTO `detailtrip` VALUES (5, 8, 76, NULL, 0, 'Về thành phố', 2, '12:42:00', '2022-05-22 12:50:30', '2022-05-22 12:50:30');
+INSERT INTO `detailtrip` VALUES (6, 8, 77, NULL, 0, 'ghé qua Dinh thống nhất', 2, '14:00:00', '2022-05-22 12:57:45', '2022-05-22 13:05:55');
+INSERT INTO `detailtrip` VALUES (7, 8, 0, 3, 1, '', 1, '19:30:00', '2022-05-22 13:14:11', '2022-05-23 01:09:20');
+INSERT INTO `detailtrip` VALUES (18, 1, 1, NULL, 0, '', 1, '11:54:00', '2022-05-23 11:54:18', '2022-05-23 11:54:18');
+INSERT INTO `detailtrip` VALUES (19, 8, 0, 4, 1, 'Về thành phố', 2, '12:45:00', '2022-05-23 13:39:24', '2022-05-23 13:39:24');
+INSERT INTO `detailtrip` VALUES (22, 9, 75, NULL, 0, NULL, 1, '15:28:00', '2022-05-23 15:29:06', '2022-05-23 15:29:06');
+INSERT INTO `detailtrip` VALUES (23, 9, 74, NULL, 0, NULL, 2, '15:29:00', '2022-05-23 15:29:06', '2022-05-23 15:29:06');
+INSERT INTO `detailtrip` VALUES (24, 10, 74, NULL, 0, NULL, 1, '15:59:00', '2022-05-23 16:00:09', '2022-05-23 16:00:09');
+INSERT INTO `detailtrip` VALUES (25, 10, 0, 3, 1, NULL, 1, '15:59:00', '2022-05-23 16:00:09', '2022-05-23 16:00:09');
+INSERT INTO `detailtrip` VALUES (26, 10, 75, NULL, 0, NULL, 3, '15:59:00', '2022-05-23 16:00:09', '2022-05-23 16:00:09');
 
 -- ----------------------------
 -- Table structure for feedback
@@ -168,7 +185,7 @@ INSERT INTO `place` VALUES (2, 'Quảng trường Ba Đình', 'Quảng trường
 INSERT INTO `place` VALUES (3, 'Núi Chứa Chan', 'Ngọn núi cao thứ hai ở Đông Nam Bộ có nhiều rừng rậm, vách đá dựng đứng... được các bạn trẻ chọn để khám phá khi rảnh rỗi.', '', 'Đồng Nai', NULL, NULL, NULL, 1);
 INSERT INTO `place` VALUES (4, 'Vườn Xoài', 'Đây là một địa điểm du lịch ưa thích đối với các bạn trẻ thích một nơi cắm trại vui vẻ. Noi nay that dep\n', 'Many hinh\n', 'Đồng Nai', NULL, NULL, NULL, 1);
 INSERT INTO `place` VALUES (5, 'Công viên Văn hóa Đầm Sen', 'Nơi đây được ví là “ốc đảo xanh” với 36 thiết bị dưới nước hiện đại cùng nhiều trò chơi cảm giác mạnh đến nhẹ, phù hợp với mọi lứa tuổi. Vì vậy, bạn có thể vui chơi cả ngày mà không thấy chán.', 'Nên tắm sơ trước khi bơi để hạn chế khả năng hấp thu nước Clo trong hồ bơi.\nNgăn chặn tình trạng sạm da bằng cách dùng kem dưỡng ẩm, lotion và kem chống nắng.\nKhi tham gia máng trượt bạn nên mặc quần áo gọn gàng, không mang các vật dụng sắc nhọn để tránh ', 'Thành phố Hồ Chí Minh', NULL, NULL, NULL, 1);
-INSERT INTO `place` VALUES (6, 'Thác Đá Hàn', 'Khu du lịch thác Đá Hàn là một trong những điểm mới lạ để cho các bạn trẻ tới khám phá. Với vẻ đẹp thiên nhiên hoang sơ và hùng vĩ khó cưỡng, thác nước hữu tình điểm thêm vườn trái cây trĩu quả. Với những bạn yêu thích đi phượt thì địa điểm này hứa hẹn sẽ là điểm đến lý tưởng để dã ngoại, cắm trại những ngày cuối tuần.', 'Hãy mặc trang phục thoải mái, đi giày thể thao để bảo vệ sức khỏe trong thời gian di chuyển.\nCần mang thuốc xịt đề phòng côn trùng cắn', 'Đồng Nai', NULL, '11.054820078965946', '107.40045249717184', 1);
+INSERT INTO `place` VALUES (6, 'Thác Đá Hàn', 'Khu du lịch thác Đá Hàn là một trong những điểm mới lạ để cho các bạn trẻ tới khám phá. Với vẻ đẹp thiên nhiên hoang sơ và hùng vĩ khó cưỡng, thác nước hữu tình điểm thêm vườn trái cây trĩu quả. Với những bạn yêu thích đi phượt thì địa điểm này hứa hẹn sẽ là điểm đến lý tưởng để dã ngoại, cắm trại những ngày cuối tuần.', 'Hãy mặc trang phục thoải mái, đi giày thể thao để bảo vệ sức khỏe trong thời gian di chuyển.\nCần mang thuốc xịt đề phòng côn trùng cắn', 'Đồng Nai', NULL, '11.054820078965946', '107.40045249717184', 0);
 INSERT INTO `place` VALUES (30, 'Thác Yên tĩnh', 'Thác Nước Thác Nước', 'Thác NướcThác Nước Thác Nước', 'An Giang', NULL, NULL, NULL, 1);
 INSERT INTO `place` VALUES (73, 'Thác Mai', 'Thác Mai hay còn gọi đầy đủ là khu du lịch sinh thái bàu nước sôi – Thác Mai. Nằm trên địa phận xã Gia Canh, huyện Định Quán, tỉnh Đồng Nai và nằm cách thành phố Hồ Chí Minh tầm 130km. Đây là điểm du lịch nằm sâu trong rừng nguyên sinh bạt ngạt sẽ rất thích hợp với những bạn mê phượt.\r\nTrên ranh giới giữa hai tỉnh Bình Thuận, Đồng Nai, Thác Mai là một địa điểm thiên nhiên kỳ thú, còn lưu giữ được vẻ hoang sơ.\r\nThác rất lớn, có chiều dài khoảng 2 km, được hợp thành từ vô số dòng suối, thác và sông con. Thác Mai gai góc, lởm chởm và bí hiểm. Nước nối tiếp nhau xô vào đá, đá nối tiếp nhau trùng điệp, như dòng thác không có chỗ tận cùng\r\n', 'Nếu bạn nào định tìm đường tới Thác Mai bằng Google Map thì cần phải hết sức lưu ý. Bởi vì bản đồ sẽ hướng dẫn chúng ta đi con đường ngắn hơn, tuy nhiên điểm đến lại là đường cụt ngay bờ sông và thác Mai lại ở bên kia sông. Chính vì vậy bạn cần phải có một hướng dẫn viên có kinh nghiệm đầy đặn', 'Đồng Nai', 'Gia Canh, Định Quán, Đồng Nai', '11.054820078965946', '107.40045249717184', 0);
 INSERT INTO `place` VALUES (74, 'Rừng Quốc Gia Nam Cát Tiên', 'Nam Cát Tiên là tên gọi một vùng đất nằm trọn trong đoạn uốn khúc của sông Đồng Nai, tọa lạc ngay trên ranh giới của cả ba tỉnh Đồng Nai, Bình Phước và Lâm Đồng. Khu rừng cấm Nam Cát Tiên có diện tích 36.000ha, đại diện cho cả hệ thực vật và động vật Nam Bộ.\r\nNơi đây có cảnh thiên nhiên đa dạng: Vừa có đồi, vừa có bãi ven sông, vừa có các trảng rộng lớn bằng phẳng, lại có các dòng chảy dốc. \r\nRừng ở đây có nhiều cây cổ thụ như bằng lăng, gỗ đỏ và hơn 600 loài thực vật.\r\nVề động vật có 240 loài chim, có những loài chim quý hiếm như trĩ lông đỏ, cò quắm xanh, tê giác một sừng,...', 'Thời điểm thích hợp để du lịch từ là vào khoảng tháng 12 – tháng 5. Bởi vì trong thời gian, tại rừng Nam Cát Tiên ít mưa, rừng khô ráo.\nVới những bạn thích đi phượt và có kinh phí hạn hẹp thì có thể lựa chọn mang theo lều trại để cắm trại trong rừng, chắn chắn sẽ đỡ tốn chi phí hơn nhiều', 'Đồng Nai', 'Nam Cát Tiên, Tân Phú, Đồng Nai', '11.423294791892964', '107.43066356749813', 0);
@@ -230,18 +247,21 @@ CREATE TABLE `trip`  (
   `tripID` int NOT NULL AUTO_INCREMENT,
   `tripName` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `city` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `numberOfDays` int NULL DEFAULT NULL,
+  `numberOfDays` int NULL DEFAULT 1,
   `isDisabled` tinyint NULL DEFAULT 0,
   `userID` int NULL DEFAULT NULL,
   `createAt` datetime NULL DEFAULT current_timestamp,
   `updateAt` datetime NULL DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`tripID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of trip
 -- ----------------------------
-INSERT INTO `trip` VALUES (1, 'Hành trình nhẹ', 'Đồng Nai', NULL, 0, 1, '2022-05-16 14:12:27', '2022-05-16 16:43:48');
+INSERT INTO `trip` VALUES (1, 'Hành trình nhẹ', 'Đồng Nai', 1, 0, 1, '2022-05-16 14:12:27', '2022-05-23 02:16:07');
+INSERT INTO `trip` VALUES (8, 'Hành trình nhẹ cho những người đang yêu nhau', 'Đồng Nai', 3, 0, 1, '2022-05-20 23:21:06', '2022-05-23 14:23:34');
+INSERT INTO `trip` VALUES (9, '123', 'Bình Dương', 2, 0, 1, '2022-05-23 15:29:06', '2022-05-23 15:29:06');
+INSERT INTO `trip` VALUES (10, 'Test Place and Service', 'Thành phố Hồ Chí Minh', 3, 0, 1, '2022-05-23 16:00:09', '2022-05-23 16:00:09');
 
 -- ----------------------------
 -- Table structure for typeservice
