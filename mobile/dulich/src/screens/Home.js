@@ -153,7 +153,6 @@ const Home = ({ navigation }) => {
                         ></FlatList>
                     </View>
 
-
                     <View >
                         <Text style={styles.content}>{filteredHotel.length != 0 ? "Khám phá các khách sạn nổi bật:" : ""}</Text>
                     </View>

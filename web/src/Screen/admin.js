@@ -1,21 +1,17 @@
 import "../styles.css";
 import React from "react";
 
-import Logo from "../assets/imgs/Logo.png";
 import "./css/admin.css"
-import { ImHome } from "react-icons/im";
-import { AiOutlineMail } from "react-icons/ai";
-import { FaThLarge, FaUserAlt, FaConciergeBell, FaSignOutAlt } from "react-icons/fa";
+
+import { FaThLarge, FaUserAlt, FaConciergeBell, FaSignOutAlt, FaBell, FaMotorcycle } from "react-icons/fa";
+
 import { GiEarthAmerica } from "react-icons/gi";
-import { useHistory, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 const Admin = () => {
 
-    const history = useHistory();
-    const handleOnAddPlace = () => {
-        history.push(`/admin/placemanagement/`)
-    }
+
     return (
-        <div class="container-Admin">
+        <div className="container-Admin">
             {/* <div class="topbar-Admin">
                 <div class="logo-Admin">
                     <h2>Brand.</h2> 
@@ -27,7 +23,7 @@ const Admin = () => {
 
 
             </div> */}
-            <div class="sidebar-Admin">
+            <div className="sidebar-Admin">
                 <ul>
                     <li>
 
@@ -62,9 +58,17 @@ const Admin = () => {
                     </li>
                     <li>
 
+                        <Link to="/admin/tripmanagement">
+                            <a >
+                                <FaMotorcycle className="icon-Admin" />
+                                <div>Lịch trình</div>
+                            </a></Link>
+                    </li>
+                    <li>
+
                         <Link to="/admin/notificationmanagement">
                             <a >
-                                <FaConciergeBell className="icon-Admin" />
+                                <FaBell className="icon-Admin" />
                                 <div>Thông báo</div>
                             </a></Link>
                     </li>

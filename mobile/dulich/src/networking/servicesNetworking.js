@@ -2,6 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GLOBALS } from '../resources/values/globals'
 
 const API_URL = GLOBALS.API_URL;
+
+
 const getToken = async () => {
     try {
         const token = await AsyncStorage.getItem('keytoken')
@@ -84,4 +86,34 @@ const getOtherServicesByCity = async (city) => {
     }
 };
 
-export { getAllServiceByPlaceID, getHotelByCity, getOtherServicesByCity }
+
+
+/**
+ * 
+ * @param {*} lat latitude degree 
+ * @param {*} long longitude degree 
+ * @param {*} distance surrounding
+ */
+const getAllServiceAround = async (lat, long, distance) => {
+    try {
+        let accessToken = await getToken();
+        const response = await fetch(
+            API_URL + `/api/v1/service/searchwithinradius/${lat}/${long}/${distance}`,
+            {
+                method: 'GET',
+                headers: {
+                    "x-access-token": accessToken,
+                }
+            }
+        );
+        const json = await response.json();
+
+        return json;
+
+    } catch (error) {
+
+    }
+};
+
+export { getAllServiceByPlaceID, getHotelByCity, getOtherServicesByCity, getAllServiceAround }
+

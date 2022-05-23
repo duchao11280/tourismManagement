@@ -16,6 +16,21 @@ const getAllServices = async () => {
 
     }
 };
+const getAllServicesEnable = async () => {
+    try {
+        const response = await fetch(
+            API_URL + `/api/v1/admin/services/enable`,
+            {
+                method: 'GET',
+                credentials: "include"
+            }
+        );
+        const json = await response.json();
+        return json;
+    } catch (error) {
+
+    }
+};
 const getServiceAndImageByServiceID = async (id) => {
     try {
         const response = await fetch(
@@ -176,4 +191,5 @@ export {
     addService,
     uploadImageInEditService,
     updateInfoService,
+    getAllServicesEnable,
 }

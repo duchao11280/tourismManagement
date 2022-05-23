@@ -4,10 +4,21 @@ const UserModel = require('../models/user_model');
 const NotificationModel = require('../models/notification_model');
 const ServiceModel = require('../models/service_model');
 const TypeService = require('../models/typeservice_model')
+const TripModel = require('../models/trip_model')
+const DetailTripModel = require('../models/detailtrip_model')
 //========================PLace================================//
 //get all place
 exports.getAllPlaces = (req, res) => {
     PlaceModel.getAllPlaces((err, places) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Lấy dữ liệu thành công', data: places })
+    });
+}
+exports.getAllPlacesEnable = (req, res) => {
+    PlaceModel.getAllPlacesEnable((err, places) => {
         if (err) {
             res.status(500).json({ status: false, message: "Thất bại" })
             return;
@@ -225,7 +236,7 @@ exports.addNotification = (req, res) => {
     var now = new Date();
     var month = now.getMonth() + 1;
     var time = (now.getFullYear() + "-" + month + "-" + now.getDate() +
-        " " + now.getHours() + ":" + now.getMinutes());
+        " " + `0${new Date().getHours()}`.slice(-2) + ":" + `0${new Date().getMinutes()}`.slice(-2));
     NotificationModel.insertNotification(title, content, time, (err, data) => {
         if (err) {
             res.status(500).json({ status: false, message: "Thất bại" })
@@ -242,7 +253,7 @@ exports.updateNotification = (req, res) => {
     var now = new Date();
     var month = now.getMonth() + 1;
     var time = (now.getFullYear() + "-" + month + "-" + now.getDate() +
-        " " + now.getHours() + ":" + now.getMinutes());
+        " " + `0${new Date().getHours()}`.slice(-2) + ":" + `0${new Date().getMinutes()}`.slice(-2));
     NotificationModel.updateNotification(id, title, content, time, (err, data) => {
         if (err) {
             res.status(500).json({ status: false, message: "Thất bại" })
@@ -264,6 +275,15 @@ exports.deleteNotification = (req, res) => {
 //======================Services=====================//
 exports.getAllServices = (req, res) => {
     ServiceModel.getAllServices((err, services) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Lấy dữ liệu thành công', data: services })
+    });
+}
+exports.getAllServicesEnable = (req, res) => {
+    ServiceModel.getAllServicesEnable((err, services) => {
         if (err) {
             res.status(500).json({ status: false, message: "Thất bại" })
             return;
@@ -414,5 +434,175 @@ exports.getAllTypeService = (req, res) => {
             return;
         };
         res.json({ status: true, message: 'Vô hiệu hóa thành công', data: type })
+    })
+}
+
+exports.getAllTrip = (req, res) => {
+    TripModel.getAllTrip((err, data) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        }
+        if (data.length == 0) {
+            res.status(204).json({ status: true, message: 'Không có dữ liệu', data: data })
+        } else
+            res.status(200).json({ status: true, message: 'Lấy dữ liệu thành công', data: data })
+    })
+}
+
+// enable trip
+exports.enableTrip = (req, res) => {
+    TripModel.enableTrip(req.params.id, (err, trip) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Kích hoạt thành công' })
+    })
+}
+
+// disable trip
+exports.disableTrip = (req, res) => {
+    TripModel.disableTrip(req.params.id, (err, trip) => {
+        if (err) {
+            res.status(500).json({ status: false, message: err })
+            return;
+        };
+        res.json({ status: true, message: 'Vô hiệu hóa thành công' })
+    })
+}
+exports.addTrip = (req, res) => {
+    TripModel.addTrip(req.body.tripName, req.body.city, req.body.tripDetail, req.userID, (err, data) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Thêm mới thành công' })
+    })
+}
+exports.getDetailTripByID = (req, res) => {
+    let id = req.params.id;
+    let data = {};
+    TripModel.getTripByID(id, (err, trip) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        }
+        data.tripID = trip[0].tripID;
+        data.tripName = trip[0].tripName;
+        data.city = trip[0].city;
+        data.numberOfDays = trip[0].numberOfDays;
+        data.isDisabled = trip[0].isDisabled;
+        data.userID = trip[0].userID;
+
+        DetailTripModel.getTripDetailByTripID(id, (err, detail) => {
+            if (err) {
+                res.status(500).json({ status: false, message: "Thất bại" })
+                return;
+            }
+            data.detail = [];
+            let listDay = []
+
+            detail.forEach((item) => {
+                listDay.push(item.day)
+            })
+            // xóa bỏ các ngày trùng có dữ liệu
+            listDay = Array.from(new Set(listDay))
+            let listDayEmpty = [];
+            for (let i = listDay[listDay.length - 1] + 1 || 1; i <= trip[0].numberOfDays; i++) {
+                listDayEmpty.push(i)
+            }
+            listDay.push(...listDayEmpty)
+            listDay.forEach((day) => {
+                let detailPerDay = { day: day }
+                let detailOfDay = []
+                detail.forEach((detailItem) => {
+                    if (detailItem.day == day) {
+                        detailOfDay.push(detailItem)
+                    }
+                })
+                detailPerDay.detail = detailOfDay;
+                data.detail.push(detailPerDay);
+            })
+            res.status(200).json({ status: true, message: "Lấy dữ liệu thành công", data: data })
+
+        })
+
+    })
+}
+exports.updateBasicInfoTrip = (req, res) => {
+    let id = req.params.id;
+    let tripName = req.body.tripName;
+    let numberOfDays = req.body.numberOfDays;
+    let city = req.body.city;
+    TripModel.updateBasicInfoTrip(id, tripName, numberOfDays, city, (err, data) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Cập nhật thành công' })
+    })
+}
+exports.updateDetailTripItem = (req, res) => {
+    let id = req.params.id;
+    let placeID = req.body.placeID;
+    let serviceID = req.body.serviceID;
+    let note = req.body.note;
+    let timeClock = req.body.timeClock;
+    DetailTripModel.updateDetailTripItem(id, placeID, serviceID, note, timeClock, (err, data) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Cập nhật thành công' })
+    })
+}
+exports.deleteDetailTripItem = (req, res) => {
+    DetailTripModel.deleteDetailTripItem(req.params.id, (err, result) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Xóa thành công' })
+    })
+}
+exports.addPlaceToDetailTrip = (req, res) => {
+    let tripID = req.params.id
+    let day = req.body.day;
+    let placeID = req.body.placeID;
+    let note = req.body.note;
+    let timeClock = req.body.timeClock;
+    DetailTripModel.addPlaceToDetailTrip(tripID, day, placeID, note, timeClock, (err, result) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Thêm thành công' })
+    })
+}
+exports.addServiceToDetailTrip = (req, res) => {
+    let tripID = req.params.id
+    let day = req.body.day;
+    let serviceID = req.body.serviceID;
+    let note = req.body.note;
+    let timeClock = req.body.timeClock;
+    DetailTripModel.addServiceToDetailTrip(tripID, day, serviceID, note, timeClock, (err, result) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Thêm thành công' })
+    })
+}
+// delete day of detail trip
+exports.deleteDayOfDetailTrip = (req, res) => {
+    let tripID = req.params.tripid
+    let day = req.params.day;
+    TripModel.deleteDayOfDetailTrip(tripID, day, (err, result) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Xóa thành công' })
     })
 }

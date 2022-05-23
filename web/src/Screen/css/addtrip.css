@@ -1,0 +1,21 @@
+.box_add_trip{
+    flex:1;
+    background-color: rgb(253, 253, 253);
+    box-shadow: 0 8px 10px 0 rgba(0,0,0,0.2);
+}
+.container-btn-remove-item-place-tripdetail-addtrip{
+    border-radius: 50%;
+    height: 5vh;
+    width:5vh;
+    background-color: red;
+}
+.text-btn-remove-item-place-tripdetail-addtrip{
+    color: white;
+    font-size: 23px;
+}
+.container-item-place-trip-detail-addtrip{
+ 
+    border: 1px solid black; 
+    padding: 15px;
+    width: 90%;
+}

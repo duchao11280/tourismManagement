@@ -16,6 +16,22 @@ const getAllPlaces = async () => {
         console.log(error)
     }
 };
+
+const getAllPlacesEnable = async () => {
+    try {
+        const response = await fetch(
+            API_URL + `/api/v1/admin/places/enable`,
+            {
+                method: 'GET',
+                credentials: 'include'
+            }
+        );
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        console.log(error)
+    }
+};
 // get place and image by place id
 const getPlaceAndImageByPlaceID = async (id) => {
     try {
@@ -266,6 +282,7 @@ const updateNotification = async (id, title, content) => {
 }
 export {
     getAllPlaces,
+    getAllPlacesEnable,
     addPlace,
     deletePlace,
     enablePlace,

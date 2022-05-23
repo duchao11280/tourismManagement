@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GLOBALS } from '../resources/values/globals'
 
 const API_URL = GLOBALS.API_URL;
+
 const getToken = async () => {
   try {
     const token = await AsyncStorage.getItem('keytoken')
@@ -74,8 +75,11 @@ const getAllPlaceAround = async (lat, long, distance) => {
     );
     const json = await response.json();
     return json;
+    
   } catch (error) {
 
   }
 };
+
+
 export { getAllPlaces, getAllPlaceIDandName, getAllPlaceAround }

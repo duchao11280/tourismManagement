@@ -12,7 +12,7 @@ const feedbackController = require('../controllers/feedback_controller')
 
 //======================Place=====================//
 //insert place
-router.post('/place', [verifyToken.verifyToken, checkRole.isAdmin],uploadImage.array('placeImgs'), adminController.insertPlace)
+router.post('/place', [verifyToken.verifyToken, checkRole.isAdmin], uploadImage.array('placeImgs'), adminController.insertPlace)
 /**
  * update info place with place id
  * @param id
@@ -29,8 +29,10 @@ router.put('/place/enable/:id', [verifyToken.verifyToken, checkRole.isAdmin], ad
 
 // get All Place
 router.get('/places', [verifyToken.verifyToken, checkRole.isAdmin], adminController.getAllPlaces);
+// get All Place enable
+router.get('/places/enable', [verifyToken.verifyToken, checkRole.isAdmin], adminController.getAllPlacesEnable);
 // get places by city
-router.post('/places/bycity',[verifyToken.verifyToken],adminController.searchAllPlaceByCity)
+router.post('/places/bycity', [verifyToken.verifyToken], adminController.searchAllPlaceByCity)
 // get place info and image by place id
 router.get("/place/:id", [verifyToken.verifyToken, checkRole.isAdmin], adminController.getPlaceAndImageByPlaceID);
 // get image by place id
@@ -65,11 +67,11 @@ router.get('/notification', [verifyToken.verifyToken, checkRole.isAdmin], notifi
 
 // ====================Comment=================//
 // Comment getALl
-router.get('/comment/placeid=:id',[verifyToken.verifyToken,checkRole.isAdmin],commentController.getAllCommentByPlaceID)
+router.get('/comment/placeid=:id', [verifyToken.verifyToken, checkRole.isAdmin], commentController.getAllCommentByPlaceID)
 
 
 //delete comment
-router.delete('/comment/:id',[verifyToken.verifyToken,checkRole.isAdmin],commentController.deleteComment)
+router.delete('/comment/:id', [verifyToken.verifyToken, checkRole.isAdmin], commentController.deleteComment)
 
 router.get('/feedback',
     [verifyToken.verifyToken, checkRole.isAdmin],
@@ -77,25 +79,52 @@ router.get('/feedback',
 
 //======================Services=====================//
 // Get all services
-router.get('/services',[verifyToken.verifyToken,checkRole.isAdmin],adminController.getAllServices);
+router.get('/services', [verifyToken.verifyToken, checkRole.isAdmin], adminController.getAllServices);
+//Get all services enable
+router.get('/services/enable', [verifyToken.verifyToken, checkRole.isAdmin], adminController.getAllServicesEnable);
+
 // get service by service id
-router.get('/service/:id',[verifyToken.verifyToken,checkRole.isAdmin],adminController.getServiceAndImageByServiceID)
+router.get('/service/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.getServiceAndImageByServiceID)
 // Update service by id
-router.put('/service/:id',[verifyToken.verifyToken,checkRole.isAdmin],adminController.updateInfoService)
+router.put('/service/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.updateInfoService)
 
 // disable service
-router.put('/service/disable/:id',[verifyToken.verifyToken,checkRole.isAdmin],adminController.disableService)
+router.put('/service/disable/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.disableService)
 
 // enable service
-router.put('/service/enable/:id',[verifyToken.verifyToken,checkRole.isAdmin],adminController.enableService)
+router.put('/service/enable/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.enableService)
 
 //insert service
-router.post('/service', [verifyToken.verifyToken, checkRole.isAdmin],uploadImage.array('files'), adminController.insertService)
+router.post('/service', [verifyToken.verifyToken, checkRole.isAdmin], uploadImage.array('files'), adminController.insertService)
 //upload image service
 router.post('/service/image/upload/:id', [verifyToken.verifyToken, checkRole.isAdmin], uploadImage.array("files"), adminController.uploadImageService)
 
 
 router.get('/typeservice', [verifyToken.verifyToken, checkRole.isAdmin], adminController.getAllTypeService);
 
+//======================Trip=====================//
+// Get ALL trip
+router.get('/trip', [verifyToken.verifyToken, checkRole.isAdmin], adminController.getAllTrip);
 
+// disable trip
+router.put('/trip/disable/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.disableTrip)
+
+// enable trip
+router.put('/trip/enable/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.enableTrip)
+
+router.post('/trip/addtrip', [verifyToken.verifyToken, checkRole.isAdmin], adminController.addTrip)
+
+router.get('/trip/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.getDetailTripByID)
+// update basic info
+router.put('/trip/updatebasicinfo/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.updateBasicInfoTrip)
+// update detail trip 
+router.put('/trip/updatedetailtrip/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.updateDetailTripItem)
+// delete detail trip by id
+router.delete('/trip/deletedetailtripitem/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.deleteDetailTripItem)
+// add place to detail trip
+router.post('/detailtrip/addplace/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.addPlaceToDetailTrip)
+// add service to detail trip
+router.post('/detailtrip/addservice/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.addServiceToDetailTrip)
+//delete day Of Trip
+router.delete('/trip/deletedayoftrip/:tripid/:day', [verifyToken.verifyToken, checkRole.isAdmin], adminController.deleteDayOfDetailTrip)
 module.exports = router;

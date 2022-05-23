@@ -104,7 +104,7 @@ const NotificationManagement = () => {
             </Modal.Footer>
         </Modal>
     )
-    
+
     const ModelInput = () => {
         const [valueInput, setValueInput] = useState(isEdit ? currNotification : { title: "", content: "" })
         const handleChange = (e) => {
@@ -115,32 +115,32 @@ const NotificationManagement = () => {
             });
 
         };
-        
+
         const handleSubmit = (event) => {
             if (isEdit) {
 
                 event.preventDefault();
-                updateNotification(valueInput.notificationID,valueInput.title,valueInput.content)
-                    .then((response)=>{
+                updateNotification(valueInput.notificationID, valueInput.title, valueInput.content)
+                    .then((response) => {
                         setRefresh(!refresh)
                     })
-                    .catch(()=>{
+                    .catch(() => {
                         alert("Xảy ra lỗi, vui lòng thử lại sau")
                     })
-                    .finally(()=>{
+                    .finally(() => {
                         handleCloseModalInput()
                     })
             } else {
 
                 event.preventDefault();
-                addNotification(valueInput.title,valueInput.content)
-                    .then((response)=>{
+                addNotification(valueInput.title, valueInput.content)
+                    .then((response) => {
                         setRefresh(!refresh)
                     })
-                    .catch(()=>{
+                    .catch(() => {
                         alert("Xảy ra lỗi, vui lòng thử lại sau")
                     })
-                    .finally(()=>{
+                    .finally(() => {
                         handleCloseModalInput()
                     })
                 handleCloseModalInput()
