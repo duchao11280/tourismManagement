@@ -1,18 +1,22 @@
 import React, { Component, useEffect, useState } from 'react';
 import { Text, View, StyleSheet, Button, Image, TextInput, Pressable, FlatList, SafeAreaView, ScrollView } from 'react-native';
-
+import { Picker } from '@react-native-picker/picker';
 import { FontAwesome5 } from 'react-native-vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { province } from '../resources/values/province'
 import Province from '../components/child/place/Province'
 import ServicesList from '../components/child/home/HotelList'
+import PlaceList from '../components/child/home/PlaceList'
 import { Appbar } from 'react-native-paper';
 import { SearchBar } from "react-native-elements";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { getAllHotel, getAllOtherServices } from '../networking/servicesNetworking'
+import { getHotelByCity, getOtherServicesByCity } from '../networking/servicesNetworking'
 import SelectDropdown from 'react-native-select-dropdown'
 import { AntDesign } from '@expo/vector-icons';
+import {
+    getAllPlaces
+} from '../networking/placeNetworking'
 
 const Home = ({ navigation }) => {
 
@@ -20,9 +24,34 @@ const Home = ({ navigation }) => {
     const [listHotel, setListHotel] = useState([]);
     const [listOtherServices, setListOtherServices] = useState([])
     // const [role, setrole] = useState([]);
-    const [nameFilter, setNameFilter] = useState('');
+    const [nameFilter, setNameFilter] = useState("Đồng Nai");
+    const [listPlaces, setListPlaces] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
+    const [isLoading, setLoading] = useState(true);
+
+    useEffect(() => {
+        getPlaceFromServer();
+        getHotelFromServer();
+        getOtherServicesFromServer();
+
+    }, [nameFilter]);
 
 
+    const getPlaceFromServer = () => {
+        getAllPlaces(nameFilter).then((listPlaces) => { setListPlaces(listPlaces); })
+            .catch((err) => { Alert.alert("Thông báo", "Kết nối thất bại") })
+            .finally(() => { setLoading(false), setRefreshing(false); });
+    }
+    const getHotelFromServer = () => {
+        getHotelByCity(nameFilter).then((response) => { setListHotel(response); })
+            .catch((err) => { Alert.alert("Thông báo", "Kết nối thất bại"); setListHotel([]) })
+            .finally(() => { setLoading(false), setRefreshing(false); });
+    }
+    const getOtherServicesFromServer = () => {
+        getOtherServicesByCity(nameFilter).then((response) => { setListOtherServices(response); })
+            .catch((err) => { Alert.alert("Thông báo", "Kết nối thất bại"); setListOtherServices([]) })
+            .finally(() => { setLoading(false), setRefreshing(false); });
+    }
 
     const handleSearch = (text) => {
         setSearchfield(text);
@@ -36,28 +65,21 @@ const Home = ({ navigation }) => {
         navigation.push("DetailService", { item: item });
     }
 
-    useEffect(() => {
-        getHotelFromServer();
-        getOtherServicesFromServer();
+    const handleGotoDetailPlace = (item) => {
 
-    }, []);
+        navigation.push("TabDetailPlace", { place: item });
+    }
 
-    const getHotelFromServer = () => {
-        getAllHotel().then((response) => { setListHotel(response.data); })
-            .catch((err) => { Alert.alert("Thông báo", "Kết nối thất bại"); setListHotel([]) })
-        // .finally(() => { setLoading(false), setRefreshing(false); });
-    }
-    const getOtherServicesFromServer = () => {
-        getAllOtherServices().then((response) => { setListOtherServices(response.data); })
-            .catch((err) => { Alert.alert("Thông báo", "Kết nối thất bại"); setListOtherServices([]) })
-        // .finally(() => { setLoading(false), setRefreshing(false); });
-    }
 
     const filteredProvince = province == undefined ? [] : province.filter(item => {
         var searchName = item.provinceName.toLowerCase().includes(searchfield.toLowerCase());
         return searchName;
     })
 
+    const filteredPlace = listPlaces == undefined ? [] : listPlaces.filter(item => {
+        var searchName = item.placeName.toLowerCase().includes(searchfield.toLowerCase());
+        return searchName;
+    })
     const filteredHotel = listHotel == undefined ? [] : listHotel.filter(item => {
         var searchName = item.serviceName.toLowerCase().includes(searchfield.toLowerCase());
         return searchName;
@@ -67,9 +89,10 @@ const Home = ({ navigation }) => {
         var searchName = item.serviceName.toLowerCase().includes(searchfield.toLowerCase());
         return searchName;
     })
-    const gotoPlaceByProvince = (province) => {
-        navigation.push('PlacesInfo', { province: province })
-    }
+    // const gotoPlaceByProvince = (province) => {
+    //     navigation.push('TabDetailPlace', { province: province })
+    // }
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <KeyboardAwareScrollView>
@@ -84,66 +107,47 @@ const Home = ({ navigation }) => {
                         />
                     </View>
 
-                    <View>
-                        <Text> tìm kiếm tỉnh thành :</Text>
-                        <SelectDropdown
-                            data={province}
-                            // defaultValue={province}
-                            onSelect={(selectedItem, index) => {
-                                // console.log('selected Country name ->>>>', selectedItem.provinceName)
-                                // console.log('selected Country Id ->>>>', selectedItem.id)
+                    <View >
+                        <Text style={styles.contentTitle} > tìm kiếm tỉnh thành :</Text>
 
+                        <Picker
+                            selectedValue={nameFilter}
+                            onValueChange={(itemValue, itemIndex) => {
+                                setNameFilter(itemValue)
+                                getPlaceFromServer();
+                                getHotelFromServer();
+                                getOtherServicesFromServer();
+                            }
 
-                            }}
-                            buttonTextAfterSelection={(selectedItem, index) => {
-                                // text represented after item is selected
-                                // if data array is an array of objects then return selectedItem.property to render after item is selected
-
-                                // console.log('Da chay ->>>>', selectedItem.provinceName)
-                                setNameFilter(selectedItem.provinceName)
-
-                                console.log(nameFilter)
-                                // filteredProvince = selectedItem.provinceName;
-                                return selectedItem.provinceName
-                            }}
-                            rowTextForSelection={(item, index) => {
-                                // text represented for each item in dropdown
-                                // if data array is an array of objects then return item.property to represent item in dropdown
-                                return item.provinceName
-                            }}
-                        />
+                            }>
+                            <Picker.Item label="Đồng Nai" value="Đồng Nai" />
+                            <Picker.Item label="Thành Phố Hồ Chí Minh" value="Thành Phố Hồ Chí Minh" />
+                        </Picker>
                     </View>
+
+
 
 
 
 
 
                     <View >
-                        <Text style={styles.content}>Khám phá các địa điểm tại các thành phố:</Text>
+                        <Text style={styles.content}>{filteredPlace.length != 0 ? "Khám phá các địa điểm khi du lịch:" : ""} </Text>
                     </View>
                     <View style={styles.flatlistview}>
-                        <ScrollView
+                        <FlatList
+                            data={filteredPlace}
                             horizontal
-                            // showsVerticalScrollIndicator={true}
-                            showsHorizontalScrollIndicator={true}
-                            contentContainerStyle={{ paddingVertical: 10 }}>
 
-                            <FlatList
-                                data={filteredProvince}
-                                numColumns={32}
+                            keyExtractor={item => item.placeID.toString()}
+                            renderItem={({ item, index }) => {
+                                return (
+                                    // <View><Text>{item.provinceName}</Text></View>
+                                    <Pressable onPress={() => { handleGotoDetailPlace(item) }}><PlaceList hotels={item} /></Pressable>
+                                )
+                            }}
 
-                                keyExtractor={item => item.id.toString()}
-                                renderItem={({ item, index }) => {
-                                    return (
-
-                                        <Province province={item.provinceName} gotoPlace={gotoPlaceByProvince} />
-                                    )
-                                }}
-                            >
-
-                            </FlatList>
-                        </ScrollView>
-
+                        ></FlatList>
                     </View>
 
 
@@ -229,6 +233,10 @@ const styles = StyleSheet.create({
     content: {
         fontSize: 15,
         fontWeight: "bold"
+    },
+    contentTitle: {
+        fontSize: 13,
+        fontWeight: "800"
     },
     flatlistview: {
         // height: 100,

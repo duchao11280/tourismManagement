@@ -35,36 +35,53 @@ const getAllServiceByPlaceID = async (id, typeService) => {
     }
 };
 
-const getAllHotel = async () => {
+const getHotelByCity = async (city) => {
     try {
+        let accessToken = await getToken();
         const response = await fetch(
-            API_URL + `/api/v1/service/services/1`,
+            API_URL + `/api/v1/service/hotel/searchbycity`,
             {
-                method: 'GET',
-                credentials: "include"
+                method: 'POST',
+                headers: {
+                    "Accept": 'application/json',
+                    'Content-Type': 'application/json',
+                    "x-access-token": accessToken,
+                },
+                body: JSON.stringify({
+                    city: city
+                })
             }
         );
         const json = await response.json();
-        return json;
-    } catch (error) {
 
+        return json.data;
+    } catch (error) {
     }
 };
 
-const getAllOtherServices = async () => {
+const getOtherServicesByCity = async (city) => {
+
     try {
+        let accessToken = await getToken();
         const response = await fetch(
-            API_URL + `/api/v1/service/services/2`,
+            API_URL + `/api/v1/service/otherservices/searchbycity`,
             {
-                method: 'GET',
-                credentials: "include"
+                method: 'POST',
+                headers: {
+                    "Accept": 'application/json',
+                    'Content-Type': 'application/json',
+                    "x-access-token": accessToken,
+                },
+                body: JSON.stringify({
+                    city: city
+                })
             }
         );
         const json = await response.json();
-        return json;
-    } catch (error) {
 
+        return json.data;
+    } catch (error) {
     }
 };
 
-export { getAllServiceByPlaceID, getAllHotel, getAllOtherServices }
+export { getAllServiceByPlaceID, getHotelByCity, getOtherServicesByCity }
