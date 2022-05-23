@@ -517,7 +517,7 @@ exports.getDetailTripByID = (req, res) => {
                 let detailPerDay = { day: day }
                 let detailOfDay = []
                 detail.forEach((detailItem) => {
-                    if (detailItem.day == day) {
+                    if (detailItem.day == day && detailItem.isDisabled != 1) {
                         detailOfDay.push(detailItem)
                     }
                 })

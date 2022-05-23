@@ -27,7 +27,11 @@ DetailTrip.addServiceToDetailTrip = (tripID, day, serviceID, note, timeClock, re
 DetailTrip.getTripDetailByTripID = (id, result) => {
     dbConn.query(`Select detailtrip.id, detailtrip.tripID, detailtrip.placeID,
         detailtrip.note, detailtrip.day, detailtrip.timeClock, detailtrip.serviceID,
-        detailtrip.type, place.placeName , services.serviceName
+        detailtrip.type, place.placeName , services.serviceName, 
+        CASE detailtrip.type
+            WHEN 0 THEN place.isDeleted
+            ELSE services.isDisabled
+        END as isDisabled
         from detailtrip  LEFT JOIN place ON detailtrip.placeID = place.placeID LEFT JOIN services ON detailtrip.serviceID = services.serviceID
         WHERE tripID =?
         ORDER BY day, timeClock`, [id], (err, res) => {
