@@ -210,6 +210,7 @@ const PlaceInfoDetail = ({ navigation, route }) => {
                             ListFooterComponent={
 
                                 <View style={{ backgroundColor: 'white', flexDirection: 'column' }}>
+
                                     <View style={{ flexDirection: 'row' }}>
                                         <TextInput
                                             style={styles.inputText}
