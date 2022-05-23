@@ -47,7 +47,7 @@ const ModalAddDetailTrip = (props) => {
             keyboard={false}
         >
             <Modal.Header closeButton>
-                <Modal.Title>Thêm địa điểm cho lịch trình</Modal.Title>
+                <Modal.Title>{isAddPlace ? "Thêm địa điểm cho lịch trình" : "Thêm dịch vụ cho lịch trình"}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div className=" m-3 " >

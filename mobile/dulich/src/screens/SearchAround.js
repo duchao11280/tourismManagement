@@ -30,17 +30,17 @@ const SearchAround = ({ navigation }) => {
                 latitudeDelta: 0.03,
                 longitudeDelta: 0.03
             })
-            getAllPlaceAround(location?.coords?.latitude || initialRegion.latitude, location?.coords?.longitude || initialRegion.longitude, 20)
+            getAllPlaceAround(location?.coords?.latitude || initialRegion.latitude, location?.coords?.longitude || initialRegion.longitude, 5)
                 .then((response) => { setListPlace(response.data) })
                 .catch((err) => { setListPlace([]) })
-            getAllServiceAround(location?.coords?.latitude || initialRegion.latitude, location?.coords?.longitude || initialRegion.longitude, 200)
+            getAllServiceAround(location?.coords?.latitude || initialRegion.latitude, location?.coords?.longitude || initialRegion.longitude, 5)
                 .then((response) => { setListService(response.data) })
                 .catch((err) => { setListService([]) })
 
             setRefresh(false)
         })();
     }, []);
-    
+
     const filterHotel = listService == undefined ? [] : listService.filter(item => {
         return item.typeID === 1;
     })
@@ -50,26 +50,26 @@ const SearchAround = ({ navigation }) => {
     const _scrollViewCard = React.useRef(null);
     const _map = React.useRef(null);
     const scrollToTop = () => {
-        if( _scrollViewCard !== undefined) { 
-            _scrollViewCard.current.scrollTo({x:0,y:0, animated: true})
+        if (_scrollViewCard !== undefined) {
+            _scrollViewCard.current.scrollTo({ x: 0, y: 0, animated: true })
         }
-            
+
     }
-    const goToMarker = (lat,long) =>{
+    const goToMarker = (lat, long) => {
         _map.current.animateToRegion({
-                latitude: isNaN(parseFloat(lat))?0:parseFloat(lat),
-                longitude: isNaN(parseFloat(long))?0:parseFloat(long),
-                latitudeDelta: 0.02,
-                longitudeDelta: 0.02,
-        },300)
+            latitude: isNaN(parseFloat(lat)) ? 0 : parseFloat(lat),
+            longitude: isNaN(parseFloat(long)) ? 0 : parseFloat(long),
+            latitudeDelta: 0.02,
+            longitudeDelta: 0.02,
+        }, 300)
     }
     const renderCardService = (listItem) => (
         listItem.map((item, i) => {
             return (
-                <Pressable 
-                    style={styles.card} 
+                <Pressable
+                    style={styles.card}
                     key={i}
-                    onPress={()=>{ goToMarker(item.latitude,item.longitude)}}
+                    onPress={() => { goToMarker(item.latitude, item.longitude) }}
                 >
                     <Image
                         source={item.images.length != 0 ? { uri: item.images[0].image } : require('../resources/imgs/Logo.png')}
@@ -123,15 +123,29 @@ const SearchAround = ({ navigation }) => {
                     }
                     {listService != undefined ? listService.map((service, i) => {
                         return (
-                            <Marker.Animated
-                                key={"service" + i}
-                                coordinate={{
-                                    latitude: parseFloat(service.latitude),
-                                    longitude: parseFloat(service.longitude),
-                                }}
-                                title={service.serviceName}
+                            <View key={i}>
+                                {
+                                    ((service.typeID === 1 && currentFilter == filter[0].id) || (service.typeID === 1 && currentFilter == filter[2].id)) ?
+                                        <Marker.Animated
+                                            key={"service" + i}
+                                            coordinate={{
+                                                latitude: parseFloat(service.latitude),
+                                                longitude: parseFloat(service.longitude),
+                                            }}
+                                            title={service.serviceName}
 
-                            />
+                                        /> : ((service.typeID === 2 && currentFilter == filter[0].id) || (service.typeID === 2 && currentFilter == filter[3].id)) ?
+                                            <Marker.Animated
+                                                key={"service" + i}
+                                                coordinate={{
+                                                    latitude: parseFloat(service.latitude),
+                                                    longitude: parseFloat(service.longitude),
+                                                }}
+                                                title={service.serviceName}
+                                            />
+                                            : <View></View>
+                                }
+                            </View>
                         )
                     })
                         : <View></View>
@@ -140,9 +154,9 @@ const SearchAround = ({ navigation }) => {
                 <ScrollView horizontal height={50} style={styles.filter} showsHorizontalScrollIndicator={false}>
                     {filter.map((item) => {
                         return (
-                            <Pressable 
+                            <Pressable
                                 style={currentFilter == item.id ? styles.filterFocused : styles.itemFilter}
-                                onPress={() => { 
+                                onPress={() => {
                                     setCurrentFilter(item.id)
                                     scrollToTop()
                                 }}
@@ -157,14 +171,14 @@ const SearchAround = ({ navigation }) => {
                     ref={_scrollViewCard}
                     horizontal
                     style={styles.scrollView}
-                    showsHorizontalScrollIndicator={false} 
+                    showsHorizontalScrollIndicator={false}
                 >
                     {(currentFilter == filter[0].id || currentFilter == filter[1].id) ? listPlace.map((item, i) => {
                         return (
-                            <Pressable 
-                                style={styles.card} 
-                                key={i} 
-                                onPress={()=>{ goToMarker(item.latitude,item.longitude)}}
+                            <Pressable
+                                style={styles.card}
+                                key={i}
+                                onPress={() => { goToMarker(item.latitude, item.longitude) }}
                             >
                                 <Image
                                     source={item.images.length != 0 ? { uri: item.images[0].image } : require('../resources/imgs/Logo.png')}
