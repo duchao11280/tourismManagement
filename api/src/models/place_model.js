@@ -37,8 +37,6 @@ Place.getAllPlacesEnable = (result) => {
 Place.getAllPlacesEnableByCity = (city, result) => {
     dbConn.query('Select * From place Where isDeleted != 1 and city=?', [city], (err, res) => {
         if (res) {
-
-
             result(null, res);
         } else {
             result(err, null);

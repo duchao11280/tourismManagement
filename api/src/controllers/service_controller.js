@@ -55,9 +55,10 @@ exports.getAllServiceAndImagesByPlaceIDAndTypeService = (req, res) => {
     });
 }
 
-exports.getAllHotel = (req, res) => {
-    ServiceModel.getAllHotel((err, services) => {
-
+exports.getHotelByCity = (req, res) => {
+    // console.log(req.body.city)
+    ServiceModel.getHotelByCity(req.body.city, (err, services) => {
+        // console.log(err)
         if (err) {
             res.status(500).json({ status: false, message: err, data: [] })
             return;
@@ -110,8 +111,8 @@ exports.getAllHotel = (req, res) => {
     });
 }
 
-exports.getAllOtherServices = (req, res) => {
-    ServiceModel.getAllOtherServices((err, services) => {
+exports.getServicesByCity = (req, res) => {
+    ServiceModel.getServicesByCity(req.body.city, (err, services) => {
         if (err) {
             res.status(500).json({ status: false, message: err, data: [] })
             return;

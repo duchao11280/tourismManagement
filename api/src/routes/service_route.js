@@ -7,8 +7,8 @@ const serviceController = require('../controllers/service_controller');
 router.post('/:id', [verifyToken.verifyToken], serviceController.getAllServiceAndImagesByPlaceIDAndTypeService);
 
 //get all services 
-router.get('/services/1', [verifyToken.verifyToken], serviceController.getAllHotel);
-
-
-router.get('/services/2', [verifyToken.verifyToken], serviceController.getAllOtherServices);
+router.post('/hotel/searchbycity', [verifyToken.verifyToken], serviceController.getHotelByCity);
+// router.post('/', [verifyToken.verifyToken], placeController.getAllPlaceAndImagesByCity);
+router.post('/otherservices/searchbycity', [verifyToken.verifyToken], serviceController.getServicesByCity);
+// router.post('/otherservices/', [verifyToken.verifyToken], serviceController.getOtherServicesByCity);
 module.exports = router;

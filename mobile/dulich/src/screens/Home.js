@@ -19,10 +19,11 @@ const Home = ({ navigation }) => {
     const [searchfield, setSearchfield] = useState('');
     const [listHotel, setListHotel] = useState([]);
     const [listOtherServices, setListOtherServices] = useState([])
-    const [role, setrole] = useState([]);
+    // const [role, setrole] = useState([]);
+    const [nameFilter, setNameFilter] = useState('');
 
-    // const [listProvince, setListProvinceName] = useState(province);
-    const [isShowfilter, setIsShowfilter] = useState(false)
+
+
     const handleSearch = (text) => {
         setSearchfield(text);
 
@@ -73,50 +74,45 @@ const Home = ({ navigation }) => {
         <SafeAreaView style={{ flex: 1 }}>
             <KeyboardAwareScrollView>
                 <View style={styles.container}>
-
-                    <View style={styles.containerSearch}>
-                        <View style={{ flex: 5 }}>
-                            <SearchBar
-                                placeholder="Tìm địa điểm"
-                                lightTheme
-                                round // bo góc
-                                onChangeText={handleSearch}
-                                value={searchfield}
-                            />
-                        </View>
-                        <View >
-                            <Pressable
-                                onPress={() => {
-                                    setIsShowfilter(!isShowfilter);
-                                }}
-                            >
-                                <AntDesign name="filter" size={60} color="black" />
-                            </Pressable>
-                        </View>
-
-
+                    <View >
+                        <SearchBar
+                            placeholder="Tìm địa điểm"
+                            lightTheme
+                            round // bo góc
+                            onChangeText={handleSearch}
+                            value={searchfield}
+                        />
                     </View>
-                    {isShowfilter ?
-                        <View>
-                            <SelectDropdown
-                                data={province}
-                                // defaultValue={province}
-                                onSelect={(selectedItem, index) => {
-                                    console.log('selected Country name ->>>>', selectedItem.provinceName)
-                                    console.log('selected Country Id ->>>>', selectedItem.id)
-                                }}
-                                buttonTextAfterSelection={(selectedItem, index) => {
-                                    // text represented after item is selected
-                                    // if data array is an array of objects then return selectedItem.property to render after item is selected
-                                    return selectedItem.provinceName
-                                }}
-                                rowTextForSelection={(item, index) => {
-                                    // text represented for each item in dropdown
-                                    // if data array is an array of objects then return item.property to represent item in dropdown
-                                    return item.provinceName
-                                }}
-                            />
-                        </View> : <View></View>}
+
+                    <View>
+                        <Text> tìm kiếm tỉnh thành :</Text>
+                        <SelectDropdown
+                            data={province}
+                            // defaultValue={province}
+                            onSelect={(selectedItem, index) => {
+                                // console.log('selected Country name ->>>>', selectedItem.provinceName)
+                                // console.log('selected Country Id ->>>>', selectedItem.id)
+
+
+                            }}
+                            buttonTextAfterSelection={(selectedItem, index) => {
+                                // text represented after item is selected
+                                // if data array is an array of objects then return selectedItem.property to render after item is selected
+
+                                // console.log('Da chay ->>>>', selectedItem.provinceName)
+                                setNameFilter(selectedItem.provinceName)
+
+                                console.log(nameFilter)
+                                // filteredProvince = selectedItem.provinceName;
+                                return selectedItem.provinceName
+                            }}
+                            rowTextForSelection={(item, index) => {
+                                // text represented for each item in dropdown
+                                // if data array is an array of objects then return item.property to represent item in dropdown
+                                return item.provinceName
+                            }}
+                        />
+                    </View>
 
 
 
@@ -135,16 +131,17 @@ const Home = ({ navigation }) => {
                             <FlatList
                                 data={filteredProvince}
                                 numColumns={32}
-                                // ListFooterComponent={<View style={{ paddingBottom: 300 }} />}
-                                // flexDirection:rows
+
                                 keyExtractor={item => item.id.toString()}
                                 renderItem={({ item, index }) => {
                                     return (
-                                        // <View><Text>{item.provinceName}</Text></View>
+
                                         <Province province={item.provinceName} gotoPlace={gotoPlaceByProvince} />
                                     )
                                 }}
-                            ></FlatList>
+                            >
+
+                            </FlatList>
                         </ScrollView>
 
                     </View>
@@ -188,22 +185,7 @@ const Home = ({ navigation }) => {
                         ></FlatList>
                     </View>
 
-                    {/* <View >
-                        <Text style={styles.content}>Khám phá các địa điểm tại các thành phố:</Text>
-                    </View>
-                    <View style={styles.flatlistview}>
-                        <FlatList
-                            data={filteredProvince}
-                            horizontal
-                            keyExtractor={item => item.id.toString()}
-                            renderItem={({ item, index }) => {
-                                return (
-                                    // <View><Text>{item.provinceName}</Text></View>
-                                    <Province province={item.provinceName} gotoPlace={gotoPlaceByProvince} />
-                                )
-                            }}
-                        ></FlatList>
-                    </View> */}
+
                 </View >
             </KeyboardAwareScrollView>
 
@@ -253,10 +235,10 @@ const styles = StyleSheet.create({
         // backgroundColor: 'red',
         flexGrow: 0
     },
-    containerSearch: {
-        flex: 1,
-        flexDirection: 'row',
-    }
+    // containerSearch: {
+    //     flex: 1,
+    //     flexDirection: 'row',
+    // }
 })
 
 

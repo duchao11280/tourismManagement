@@ -69,13 +69,13 @@ Service.getAllServices = (result) => {
 }
 
 // get all hotel
-Service.getAllHotel = (result) => {
+Service.getHotelByCity = (city, result) => {
     dbConn.query(`Select services.serviceID, services.serviceName, services.typeID, 
         typeservice.typeService,services.description, services.placeID, place.placeName,
         services.address, services.hotline, place.city,
         services.latitude, services.longitude, isDisabled 
         From services, typeservice, place
-        Where services.isDisabled = 0 and services.placeID = place.placeID and services.typeID = typeservice.typeID and services.typeID=1 `,
+        Where services.isDisabled = 0 and services.placeID = place.placeID and services.typeID = typeservice.typeID and services.typeID=1 and city="${city}" `,
         (err, res) => {
             result(err, res);
         }
@@ -83,13 +83,13 @@ Service.getAllHotel = (result) => {
 }
 
 // get all hotel
-Service.getAllOtherServices = (result) => {
+Service.getServicesByCity = (city, result) => {
     dbConn.query(`Select services.serviceID, services.serviceName, services.typeID, 
         typeservice.typeService,services.description, services.placeID, place.placeName,
         services.address, services.hotline, place.city,
         services.latitude, services.longitude, isDisabled 
         From services, typeservice, place
-        Where services.isDisabled = 0 and services.placeID = place.placeID and services.typeID = typeservice.typeID and services.typeID=2`,
+        Where services.isDisabled = 0 and services.placeID = place.placeID and services.typeID = typeservice.typeID and services.typeID=2 and city="${city}" `,
         (err, res) => {
             result(err, res);
         }
