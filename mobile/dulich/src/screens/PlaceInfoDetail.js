@@ -47,8 +47,8 @@ const PlaceInfoDetail = ({ navigation, route }) => {
             else {
                 setIsVoted(false)
             }
-            console.log(myComment)
-            console.log("isvote" + isVoted);
+            // console.log(myComment)
+            // console.log("isvote" + isVoted);
             // listComment.forEach(element => {
             //     console.log(userID);
             //     if (element.userID == userID) {

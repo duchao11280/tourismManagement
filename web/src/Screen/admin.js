@@ -4,6 +4,7 @@ import React from "react";
 import Logo from "../assets/imgs/Logo.png";
 import "./css/admin.css"
 import { ImHome } from "react-icons/im";
+import { AiOutlineMail } from "react-icons/ai";
 import { FaThLarge, FaUserAlt, FaConciergeBell, FaSignOutAlt } from "react-icons/fa";
 import { GiEarthAmerica } from "react-icons/gi";
 import { useHistory, Link } from 'react-router-dom'
@@ -67,6 +68,13 @@ const Admin = () => {
                                 <div>Thông báo</div>
                             </a></Link>
                     </li>
+                    {/* <li>
+                        <Link to="/admin/notificationmanagement">
+                            <a >
+                                <AiOutlineMail className="icon-Admin" />
+                                <div>Phản hồi</div>
+                            </a></Link>
+                    </li> */}
                     <li>
                         <a href="#">
                             <FaSignOutAlt className="icon-Admin" />

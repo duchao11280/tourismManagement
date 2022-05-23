@@ -107,22 +107,25 @@ const Home = ({ navigation }) => {
                         />
                     </View>
 
-                    <View >
+                    <View style={{ flexDirection: 'row' }}>
                         <Text style={styles.contentTitle} > tìm kiếm tỉnh thành :</Text>
 
-                        <Picker
-                            selectedValue={nameFilter}
-                            onValueChange={(itemValue, itemIndex) => {
-                                setNameFilter(itemValue)
-                                getPlaceFromServer();
-                                getHotelFromServer();
-                                getOtherServicesFromServer();
-                            }
+                        <View style={styles.pickerStyle}>
+                            <Picker
+                                selectedValue={nameFilter}
+                                onValueChange={(itemValue, itemIndex) => {
+                                    setNameFilter(itemValue)
+                                    getPlaceFromServer();
+                                    getHotelFromServer();
+                                    getOtherServicesFromServer();
+                                }
 
-                            }>
-                            <Picker.Item label="Đồng Nai" value="Đồng Nai" />
-                            <Picker.Item label="Thành Phố Hồ Chí Minh" value="Thành Phố Hồ Chí Minh" />
-                        </Picker>
+                                }>
+                                <Picker.Item label="Đồng Nai" value="Đồng Nai" />
+                                <Picker.Item label="Thành Phố Hồ Chí Minh" value="Thành Phố Hồ Chí Minh" />
+                            </Picker>
+                        </View>
+
                     </View>
 
 
@@ -235,6 +238,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     contentTitle: {
+        paddingTop: 17,
         fontSize: 13,
         fontWeight: "800"
     },
@@ -247,6 +251,11 @@ const styles = StyleSheet.create({
     //     flex: 1,
     //     flexDirection: 'row',
     // }
+    pickerStyle: {
+        paddingLeft: 30,
+        width: 260,
+        height: 50,
+    }
 })
 
 

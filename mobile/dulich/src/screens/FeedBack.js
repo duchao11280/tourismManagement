@@ -94,6 +94,8 @@ const Feedback = ({ navigation }) => {
 
             )
             .catch(() => Alert.alert("Thông báo", "Hệ thống xảy ra lỗi, vui lòng thử lại sau"));
+        setContent('');
+        setTitle('');
     }
 
     return (
@@ -228,9 +230,7 @@ const styles = StyleSheet.create({
         textAlignVertical: 'top'
     },
 
-    buttonSearch: {
-        paddingLeft: 250
-    },
+
     Arrowback: {
         fontSize: 30,
         marginLeft: 10
@@ -264,13 +264,13 @@ const styles = StyleSheet.create({
     Send: {
         borderWidth: 1,
         borderRadius: 10,
-        height: 50,
+        height: 40,
         width: 100,
         marginLeft: 280,
         backgroundColor: '#00cc00'
     },
     PositionInSend: {
-        paddingTop: 13,
+        paddingTop: 10,
         paddingLeft: 8
     }
 
