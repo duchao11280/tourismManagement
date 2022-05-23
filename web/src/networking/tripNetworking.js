@@ -141,7 +141,7 @@ const deleteDetailTripItem = async (id) => {
 const addPlaceToDetailTrip = async (id, day, placeID, note, timeClock) => {
     try {
         const respone = await fetch(
-            API_URL + `/api/v1/admin/detailtrip/addnew/${id}`, {
+            API_URL + `/api/v1/admin/detailtrip/addplace/${id}`, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -151,6 +151,29 @@ const addPlaceToDetailTrip = async (id, day, placeID, note, timeClock) => {
             body: JSON.stringify({
                 day: day,
                 placeID: parseInt(placeID),
+                note: note,
+                timeClock: timeClock,
+            })
+        });
+        const json = await respone.json();
+        return json;
+    } catch (error) {
+
+    }
+}
+const addServiceToDetailTrip = async (id, day, serviceID, note, timeClock) => {
+    try {
+        const respone = await fetch(
+            API_URL + `/api/v1/admin/detailtrip/addservice/${id}`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                "Accept": 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                day: day,
+                serviceID: parseInt(serviceID),
                 note: note,
                 timeClock: timeClock,
             })
@@ -186,4 +209,5 @@ export {
     deleteDetailTripItem,
     addPlaceToDetailTrip,
     deleteDayOfTrip,
+    addServiceToDetailTrip,
 }

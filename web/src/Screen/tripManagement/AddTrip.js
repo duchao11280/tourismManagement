@@ -77,7 +77,7 @@ const AddTrip = () => {
                 uId++
                 tripDetail.detail.push({
                     id: uId,
-                    laceID: listPlace[0].placeID,
+                    placeID: listPlace[0].placeID,
                     timeClock: `0${new Date().getHours()}`.slice(-2) + ":" + `0${new Date().getMinutes()}`.slice(-2)
                 })
             }

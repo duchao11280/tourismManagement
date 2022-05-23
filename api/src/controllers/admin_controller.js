@@ -509,7 +509,7 @@ exports.getDetailTripByID = (req, res) => {
             // xóa bỏ các ngày trùng có dữ liệu
             listDay = Array.from(new Set(listDay))
             let listDayEmpty = [];
-            for (let i = listDay[listDay.length - 1] + 1; i <= trip[0].numberOfDays; i++) {
+            for (let i = listDay[listDay.length - 1] + 1 || 1; i <= trip[0].numberOfDays; i++) {
                 listDayEmpty.push(i)
             }
             listDay.push(...listDayEmpty)
@@ -573,6 +573,20 @@ exports.addPlaceToDetailTrip = (req, res) => {
     let note = req.body.note;
     let timeClock = req.body.timeClock;
     DetailTripModel.addPlaceToDetailTrip(tripID, day, placeID, note, timeClock, (err, result) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Thêm thành công' })
+    })
+}
+exports.addServiceToDetailTrip = (req, res) => {
+    let tripID = req.params.id
+    let day = req.body.day;
+    let serviceID = req.body.serviceID;
+    let note = req.body.note;
+    let timeClock = req.body.timeClock;
+    DetailTripModel.addServiceToDetailTrip(tripID, day, serviceID, note, timeClock, (err, result) => {
         if (err) {
             res.status(500).json({ status: false, message: "Thất bại" })
             return;

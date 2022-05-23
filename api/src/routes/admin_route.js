@@ -122,7 +122,9 @@ router.put('/trip/updatedetailtrip/:id', [verifyToken.verifyToken, checkRole.isA
 // delete detail trip by id
 router.delete('/trip/deletedetailtripitem/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.deleteDetailTripItem)
 // add place to detail trip
-router.post('/detailtrip/addnew/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.addPlaceToDetailTrip)
+router.post('/detailtrip/addplace/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.addPlaceToDetailTrip)
+// add service to detail trip
+router.post('/detailtrip/addservice/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.addServiceToDetailTrip)
 //delete day Of Trip
 router.delete('/trip/deletedayoftrip/:tripid/:day', [verifyToken.verifyToken, checkRole.isAdmin], adminController.deleteDayOfDetailTrip)
 module.exports = router;

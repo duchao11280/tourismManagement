@@ -30,6 +30,7 @@ const EditTrip = () => {
     const [showModalAlertDelete, setShowModalAlertDelete] = useState(false)
     const [currItemDelete, setCurrItemDelete] = useState({})
     const [showModalAddDetailTrip, setShowModalAddDetailTrip] = useState(false)
+    const [isAddPlaceDetail, setIsAddPlaceDetail] = useState(false)
     const [dayAddPlaceDetail, setDayAddPlaceDetail] = useState(null)
     const [showModalAlert, setShowModalAlert] = useState(false);
     const [dayDelete, setDayDelete] = useState(null);
@@ -45,6 +46,7 @@ const EditTrip = () => {
                     .catch(() => { setListService([]) })
             })
             .catch(() => { setListPlace([]) })
+
     }, [])
     useEffect(() => {
         getTripDetailByTripID(id)
@@ -91,6 +93,12 @@ const EditTrip = () => {
     // Modal add place for detail trip 
     const onAddPlaceDetailTripItem = (day) => {
         setDayAddPlaceDetail(day)
+        setIsAddPlaceDetail(true)
+        setShowModalAddDetailTrip(true);
+    }
+    const onAddServiceDetailTripItem = (day) => {
+        setDayAddPlaceDetail(day)
+        setIsAddPlaceDetail(false)
         setShowModalAddDetailTrip(true);
     }
     const handleCloseModalAddDetailTrip = () => {
@@ -176,7 +184,7 @@ const EditTrip = () => {
                                             return (
                                                 <div style={{ backgroundColor: "azure", border: "1px solid", marginBottom: "5px" }} key={i}>
                                                     <div style={{ backgroundColor: "gray" }}>
-                                                        <div style={{ display: "flex", flex: 1, justifyContent: "space-between" }}>
+                                                        <div style={{ display: "flex", flex: 1, justifyContent: "space-between", marginLeft: "15px", color: "white", paddingTop: "5px" }}>
                                                             Ngày {tripDetailItem.day}
                                                             {tripDetailItem.day === tripDetail?.detail[tripDetail?.detail.length - 1].day && tripDetailItem.day !== 1 ?
                                                                 <div>
@@ -269,8 +277,9 @@ const EditTrip = () => {
                                                                     </div>
                                                                 </div>
                                                             ))}
-                                                            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                                                <Button variant="primary" onClick={() => { onAddPlaceDetailTripItem(tripDetailItem.day) }}>Thêm địa điểm</Button>
+                                                            <div style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}>
+                                                                <button className="mx-3 p-1 border border-primary bg-success text-white" onClick={() => { onAddPlaceDetailTripItem(tripDetailItem.day) }}>Thêm địa điểm</button>
+                                                                <button className="mx-3 p-1 border border-danger" onClick={() => { onAddServiceDetailTripItem(tripDetailItem.day) }}>Thêm dịch vụ</button>
 
                                                             </div>
                                                         </div>
@@ -310,8 +319,10 @@ const EditTrip = () => {
                         />
                         <ModalAddDetailTrip
                             isShow={showModalAddDetailTrip}
+                            isAddPlace={isAddPlaceDetail}
                             day={dayAddPlaceDetail}
                             listPlace={listPlace}
+                            listService={listService}
                             tripID={id}
                             handleCloseModal={handleCloseModalAddDetailTrip}
                         />

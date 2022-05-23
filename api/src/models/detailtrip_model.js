@@ -13,8 +13,14 @@ let DetailTrip = function (detailtrip) {
     this.updateAt = detailtrip.updateAt;
 }
 DetailTrip.addPlaceToDetailTrip = (tripID, day, placeID, note, timeClock, result) => {
-    dbConn.query(`Insert INTO detailtrip(tripID,placeID,note,day,timeClock) 
-        values(?,?,?,?,?)`, [tripID, placeID, note, day, timeClock], (err, res) => {
+    dbConn.query(`Insert INTO detailtrip(tripID,placeID,note,day,timeClock,type) 
+        values(?,?,?,?,?,0)`, [tripID, placeID, note, day, timeClock], (err, res) => {
+        result(err, res)
+    })
+}
+DetailTrip.addServiceToDetailTrip = (tripID, day, serviceID, note, timeClock, result) => {
+    dbConn.query(`Insert INTO detailtrip(tripID,serviceID,note,day,timeClock,type) 
+        values(?,?,?,?,?,1)`, [tripID, serviceID, note, day, timeClock], (err, res) => {
         result(err, res)
     })
 }
