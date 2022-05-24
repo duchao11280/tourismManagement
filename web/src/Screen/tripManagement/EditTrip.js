@@ -256,7 +256,7 @@ const EditTrip = () => {
                                                                                 placeholder="Ghi chú"
                                                                                 disabled
                                                                                 name="note"
-                                                                                defaultValue={detailPerItem.note}
+                                                                                value={detailPerItem.note}
                                                                             />
                                                                         </div>
                                                                     </div>
