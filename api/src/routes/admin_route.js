@@ -73,9 +73,9 @@ router.get('/comment/placeid=:id', [verifyToken.verifyToken, checkRole.isAdmin],
 //delete comment
 router.delete('/comment/:id', [verifyToken.verifyToken, checkRole.isAdmin], commentController.deleteComment)
 
-router.get('/feedback',
-    [verifyToken.verifyToken, checkRole.isAdmin],
-    feedbackController.adminGetAllFeedback)
+// router.get('/feedback',
+//     [verifyToken.verifyToken, checkRole.isAdmin],
+//     feedbackController.adminGetAllFeedback)
 
 //======================Services=====================//
 // Get all services
@@ -106,6 +106,8 @@ router.get('/typeservice', [verifyToken.verifyToken, checkRole.isAdmin], adminCo
 // Get ALL trip
 router.get('/trip', [verifyToken.verifyToken, checkRole.isAdmin], adminController.getAllTrip);
 
+
+
 // disable trip
 router.put('/trip/disable/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.disableTrip)
 
@@ -127,4 +129,9 @@ router.post('/detailtrip/addplace/:id', [verifyToken.verifyToken, checkRole.isAd
 router.post('/detailtrip/addservice/:id', [verifyToken.verifyToken, checkRole.isAdmin], adminController.addServiceToDetailTrip)
 //delete day Of Trip
 router.delete('/trip/deletedayoftrip/:tripid/:day', [verifyToken.verifyToken, checkRole.isAdmin], adminController.deleteDayOfDetailTrip)
+
+
+
+//======================feedback=====================//
+router.get('/feedback', [verifyToken.verifyToken, checkRole.isAdmin], adminController.getAllFeedback);
 module.exports = router;

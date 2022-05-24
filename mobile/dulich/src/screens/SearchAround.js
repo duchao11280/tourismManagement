@@ -8,7 +8,7 @@ import { useIsFocused } from '@react-navigation/native';
 const { width, height } = Dimensions.get('window');
 
 const SearchAround = ({ navigation }) => {
-    const [initialRegion, setInitialRegion] = useState({ latitude: 10.8836, longitude: 106.7815, latitudeDelta: 0.03, longitudeDelta: 0.03, });
+    const [initialRegion, setInitialRegion] = useState({ latitude: 10.8836, longitude: 106.7815, latitudeDelta: 0.016, longitudeDelta: 0.016, });
     const [listPlace, setListPlace] = useState([])
     const [listService, setListService] = useState([])
     const isFocused = useIsFocused();
@@ -23,12 +23,12 @@ const SearchAround = ({ navigation }) => {
                 return;
             }
             setRefresh(true)
-            let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Highest, maximumAge: 10000 });
+            let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.HighlatitudeDeltaest, maximumAge: 10000 });
             setInitialRegion({
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude,
-                latitudeDelta: 0.03,
-                longitudeDelta: 0.03
+                latitudeDelta: 0.016,
+                longitudeDelta: 0.016
             })
             getAllPlaceAround(location?.coords?.latitude || initialRegion.latitude, location?.coords?.longitude || initialRegion.longitude, 5)
                 .then((response) => { setListPlace(response.data) })
@@ -59,8 +59,8 @@ const SearchAround = ({ navigation }) => {
         _map.current.animateToRegion({
             latitude: isNaN(parseFloat(lat)) ? 0 : parseFloat(lat),
             longitude: isNaN(parseFloat(long)) ? 0 : parseFloat(long),
-            latitudeDelta: 0.02,
-            longitudeDelta: 0.02,
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.015,
         }, 300)
     }
     const renderCardService = (listItem) => (

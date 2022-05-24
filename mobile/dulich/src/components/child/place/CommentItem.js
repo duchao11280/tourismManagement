@@ -16,9 +16,10 @@ const CommentItem = (props) => {
                     </Text>
                     <View style={Styles.containerStar}>
                         {
-                            maxRating.map((vote) => {
+                            maxRating.map((vote, i) => {
                                 return (
                                     <Image
+                                        key={i}
                                         style={{
                                             width: 20,
                                             height: 20,

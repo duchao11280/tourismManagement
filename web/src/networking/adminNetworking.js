@@ -223,6 +223,24 @@ const getAllNotification = async () => {
 
     }
 }
+
+// get notification
+const getAllFeedback = async () => {
+    try {
+
+        const response = await fetch(
+            API_URL + `/api/v1/admin/feedback`,
+            {
+                method: 'GET',
+                credentials: 'include'
+            }
+        );
+        const json = await response.json();
+        return json;
+    } catch (error) {
+
+    }
+}
 // delete notification
 const deleteNotification = async (id) => {
     try {
@@ -294,6 +312,7 @@ export {
     disableUser,
     enableUser,
     getAllNotification,
+    getAllFeedback,
     deleteNotification,
     addNotification,
     updateNotification,
