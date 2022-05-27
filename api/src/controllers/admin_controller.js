@@ -6,6 +6,18 @@ const ServiceModel = require('../models/service_model');
 const TypeService = require('../models/typeservice_model')
 const TripModel = require('../models/trip_model')
 const DetailTripModel = require('../models/detailtrip_model')
+const FeedbackModel = require('../models/feedback_model')
+
+//========================Feedback================================//
+exports.getAllFeedback = (req, res) => {
+    FeedbackModel.getAllFeedback((err, places) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        res.json({ status: true, message: 'Lấy dữ liệu thành công', data: places })
+    });
+}
 //========================PLace================================//
 //get all place
 exports.getAllPlaces = (req, res) => {

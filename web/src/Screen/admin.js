@@ -4,7 +4,7 @@ import React from "react";
 import "./css/admin.css"
 
 import { FaThLarge, FaUserAlt, FaConciergeBell, FaSignOutAlt, FaBell, FaMotorcycle } from "react-icons/fa";
-
+import { FiMail } from "react-icons/fi";
 import { GiEarthAmerica } from "react-icons/gi";
 import { Link } from 'react-router-dom'
 const Admin = () => {
@@ -72,13 +72,13 @@ const Admin = () => {
                                 <div>Thông báo</div>
                             </a></Link>
                     </li>
-                    {/* <li>
-                        <Link to="/admin/notificationmanagement">
+                    <li>
+                        <Link to="/admin/feedbackmanagement">
                             <a >
-                                <AiOutlineMail className="icon-Admin" />
+                                <FiMail className="icon-Admin" />
                                 <div>Phản hồi</div>
                             </a></Link>
-                    </li> */}
+                    </li>
                     <li>
                         <a href="#">
                             <FaSignOutAlt className="icon-Admin" />

@@ -48,7 +48,7 @@ const DetailHotel = ({ navigation, route }) => {
             <Text style={styles.title}>Số điện thoại:</Text>
             {/* <View style={styles.phone}>
                 <Pressable onPress={makeCall}>
-                    <AntDesign name="phone" size={24} color="black" />
+                    <AntDesign name="phone" size={24} color="black" />/
                     <Text style={styles.content}>{service.hotline}</Text>
                 </Pressable>
             </View> */}
