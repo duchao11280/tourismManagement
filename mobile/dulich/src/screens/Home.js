@@ -108,16 +108,14 @@ const Home = ({ navigation }) => {
                     </View>
 
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.contentTitle} > tìm kiếm tỉnh thành :</Text>
+                        <Text style={styles.contentTitle} > Tìm kiếm tỉnh thành :</Text>
 
                         <View style={styles.pickerStyle}>
                             <Picker
                                 selectedValue={nameFilter}
                                 onValueChange={(itemValue, itemIndex) => {
                                     setNameFilter(itemValue)
-                                    getPlaceFromServer();
-                                    getHotelFromServer();
-                                    getOtherServicesFromServer();
+
                                 }
 
                                 }>

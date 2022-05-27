@@ -31,7 +31,15 @@ DetailTrip.getTripDetailByTripID = (id, result) => {
         CASE detailtrip.type
             WHEN 0 THEN place.isDeleted
             ELSE services.isDisabled
-        END as isDisabled
+        END as isDisabled,
+        CASE detailtrip.type
+            WHEN 0 THEN place.latitude
+            ELSE services.latitude
+        END as latitude,
+				CASE detailtrip.type
+            WHEN 0 THEN place.longitude
+            ELSE services.longitude
+        END as longitude
         from detailtrip  LEFT JOIN place ON detailtrip.placeID = place.placeID LEFT JOIN services ON detailtrip.serviceID = services.serviceID
         WHERE tripID =?
         ORDER BY day, timeClock`, [id], (err, res) => {

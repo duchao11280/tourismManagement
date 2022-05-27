@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
     SafeAreaView, View, FlatList, StyleSheet,
-    RefreshControl, Text, StatusBar, Pressable,ActivityIndicator
+    RefreshControl, Text, StatusBar, Pressable, ActivityIndicator
 } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import { getAllNotification } from '../networking/notificationNetworking'
@@ -12,40 +12,40 @@ const Notification = ({ navigation }) => {
     const [refreshing, setRefreshing] = useState(false);
     useEffect(() => {
         getNotificationFromServer();
-    },[])
+    }, [])
     const getNotificationFromServer = () => {
 
         getAllNotification().then((response) => { setListNotification(response.data) })
             .catch((err) => { Alert.alert("Thông báo", "Hệ thống xảy ra lỗi, vui lòng thử lại sau") })
-            .finally(() => { setLoading(false), setRefreshing(false); });
+            .finally(() => { setLoading(false); setRefreshing(false); });
 
     }
     const onRefresh = () => { setRefreshing(true); getNotificationFromServer() }
     const renderItem = ({ item }) => (
-        <Pressable onPress={()=>{navigation.push('DetailNotification',{notification: item})}}>
+        <Pressable onPress={() => { navigation.push('DetailNotification', { notification: item }) }}>
             <View style={styles.notificationItem}>
-            <Text style={styles.title}>
-                {item.title}
-            </Text>
-            <View >
-                {item.content.length < 100
-                    ?
-                    <Text style={styles.textContent}>
-                        {item.content}
-                    </Text>
-                    :
-                    <Text style={styles.textContent}>
-                        {item.content.slice(0, 100)}...
+                <Text style={styles.title}>
+                    {item.title}
+                </Text>
+                <View >
+                    {item.content.length < 100
+                        ?
+                        <Text style={styles.textContent}>
+                            {item.content}
+                        </Text>
+                        :
+                        <Text style={styles.textContent}>
+                            {item.content.slice(0, 100)}...
                             <Text style={styles.bonus}>Xem thêm</Text>
-                    </Text>
-                }
+                        </Text>
+                    }
+                </View>
+                <Text style={{ fontStyle: 'italic', color: 'grey', textAlign: 'right' }}>
+                    Ngày gửi: {item.time.replace(/T/, ' ').replace(/\..+/, '')}
+                </Text>
             </View>
-            <Text style={{ fontStyle: 'italic', color: 'grey', textAlign: 'right' }}>
-                Ngày gửi: {item.time.replace(/T/, ' ').replace(/\..+/, '') }
-            </Text>
-        </View>
         </Pressable>
-        
+
     );
 
     return (
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     textContent: {
         fontSize: 17
     },
-    bonus:{
+    bonus: {
         color: 'blue'
     },
 

@@ -33,6 +33,7 @@ const serviceRoutes = require('./src/routes/service_route');
 
 const notificationRoutes = require('./src/routes/notification_route')
 const commentRoutes = require('./src/routes/comment_route')
+const tripRoutes = require('./src/routes/trip_route')
 //create user
 app.use('/api/v1/user', userRoutes);
 // route cho place
@@ -44,6 +45,7 @@ app.use('/api/v1/admin', adminRoutes);
 
 app.use('/api/v1/notification', notificationRoutes)
 app.use('/api/v1/comment', commentRoutes)
+app.use('/api/v1/trip', tripRoutes)
 app.listen(port, function () {
     console.log(`Node server running @ http://localhost:${port}`)
 });

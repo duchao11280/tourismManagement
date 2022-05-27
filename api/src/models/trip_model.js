@@ -152,4 +152,10 @@ Trip.deleteDayOfDetailTrip = (tripID, day, result) => {
         }
     });
 }
+
+Trip.getTripEnableByCity = (city, result) => {
+    dbConn.query(`Select * from trip Where city = ? and isDisabled =0 `, [city], (err, res) => {
+        result(err, res)
+    })
+}
 module.exports = Trip;
