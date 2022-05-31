@@ -278,9 +278,8 @@ const EditTrip = () => {
                                                                 </div>
                                                             ))}
                                                             <div style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}>
-                                                                <button className="mx-3 p-1 border border-primary bg-success text-white" onClick={() => { onAddPlaceDetailTripItem(tripDetailItem.day) }}>Thêm địa điểm</button>
-                                                                <button className="mx-3 p-1 border border-danger" onClick={() => { onAddServiceDetailTripItem(tripDetailItem.day) }}>Thêm dịch vụ</button>
-
+                                                                <button className="mx-3 p-1 border border-primary bg-success text-white" style={{ borderRadius: 15 }} onClick={() => { onAddPlaceDetailTripItem(tripDetailItem.day) }}>Thêm địa điểm</button>
+                                                                <button className="mx-3 p-1 border border-danger" style={{ borderRadius: 15 }} onClick={() => { onAddServiceDetailTripItem(tripDetailItem.day) }}>Thêm dịch vụ</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -292,12 +291,12 @@ const EditTrip = () => {
                             </div>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <Button variant="primary" onClick={() => { addDay() }}>Thêm ngày</Button>
+                            <Button variant="primary" style={{ borderRadius: 15 }} onClick={() => { addDay() }}>Thêm ngày</Button>
 
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                             {/* <Button variant="primary" onClick={() => { }}>Đồng ý</Button> */}
-                            <Button variant="secondary" onClick={() => { handleGoback() }}>Quay lại</Button>
+                            <Button variant="secondary" style={{ borderRadius: 15 }} onClick={() => { handleGoback() }}>Quay lại</Button>
                         </div>
                         <ModalUpdateInfoTrip
                             isShow={showModalUpdateBasicInfo}
@@ -336,7 +335,7 @@ const EditTrip = () => {
                 </div>
             }
 
-        </div>
+        </div >
     )
 }
 

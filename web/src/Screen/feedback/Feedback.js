@@ -12,6 +12,7 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import Form from 'react-bootstrap/Form'
 import Scroll from '../../component/Scroll'
 import { getAllFeedback, deleteNotification, addNotification, updateNotification } from '../../networking/adminNetworking'
+import '../css/notification_and_feedback.css'
 const Feedback = () => {
     const [searchfield, setSearchfield] = useState('');
     const [listNotification, setListNotification] = useState([])
@@ -214,26 +215,28 @@ const Feedback = () => {
                     <h3> Danh sách phản hồi</h3>
 
                 </div>
-                <Accordion defaultActiveKey="0">
+                <Accordion defaultActiveKey="0" >
                     {
                         filteredNotification.map((item, i) => {
                             return (
-                                <Card key={i}>
-                                    <Card.Header>
-                                        <div style={{ display: "flex", flex: 1, justifyContent: "space-between" }}>
-                                            {item.title}
-                                            <div>
-                                                <ContextAwareToggle eventKey={i}>_</ContextAwareToggle>
-                                                {/* <button className="btn" onClick={() => { handleOnEdit(item) }} style={{ backgroundColor: '#6f8ead' }}><BiPencil /></button>
-                                                <button className="btn" onClick={() => { handleOnDelete(item) }} style={{ backgroundColor: '#f64645' }}><BsTrash /></button> */}
+                                <div >
+                                    <Card key={i} style={{ marginBottom: "13px" }}>
+                                        <Card.Header>
+                                            <div style={{ display: "flex", flex: 1, justifyContent: "space-between" }}>
 
+                                                {item.title}
+                                                <div>
+                                                    <ContextAwareToggle eventKey={i}>_</ContextAwareToggle>
+
+
+                                                </div>
                                             </div>
-                                        </div>
-                                    </Card.Header>
-                                    <Accordion.Collapse eventKey={i}>
-                                        <Card.Body>{item.content}</Card.Body>
-                                    </Accordion.Collapse>
-                                </Card>
+                                        </Card.Header>
+                                        <Accordion.Collapse eventKey={i}>
+                                            <Card.Body>{item.content}</Card.Body>
+                                        </Accordion.Collapse>
+                                    </Card>
+                                </div>
                             )
                         })
                     }

@@ -141,7 +141,7 @@ const EditService = () => {
     return (
         <div className="containerWithsideBar">
             <Admin />
-            <div className="container-manager">
+            <div className="container-edit-service">
                 <h2>Chỉnh sửa dịch vụ</h2>
                 <div className="edit_service">
 
@@ -198,14 +198,14 @@ const EditService = () => {
                         </div>
                         <div className="input_text">
                             <label htmlFor="address">Địa chỉ(*)</label>
-                            <input
+                            <textarea
                                 id="address"
-                                type="text"
                                 name="address"
+                                aria-multiline="true"
                                 value={values.address}
                                 placeholder="Nhập địa chỉ"
-                                onChange={handleChange}
-                            />
+                                rows="2"
+                                onChange={handleChange} />
                         </div>
                         <div className="input_text">
                             <label htmlFor="latitude">Vĩ độ(*)</label>
@@ -276,7 +276,7 @@ const EditService = () => {
                             </div>
                             :
                             <div className="box_edit_image_service">
-                                <div className="expanded_image">
+                                <div className="expanded_image_service">
                                     <span className="btn_delete_img" onClick={() => { handleDeleteImage(currImg?.id) }}><BsTrash /></span>
                                     <img className="image" src={currImg?.imgURL} alt="" />
                                 </div>

@@ -9,10 +9,9 @@ import { useHistory } from "react-router-dom";
 function Login() {
   const history = useHistory();
 
-
   const [userName, setuserName] = useState('');
   const [password, setpassword] = useState('');
-
+  const [error, serError] = useState('');
 
   const handleUserNameChange = (e) => {
     setuserName(e.target.value);
@@ -37,12 +36,13 @@ function Login() {
         } else if (response.data.user.role === 1) {
           history.push("/admin")
         }
-        
+
 
       } catch (e) {
       }
     } else {
-      alert(response.message)
+      serError('Sai tên đăng nhập hoặc mật khẩu');
+      // alert(response.message)
     }
 
 
@@ -58,26 +58,35 @@ function Login() {
   }
   return (
     <div className="containerLogin">
-      <div><img src={Logo} alt="logo" /></div>
+      <div className="container-logo-login-admin">
+        <img src={Logo} alt="logo" />
+      </div>
       <div className="login-form">
         <form onSubmit={handleSubmit}>
           <div className="login-title">Đăng nhập</div>
           <div className="input-container">
-            <label>Username </label>
+            <label>Tên đăng nhập </label>
             <input type="text" name="uname" value={userName}
               onChange={(e) => { handleUserNameChange(e) }} />
           </div>
 
 
           <div className="input-container">
-            <label>Password </label>
+            <label>Mật khẩu </label>
             <input type="password" name="pass" value={password}
               onChange={(e) => { handlePasswordChange(e) }} />
           </div>
 
           <div className="button-container">
-            <input type="submit" />
+            {/* <input type="submit" label="Đăng nhập" /> */}
+            <div className="container-button-login">
+              <button className="button-login"> Đăng nhập</button>
+            </div>
           </div>
+          <div className="container-error-font">
+            <div className="error-font">{error}</div>
+          </div>
+
         </form>
 
       </div>

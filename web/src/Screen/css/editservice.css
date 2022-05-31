@@ -21,6 +21,8 @@
 .btn_edit_service{
     margin:5px;
     padding:5px;
+    background-color:rgb(171, 230, 171);
+    border-radius: 15px
 }
 .section_image_editservice{
     width: 65%;
@@ -50,13 +52,13 @@
     flex-direction: row;
     margin-bottom: 40px;
 }
-.expanded_image{
+.expanded_image_service{
     width: 80%;
     
     position: relative;
     background-color: rgb(78, 72, 72);
 }
-.expanded_image .image{
+.expanded_image_service .image{
     height: 500px;
     width: 100%;
     justify-content: center;

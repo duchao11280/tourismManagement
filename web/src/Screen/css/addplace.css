@@ -38,8 +38,11 @@ h2{
 .btn_add_place{
     margin:5px;
     padding:5px;
+    background-color: rgb(148, 241, 179);
 }
 .btn_back{
     margin: 5px;
     padding:5px 15px;
+    background-color: rgb(241, 179, 179);
+    border-radius: 15px;
 }

@@ -39,6 +39,10 @@ const Information = ({ navigation }) => {
       </Appbar.Header>
 
       <View style={styles.HeadContainer}>
+        <View style={styles.AvartarView}>
+          <Image source={require('../resources/imgs/avatar.png')} style={{ width: 50, height: 50 }} />
+        </View>
+
         <View style={styles.WelcomeView}>
           <Text style={styles.TextWelcome} > Xin Chào! {"\n "}
             {fullName}</Text>
@@ -56,14 +60,14 @@ const Information = ({ navigation }) => {
         <Line />
 
         <View style={styles.TitleView}>
-          <TouchableOpacity style={[{ flex: 0.5, flexDirection: 'row' }]} onPress={() => navigation.push('Profile')}>
+          <TouchableOpacity style={[{ flex: 0.5, flexDirection: 'row', paddingLeft: 10 }]} onPress={() => navigation.push('Profile')}>
             <FontAwesome5 name={'user'} size={20} />
             <Text style={styles.Title}>Thông tin của bạn</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.TitleView}>
-          <TouchableOpacity style={[{ flex: 0.5, flexDirection: 'row' }]} onPress={() => navigation.push('Feedback')}>
+          <TouchableOpacity style={[{ flex: 0.5, flexDirection: 'row', paddingLeft: 10 }]} onPress={() => navigation.push('Feedback')}>
             <AntDesign name="mail" size={20} color="black" />
             <Text style={styles.Title}>Gửi góp ý</Text>
           </TouchableOpacity>
@@ -83,14 +87,14 @@ const Information = ({ navigation }) => {
         <Text style={styles.headTitle}> Thông tin</Text>
         <Line />
         <View style={styles.TitleView}>
-          <TouchableOpacity style={[{ flex: 0.5, flexDirection: 'row' }]} onPress={() => alert('Ứng dụng thực hiện cho Khóa Luận tốt nghiệp')} >
+          <TouchableOpacity style={[{ flex: 0.5, flexDirection: 'row', paddingLeft: 14 }]} onPress={() => alert('Ứng dụng thực hiện cho Khóa Luận tốt nghiệp')} >
             <FontAwesome5 name={'info'} size={30} />
             <Text style={styles.Title}>  Về ứng dụng</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.TitleView}>
-          <TouchableOpacity style={[{ flex: 0.5, flexDirection: 'row' }]} onPress={() => alert('Ứng dụng thực hiện bởi Đức Hảo và Thanh Hoàng')}>
+          <TouchableOpacity style={[{ flex: 0.5, flexDirection: 'row', paddingLeft: 9 }]} onPress={() => alert('Ứng dụng thực hiện bởi Đức Hảo và Thanh Hoàng')}>
             <FontAwesome5 name={'users'} size={20} />
             <Text style={styles.Title}>Về chúng tôi</Text>
           </TouchableOpacity>
@@ -126,7 +130,13 @@ const styles = StyleSheet.create({
   WelcomeView: {
     flex: 1,
     paddingTop: 20,
-    paddingLeft: 10
+    paddingLeft: 50
+  },
+  AvartarView: {
+    width: 10,
+    height: 10,
+    paddingTop: 15,
+    paddingLeft: 5
   },
   TextWelcome: {
     fontSize: 16,
