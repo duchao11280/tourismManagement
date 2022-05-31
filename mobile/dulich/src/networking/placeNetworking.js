@@ -75,11 +75,30 @@ const getAllPlaceAround = async (lat, long, distance) => {
     );
     const json = await response.json();
     return json;
-    
+
+  } catch (error) {
+
+  }
+};
+const getPlaceByID = async (id) => {
+  try {
+    let accessToken = await getToken();
+    const response = await fetch(
+      API_URL + `/api/v1/place/byid/${id}`,
+      {
+        method: 'GET',
+        headers: {
+
+          "x-access-token": accessToken,
+        },
+
+      }
+    );
+    const json = await response.json();
+    return json.data;
   } catch (error) {
 
   }
 };
 
-
-export { getAllPlaces, getAllPlaceIDandName, getAllPlaceAround }
+export { getAllPlaces, getAllPlaceIDandName, getAllPlaceAround, getPlaceByID }

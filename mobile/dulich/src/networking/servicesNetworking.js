@@ -115,5 +115,23 @@ const getAllServiceAround = async (lat, long, distance) => {
     }
 };
 
-export { getAllServiceByPlaceID, getHotelByCity, getOtherServicesByCity, getAllServiceAround }
+const getServicebyServiceID = async (id) => {
+    try {
+        let accessToken = await getToken();
+        const response = await fetch(
+            API_URL + `/api/v1/service/byserviceid/${id}`,
+            {
+                method: 'GET',
+                headers: {
+                    "x-access-token": accessToken,
+                }
+            }
+        );
+        const json = await response.json();
+        // console.log(json);
+        return json.data;
+    } catch (error) {
+    }
+};
+export { getAllServiceByPlaceID, getHotelByCity, getOtherServicesByCity, getAllServiceAround, getServicebyServiceID }
 

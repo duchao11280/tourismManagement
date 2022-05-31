@@ -14,5 +14,5 @@ router.post('/otherservices/searchbycity', [verifyToken.verifyToken], serviceCon
 
 // search around
 router.get('/searchwithinradius/:latitude/:longitude/:distance', [verifyToken.verifyToken], serviceController.searchServicesWithinRadiusWithLatLong)
-
+router.get('/byserviceid/:id', [verifyToken.verifyToken], serviceController.getServiceById)
 module.exports = router;

@@ -102,7 +102,7 @@ exports.searchPlacesWithinRadiusWithLatLong = (req, res) => {
             return;
         }
         else {
-            if(places === undefined){
+            if (places === undefined) {
                 res.status(204).json({ status: false, message: "Không có dữ liệu", data: [] })
                 return;
             }
@@ -111,16 +111,16 @@ exports.searchPlacesWithinRadiusWithLatLong = (req, res) => {
 
                 let distance = calcDistance.getDistanceFromLatLong(latitude, longitude, place.latitude, place.longitude);
                 if (distance <= d) {
-                    let objD = {distance: distance}
+                    let objD = { distance: distance }
                     placeWithinRadius.push(Object.assign(place, objD));
                 }
             })
-            if(placeWithinRadius.length === 0){
+            if (placeWithinRadius.length === 0) {
                 res.status(204).json({ status: false, message: "Không có dữ liệu", data: [] })
                 return;
             }
-            placeWithinRadius.sort((a,b)=>{
-                return a.distance - b.distance ;
+            placeWithinRadius.sort((a, b) => {
+                return a.distance - b.distance;
             })
             var data = []
             var flag = 0;
@@ -155,10 +155,45 @@ exports.searchPlacesWithinRadiusWithLatLong = (req, res) => {
                 })
 
             })
-           
+
         }
 
     });
 
 }
 
+exports.getPlaceAndImageByPlaceID = (req, res) => {
+    PlaceModel.getPlaceByID(req.params.id, (err, place) => {
+        if (err || place[0] === undefined) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        };
+        let data = {
+            placeID: place[0]?.placeID,
+            placeName: place[0]?.placeName,
+            description: place[0]?.description,
+            tips: place[0]?.tips,
+            city: place[0]?.city,
+            address: place[0]?.address,
+            latitude: place[0]?.latitude,
+            longitude: place[0]?.longitude,
+            images: [],
+        }
+        ImageModel.getAllImageByPlaceID(data.placeID, (err, imgs) => {
+            if (err) {
+                res.status(500).json({ status: false, message: "Thất bại" })
+                return;
+            };
+            var images = [];
+            imgs.forEach(element => {
+                images.push({
+                    id: Object.values(element)[0],
+                    image: process.env.DOMAIN + '/public/images/' + Object.values(element)[1]
+                })
+            });
+            data.images = images
+
+            res.json({ status: true, message: 'Lấy dữ liệu thành công', data: data })
+        })
+    })
+}

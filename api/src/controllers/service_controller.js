@@ -173,11 +173,11 @@ exports.searchServicesWithinRadiusWithLatLong = (req, res) => {
     let longitude = isNaN(parseFloat(req.params.longitude)) ? 0 : parseFloat(req.params.longitude);
     ServiceModel.getAllServicesEnable((err, services) => {
         if (err) {
-            res.status(500).json({ status: false, message: "Thất bại", data:[] })
+            res.status(500).json({ status: false, message: "Thất bại", data: [] })
             return;
         }
         else {
-            if(services === undefined){
+            if (services === undefined) {
                 res.status(204).json({ status: false, message: "Không có dữ liệu", data: [] })
                 return;
             }
@@ -186,22 +186,22 @@ exports.searchServicesWithinRadiusWithLatLong = (req, res) => {
 
                 let distance = calcDistance.getDistanceFromLatLong(latitude, longitude, service.latitude, service.longitude);
                 if (distance <= d) {
-                    let objD = {distance: distance}
+                    let objD = { distance: distance }
                     serviceWithinRadius.push(Object.assign(service, objD));
                 }
             })
-            if(serviceWithinRadius.length === 0){
+            if (serviceWithinRadius.length === 0) {
                 res.status(204).json({ status: false, message: "Không có dữ liệu", data: [] })
                 return;
             }
-            serviceWithinRadius.sort((a,b)=>{
-                return a.distance - b.distance ;
+            serviceWithinRadius.sort((a, b) => {
+                return a.distance - b.distance;
             })
             var data = []
             var flag = 0;
             serviceWithinRadius.forEach(service => {
                 var images = [];
-                
+
                 ImageModel.getAllImageByServiceID(service.serviceID, (err, imgs) => {
                     flag++
                     if (err) {
@@ -236,9 +236,51 @@ exports.searchServicesWithinRadiusWithLatLong = (req, res) => {
                 })
 
             })
-           
+
         }
 
     });
 
+}
+
+exports.getServiceById = (req, res) => {
+    let id = req.params.id;
+    ServiceModel.getAllServiceByServiceID(id, (err, service) => {
+        if (err) {
+            res.status(500).json({ status: false, message: "Thất bại" })
+            return;
+        }
+        let data = {
+            serviceID: service[0]?.serviceID,
+            serviceName: service[0]?.serviceName,
+            description: service[0]?.description,
+            typeID: service[0]?.typeID,
+            typeService: service[0]?.typeService,
+            placeID: service[0]?.placeID,
+            placeName: service[0]?.placeName,
+            city: service[0]?.city,
+            address: service[0]?.address,
+            hotline: service[0]?.hotline,
+            latitude: service[0]?.latitude,
+            longitude: service[0]?.longitude,
+            isDisabled: service[0]?.isDisabled,
+            images: [],
+        }
+        ImageModel.getAllImageByServiceID(data.serviceID, (err, imgs) => {
+            if (err) {
+                res.status(500).json({ status: false, message: "Thất bại" })
+                return;
+            };
+            var images = [];
+            imgs.forEach(element => {
+                images.push({
+                    id: Object.values(element)[0],
+                    image: process.env.DOMAIN + '/public/images/' + Object.values(element)[1]
+                })
+            });
+            data.images = images
+
+            res.json({ status: true, message: 'Lấy dữ liệu thành công', data: data })
+        })
+    })
 }

@@ -19,11 +19,13 @@ const TripNavigator = () => {
                 component={DetailsTrip}
                 options={{ headerShown: true, title: "Chi tiết lịch trình" }}
             />
+
             <Stack.Screen
                 name="DetailServiceInTrip"
                 component={DetailHotel}
                 options={{ headerShown: false }}
             />
+
         </Stack.Navigator>
     )
 }

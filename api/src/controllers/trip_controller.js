@@ -1,5 +1,6 @@
 const TripModel = require('../models/trip_model')
 const DetailTripModel = require('../models/detailtrip_model')
+const calcDistance = require('../utitlities/distance.js')
 exports.getTripEnableByCity = (req, res) => {
     let city = req.body.city;
     TripModel.getTripEnableByCity(city, (err, data) => {
@@ -22,6 +23,10 @@ exports.getTripDetailById = (req, res) => {
             res.status(500).json({ status: false, message: "Thất bại" })
             return;
         }
+        if (trip.length === 0) {
+            res.status(204).json({ status: false, message: "Không có dữ liệu", data: {} })
+            return;
+        }
         data.tripID = trip[0].tripID;
         data.tripName = trip[0].tripName;
         data.city = trip[0].city;
@@ -35,6 +40,7 @@ exports.getTripDetailById = (req, res) => {
                 return;
             }
             data.detail = [];
+            data.distance = []
             let listDay = []
 
             detail.forEach((item) => {
@@ -50,11 +56,19 @@ exports.getTripDetailById = (req, res) => {
             listDay.forEach((day) => {
                 let detailPerDay = { day: day }
                 let detailOfDay = []
+
                 detail.forEach((detailItem) => {
                     if (detailItem.day == day && detailItem.isDisabled != 1) {
-                        detailOfDay.push(detailItem)
+                        detailOfDay.push({ ...detailItem, distanceToNext: 0 })
                     }
                 })
+
+                if (detailOfDay.length > 1) {
+                    for (let i = 0; i < detailOfDay.length - 1; i++) {
+                        let distance = calcDistance.getDistanceFromLatLong(detailOfDay[i].latitude, detailOfDay[i].longitude, detailOfDay[i + 1].latitude, detailOfDay[i + 1].longitude)
+                        detailOfDay[i].distanceToNext = distance;
+                    }
+                }
                 detailPerDay.detail = detailOfDay;
                 data.detail.push(detailPerDay);
             })

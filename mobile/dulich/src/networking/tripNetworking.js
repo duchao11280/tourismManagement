@@ -35,6 +35,31 @@ const getAllTripByCity = async (city) => {
 
     }
 };
+const getTripDetailById = async (id) => {
+    try {
+        let accessToken = await getToken();
+        const response = await fetch(
+            API_URL + `/api/v1/trip/getdetailbyid/${id}`,
+            {
+                method: 'GET',
+                headers: {
+                    "x-access-token": accessToken,
+                },
+            }
+        );
+        let json
+        if (response.status === 200) {
+            json = await response.json();
+        } else {
+            json = { message: "Không có dữ liệu", data: {} }
+        }
+
+        return json;
+    } catch (error) {
+
+    }
+};
 export {
     getAllTripByCity,
+    getTripDetailById,
 }

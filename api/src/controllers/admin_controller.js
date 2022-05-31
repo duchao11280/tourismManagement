@@ -500,6 +500,10 @@ exports.getDetailTripByID = (req, res) => {
             res.status(500).json({ status: false, message: "Thất bại" })
             return;
         }
+        if (trip.length === 0) {
+            res.status(204).json({ status: false, message: "Không có dữ liệu", data: {} })
+            return;
+        }
         data.tripID = trip[0].tripID;
         data.tripName = trip[0].tripName;
         data.city = trip[0].city;

@@ -6,7 +6,7 @@ const placeController = require('../controllers/place_controller');
 const checkRole = require('../middleware/checkRole');
 const verifyToken = require('../middleware/verifyToken');
 
-
+router.get('/byid/:id', [verifyToken.verifyToken], placeController.getPlaceAndImageByPlaceID)
 //search place by city
 router.post('/', [verifyToken.verifyToken], placeController.getAllPlaceAndImagesByCity);
 // get place id and name
