@@ -7,9 +7,12 @@ import { FaThLarge, FaUserAlt, FaConciergeBell, FaSignOutAlt, FaBell, FaMotorcyc
 import { FiMail } from "react-icons/fi";
 import { GiEarthAmerica } from "react-icons/gi";
 import { Link } from 'react-router-dom'
+import { logOut } from '../networking/userNetworking'
 const Admin = () => {
 
-
+    const logOutFunc = () => {
+        logOut().then(() => { window.location.assign('/home') }).catch(() => { window.location.assign('/home') })
+    }
     return (
         <div className="container-Admin">
             {/* <div class="topbar-Admin">
@@ -82,7 +85,7 @@ const Admin = () => {
                     <li>
                         <a href="#">
                             <FaSignOutAlt className="icon-Admin" />
-                            <div>Đăng Xuất</div>
+                            <div onClick={() => logOutFunc()}>Đăng Xuất</div>
                         </a>
                     </li>
 

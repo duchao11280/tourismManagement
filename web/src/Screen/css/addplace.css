@@ -37,6 +37,7 @@ h2{
 }
 .btn_add_place{
     margin:5px;
+    border-radius: 15px;
     padding:5px;
     background-color: rgb(148, 241, 179);
 }

@@ -201,7 +201,7 @@ const EditTrip = () => {
                                                                 <div className="d-flex flex-row" key={index}>
                                                                     <div className="d-flex m-3 justify-content-around container-item-place-trip-detail-addtrip" key={detailPerItem.id} style={{}}>
                                                                         {
-                                                                            detailPerItem.type == 0 ?
+                                                                            detailPerItem.type === 0 ?
                                                                                 <div>
                                                                                     <label>Địa điểm</label>
                                                                                     <br />

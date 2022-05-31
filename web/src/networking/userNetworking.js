@@ -141,6 +141,19 @@ const sendFeedback = async (id, params) => {
 
 }
 
+const logOut = async () => {
+    try {
+        const respone = await fetch(API_URL + `/api/v1/user/logout`, {
+            method: 'POST',
+            credentials: 'include',
+        });
+        console.log(respone);
+        const json = await respone.json();
+        return json;
+    } catch (error) {
+
+    }
+}
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export { getProfile, editProfile, changePassword, login, signUp, sendFeedback };
+export { getProfile, editProfile, changePassword, login, signUp, sendFeedback, logOut };
