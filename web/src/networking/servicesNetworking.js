@@ -166,7 +166,7 @@ const updateInfoService = async (id, params) => {
             },
             body: JSON.stringify({
                 serviceName: params.serviceName,
-                typeID: params.typeID,
+                typeID: parseInt(params.typeID),
                 description: params.description,
                 placeID: params.placeID,
                 address: params.address,
