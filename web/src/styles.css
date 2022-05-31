@@ -84,23 +84,7 @@ input[type="submit"]:hover {
   background: #6cf0c2;
 }
 
-/* .list-container {
-  display: flex;
-} */
 
-/* .error {
-  color: red;
-  font-size: 12px;
-} */
-
-/* .title {
-  font-size: 25px;
-  margin-bottom: 20px;
-} */
-
-
-/* landing.js */
-/* Add a black background color to the top navigation */
 .topnav {
   background-color: #4747d1;
   overflow: hidden;
@@ -207,7 +191,24 @@ input[type="submit"]:hover {
 
 .button-landing-help:hover{
   background-color: #ffb3b3;
-  
+}
+
+.button-login{
+  background-color: rgb(153, 233, 153);
+  width: 120px;
+  border-radius: 5px;
+}
+
+.container-button-login{
+  padding-top: 7px;
+}
+
+.container-logo-login-admin{
+  padding-top: 40px;
+
+}
+.container-error-font{
+  padding-top: 15px;
 }
 
 

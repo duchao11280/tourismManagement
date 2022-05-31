@@ -170,7 +170,7 @@ const NotificationManagement = () => {
                             />
                             <Form.Control.Feedback type="invalid">
                                 Vui lòng nhập tiêu đề
-                        </Form.Control.Feedback>
+                            </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="input_content">
@@ -185,13 +185,13 @@ const NotificationManagement = () => {
                             />
                             <Form.Control.Feedback type="invalid">
                                 Vui lòng nhập nội dung
-                        </Form.Control.Feedback>
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                             <Button variant="primary" type="submit" >Đồng ý</Button>
                             <Button variant="secondary" onClick={() => handleCloseModalInput()} style={{ marginLeft: "10px" }}>
                                 Hủy bỏ
-                        </Button>
+                            </Button>
 
                         </div>
                     </Form>
@@ -214,14 +214,14 @@ const NotificationManagement = () => {
                     <h3> Danh sách thông báo</h3>
                     <button className="button_add" onClick={() => { handleOnAddService() }}>
                         <AiOutlinePlus />
-                            Thêm mới
-                        </button>
+                        Thêm mới
+                    </button>
                 </div>
                 <Accordion defaultActiveKey="0">
                     {
                         filteredNotification.map((item, i) => {
                             return (
-                                <Card key={i}>
+                                <Card key={i} style={{ marginBottom: "13px" }}>
                                     <Card.Header>
                                         <div style={{ display: "flex", flex: 1, justifyContent: "space-between" }}>
                                             {item.title}

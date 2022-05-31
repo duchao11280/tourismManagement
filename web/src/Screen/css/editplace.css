@@ -7,7 +7,7 @@
 .box_edit_place{
     margin:20px 10px;
     padding:20px;
-    width: 30%;
+    width: 50%;
     background-color: #fafafa;
 }
 .box_edit_place .input_text {
@@ -21,6 +21,9 @@
 .btn_edit_place{
     margin:5px;
     padding:5px;
+    background-color: rgb(139, 244, 158);
+    border-radius: 15px;
+    
 }
 .section_image_editplace{
     width: 65%;
@@ -37,6 +40,7 @@
     padding: 5px;
     height: max-content;
     align-items: center;
+    border-radius: 10px;
 }
 .header_add_image{
     display: flex;
@@ -52,7 +56,6 @@
 }
 .expanded_image{
     width: 80%;
-    
     position: relative;
     background-color: rgb(78, 72, 72);
 }
@@ -89,4 +92,8 @@
     width: 45%;
     margin: 10px;
     object-fit: contain;
+}
+
+.button_add_editplace{
+    
 }

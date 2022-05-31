@@ -108,7 +108,7 @@ const EditPlace = () => {
     return (
         <div>
             <Admin />
-            <div className="container-manager">
+            <div className="container-edit">
                 <h2>Chỉnh sửa địa điểm</h2>
                 <div className="edit_place">
 
@@ -138,14 +138,22 @@ const EditPlace = () => {
                         </div>
                         <div className="input_text">
                             <label htmlFor="address">Địa chỉ(*)</label>
-                            <input
+                            <textarea
+                                id="address"
+                                name="address"
+                                aria-multiline="true"
+                                value={values.address}
+                                placeholder="Nhập địa chỉ"
+                                rows="2"
+                                onChange={handleChange} />
+                            {/* <input
                                 id="address"
                                 type="text"
                                 name="address"
                                 value={values.address}
                                 placeholder="Nhập địa chỉ"
                                 onChange={handleChange}
-                            />
+                            /> */}
                         </div>
                         <div className="input_text">
                             <label htmlFor="latitude">Vĩ độ(*)</label>
@@ -191,8 +199,13 @@ const EditPlace = () => {
                                 onChange={handleChange} />
                         </div>
                         <div className="box_btn_edit">
+
                             <button onClick={() => { handleOnEdit() }} className="btn_edit_place">Chỉnh sửa</button>
+
+
+
                             <button className="btn_back" onClick={() => handleGoback()}>Quay lại</button>
+
                         </div>
                     </div>
                     <div className="section_image_editplace">
