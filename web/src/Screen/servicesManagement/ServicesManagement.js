@@ -101,47 +101,50 @@ const ServicesManagement = () => {
                             Thêm mới
                         </button>
                     </div>
-                    {/* <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Tên dịch vụ</th>
-                                <th>Loại dịch vụ</th>
-                                <th>Tỉnh thành</th>
-                                <th>Địa diểm</th>
-                                <th>Địa chỉ</th>
-                                <th>Liên hệ</th>
-                                <th>Tình trạng</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filteredTables.map((item, i) => {
-                                return (
-                                    <tr key={i}>
+                    <div style={{ height: '30px' }}>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tên dịch vụ</th>
+                                    <th>Loại dịch vụ</th>
+                                    <th>Tỉnh thành</th>
+                                    <th>Địa diểm</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Liên hệ</th>
+                                    <th>Tình trạng</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filteredTables.map((item, i) => {
+                                    return (
+                                        <tr key={i}>
 
-                                        <td>{item.serviceID}</td>
-                                        <td>{item.serviceName}</td>
-                                        <td>{item.typeService}</td>
-                                        <td>{item.city}</td>
-                                        <td>{item.placeName}</td>
-                                        <td>{item.address}</td>
-                                        <td>{item.hotline}</td>
-                                        <td>{item.isDisabled ? "Bị vô hiệu hóa" : "Đang hoạt động"}</td>
-                                        <td>
-                                            <div className="action_button">
-                                                <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(item.serviceID) }}><BiPencil /></button>
-                                                {item.isDisabled ?
-                                                    <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(item.serviceID) }}><TiTick /></button>
-                                                    : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(item.serviceID) }}><IoBan /></button>}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table> */}
-                    <Paper sx={{ width: '100%', overflow: 'hidden', height: '450px' }}>
+                                            <td>{item.serviceID}</td>
+                                            <td>{item.serviceName}</td>
+                                            <td>{item.typeService}</td>
+                                            <td>{item.city}</td>
+                                            <td>{item.placeName}</td>
+                                            <td>{item.address}</td>
+                                            <td>{item.hotline}</td>
+                                            <td>{item.isDisabled ? "Bị vô hiệu hóa" : "Đang hoạt động"}</td>
+                                            <td>
+                                                <div className="action_button">
+                                                    <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(item.serviceID) }}><BiPencil /></button>
+                                                    {item.isDisabled ?
+                                                        <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(item.serviceID) }}><TiTick /></button>
+                                                        : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(item.serviceID) }}><IoBan /></button>}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {/* <Paper sx={{ width: '100%', overflow: 'hidden', height: '450px' }}>
                         <TableContainer sx={{ maxHeight: 440 }}>
                             <Table stickyHeader aria-label="sticky table">
                                 <TableHead>
@@ -161,9 +164,10 @@ const ServicesManagement = () => {
                                     {filteredTables
                                         .map((row) => {
                                             return (
-                                                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                                <TableRow hover role="checkbox" key={row.serviceID}>
                                                     {columns.map((column) => {
                                                         const value = row[column.id];
+                                                        console.log(value);
                                                         if (column.id === "status") {
                                                             return (
                                                                 <TableCell>
@@ -176,15 +180,22 @@ const ServicesManagement = () => {
                                                             return (
                                                                 <TableCell>
                                                                     <div className="action_button">
-                                                                        <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(row.placeID); }}><BiPencil /></button>
+                                                                        <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(row.serviceID); }}><BiPencil /></button>
                                                                         {row.isDeleted ?
-                                                                            <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(row.placeID); }}><TiTick /></button>
-                                                                            : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(row.placeID); }}><IoBan /></button>}
+                                                                            <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(row.serviceID); }}><TiTick /></button>
+                                                                            : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(row.serviceID); }}><IoBan /></button>}
                                                                     </div>
                                                                 </TableCell>
                                                             )
                                                         }
                                                         if (column.id === "phone") {
+                                                            return (
+                                                                <TableCell>
+                                                                    <a>{row.hotline}</a>
+                                                                </TableCell>
+                                                            )
+                                                        }
+                                                        if (column.id === "city") {
                                                             return (
                                                                 <TableCell>
                                                                     <a>{row.hotline}</a>
@@ -227,7 +238,7 @@ const ServicesManagement = () => {
                                                         return (
 
                                                             <TableCell key={column.id} align={column.align}>
-                                                                {column.format && typeof value === 'number'
+                                                                {typeof value === 'number'
                                                                     ? column.format(value)
                                                                     : value}
                                                             </TableCell>
@@ -241,7 +252,7 @@ const ServicesManagement = () => {
                             </Table>
                         </TableContainer>
 
-                    </Paper>
+                    </Paper> */}
                 </div>
             </div>
         </div>

@@ -80,21 +80,21 @@ const PlaceManagement = () => {
     })
 
     return (
-
-        <div className="containerWithsideBar">
-            <Admin />
-            <div className="container-manager">
-                <h2 className="title">Quản lý địa điểm du lịch</h2>
-                <SearchBox searchChange={onSearchChange} />
-                <div>
-                    <div className="box_button_add">
-                        <h3> Danh sách địa điểm</h3>
-                        <button className="button_add" onClick={() => { handleOnAddPlace(); }}>
-                            <AiOutlinePlus />
-                            Thêm mới
-                        </button>
-                    </div>
-                    {/* <table className="table_place">
+        <div >
+            <div className="containerWithsideBar">
+                <Admin />
+                <div className="container-manager">
+                    <h2 className="title">Quản lý địa điểm du lịch</h2>
+                    <SearchBox searchChange={onSearchChange} />
+                    <div>
+                        <div className="box_button_add">
+                            <h3> Danh sách địa điểm</h3>
+                            <button className="button_add" onClick={() => { handleOnAddPlace(); }}>
+                                <AiOutlinePlus />
+                                Thêm mới
+                            </button>
+                        </div>
+                        {/* <table className="table_place">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -125,71 +125,73 @@ const PlaceManagement = () => {
                             })}
                         </tbody>
                     </table> */}
-                    <Paper sx={{ width: '100%', overflow: 'hidden', height: '450px' }}>
-                        <TableContainer sx={{ maxHeight: 440 }}>
-                            <Table stickyHeader aria-label="sticky table">
-                                <TableHead>
-                                    <TableRow >
-                                        {columns.map((column) => (
-                                            <TableCell
-                                                key={column.id}
-                                                align={column.align}
-                                                style={{ minWidth: column.minWidth, backgroundColor: 'skyblue' }}
-                                            >
-                                                {column.label}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {filteredPlaces
-                                        .map((row) => {
-                                            return (
-                                                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                                                    {columns.map((column) => {
-                                                        const value = row[column.id];
-                                                        if (column.id === "status") {
+                        <Paper sx={{ width: '100%', overflow: 'hidden', height: '450px' }}>
+                            <TableContainer sx={{ maxHeight: 440 }}>
+                                <Table stickyHeader aria-label="sticky table">
+                                    <TableHead>
+                                        <TableRow >
+                                            {columns.map((column) => (
+                                                <TableCell
+                                                    key={column.id}
+                                                    align={column.align}
+                                                    style={{ minWidth: column.minWidth, backgroundColor: 'skyblue' }}
+                                                >
+                                                    {column.label}
+                                                </TableCell>
+                                            ))}
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {filteredPlaces
+                                            .map((row) => {
+                                                return (
+                                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                                        {columns.map((column) => {
+                                                            const value = row[column.id];
+                                                            if (column.id === "status") {
+                                                                return (
+                                                                    <TableCell>
+                                                                        <a>{row.isDeleted ? "Bị vô hiệu hóa" : "Đang hoạt động"}</a>
+                                                                    </TableCell>
+
+                                                                )
+                                                            }
+                                                            if (column.id === "action") {
+                                                                return (
+                                                                    <TableCell>
+                                                                        <div className="action_button">
+                                                                            <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(row.placeID); }}><BiPencil /></button>
+                                                                            {row.isDeleted ?
+                                                                                <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(row.placeID); }}><TiTick /></button>
+                                                                                : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(row.placeID); }}><IoBan /></button>}
+                                                                        </div>
+                                                                    </TableCell>
+                                                                )
+                                                            }
+
                                                             return (
-                                                                <TableCell>
-                                                                    <a>{row.isDeleted ? "Bị vô hiệu hóa" : "Đang hoạt động"}</a>
+
+                                                                <TableCell key={column.id} align={column.align}>
+                                                                    {column.format && typeof value === 'number'
+                                                                        ? column.format(value)
+                                                                        : value}
                                                                 </TableCell>
-
-                                                            )
+                                                            );
                                                         }
-                                                        if (column.id === "action") {
-                                                            return (
-                                                                <TableCell>
-                                                                    <div className="action_button">
-                                                                        <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(row.placeID); }}><BiPencil /></button>
-                                                                        {row.isDeleted ?
-                                                                            <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(row.placeID); }}><TiTick /></button>
-                                                                            : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(row.placeID); }}><IoBan /></button>}
-                                                                    </div>
-                                                                </TableCell>
-                                                            )
-                                                        }
+                                                        )}
+                                                    </TableRow>
+                                                );
+                                            })}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
 
-                                                        return (
-
-                                                            <TableCell key={column.id} align={column.align}>
-                                                                {column.format && typeof value === 'number'
-                                                                    ? column.format(value)
-                                                                    : value}
-                                                            </TableCell>
-                                                        );
-                                                    }
-                                                    )}
-                                                </TableRow>
-                                            );
-                                        })}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-
-                    </Paper>
+                        </Paper>
+                    </div>
                 </div>
             </div>
         </div>
+
     )
 }
 

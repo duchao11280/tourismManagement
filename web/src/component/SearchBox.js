@@ -5,10 +5,10 @@ const SearchBox = (props) => {
     return (
         <div className="box_search">
             <FcSearch className="icon" />
-            <input className="input_search" 
-                type="search" 
+            <input className="input_search" style={{ backgroundColor: "rgb(255 251 251 / 96%)" }}
+                type="search"
                 placeholder="Nhập từ khóa..."
-                onChange={props.searchChange}    
+                onChange={props.searchChange}
             />
         </div>
     )

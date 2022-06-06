@@ -59,6 +59,7 @@ const AddPlace = () => {
                         <label htmlFor="placeName">Tên địa điểm(*)</label>
 
                         <input
+                            style={{ padding: "10px" }}
                             id="placeName"
                             type="text"
                             name="placeName"
@@ -81,6 +82,7 @@ const AddPlace = () => {
                     <div className="input_text">
                         <label htmlFor="address">Địa chỉ(*)</label>
                         <input
+                            style={{ padding: "10px" }}
                             id="address"
                             type="text"
                             name="address"
@@ -92,6 +94,7 @@ const AddPlace = () => {
                     <div className="input_text">
                         <label htmlFor="latitude">Vĩ độ(*)</label>
                         <input
+                            style={{ padding: "10px" }}
                             id="latitude"
                             type="text"
                             name="latitude"
@@ -103,6 +106,7 @@ const AddPlace = () => {
                     <div className="input_text">
                         <label htmlFor="longitude">Kinh độ(*)</label>
                         <input
+                            style={{ padding: "10px" }}
                             id="longitude"
                             type="text"
                             name="longitude"
@@ -115,6 +119,7 @@ const AddPlace = () => {
                         <label htmlFor="description">Mô tả</label>
 
                         <textarea
+                            style={{ padding: "10px" }}
                             id="description"
                             name="description"
                             aria-multiline="true"
@@ -124,6 +129,7 @@ const AddPlace = () => {
                     <div className="input_text">
                         <label htmlFor="tips">Gợi ý</label>
                         <textarea
+                            style={{ padding: "10px" }}
                             id="tips"
                             name="tips"
                             aria-multiline="true"

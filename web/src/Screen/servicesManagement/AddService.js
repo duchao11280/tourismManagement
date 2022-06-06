@@ -81,6 +81,7 @@ const AddService = () => {
                         <div className="input_text">
                             <label htmlFor="serviceName">Tên dịch vụ(*)</label>
                             <input
+                                style={{ padding: "10px" }}
                                 id="serviceName"
                                 type="text"
                                 name="serviceName"
@@ -131,6 +132,7 @@ const AddService = () => {
                         <div className="input_text">
                             <label htmlFor="address">Địa chỉ(*)</label>
                             <input
+                                style={{ padding: "10px" }}
                                 id="address"
                                 type="text"
                                 name="address"
@@ -142,6 +144,7 @@ const AddService = () => {
                         <div className="input_text">
                             <label htmlFor="latitude">Vĩ độ(*)</label>
                             <input
+                                style={{ padding: "10px" }}
                                 id="latitude"
                                 type="text"
                                 name="latitude"
@@ -153,6 +156,7 @@ const AddService = () => {
                         <div className="input_text">
                             <label htmlFor="longitude">Kinh độ(*)</label>
                             <input
+                                style={{ padding: "10px" }}
                                 id="longitude"
                                 type="text"
                                 name="longitude"
@@ -165,6 +169,7 @@ const AddService = () => {
                             <label htmlFor="description">Mô tả</label>
 
                             <textarea
+                                style={{ padding: "10px" }}
                                 id="description"
                                 name="description"
                                 aria-multiline="true"
@@ -174,11 +179,12 @@ const AddService = () => {
                         <div className="input_text">
                             <label htmlFor="hotline">Liên lạc:</label>
                             <input
+                                style={{ padding: "10px" }}
                                 id="hotline"
                                 type="text"
                                 name="hotline"
                                 value={values.hotline}
-                                placeholder=""
+                                placeholder="Nhập số điện thoại..."
                                 onChange={handleChange}
                             />
                         </div>

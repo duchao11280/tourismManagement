@@ -144,6 +144,7 @@ const AddTrip = () => {
                         <div className="input_text" >
                             <label htmlFor="tripName">Tên lịch trình(*)</label>
                             <input
+                                style={{ padding: "10px" }}
                                 id="tripName"
                                 required
                                 type="text"
@@ -154,7 +155,7 @@ const AddTrip = () => {
                                 onChange={handleChange}
                             />
                         </div>
-                        <div>
+                        <div style={{ paddingTop: "10px" }}>
                             <label htmlFor="province">Tỉnh thành(*)</label>
                             <br />
                             <select id="province" name="city" onChange={handleChange}>
@@ -167,12 +168,12 @@ const AddTrip = () => {
                             </select>
                         </div>
                         <div>
-                            <div>
+                            <div style={{ paddingTop: "15px" }}>
                                 {
                                     tripDetail.map((tripDetailItem, i) => {
                                         return (
                                             <div style={{ backgroundColor: "azure", border: "1px solid", marginBottom: "5px" }} key={i}>
-                                                <div style={{ backgroundColor: "gray" }}>
+                                                <div style={{ backgroundColor: '#d3d3d3ba' }}>
                                                     <div style={{ display: "flex", flex: 1, justifyContent: "space-between" }}>
                                                         Ngày {tripDetailItem.day}
                                                         {tripDetailItem.day === tripDetail[tripDetail.length - 1].day && tripDetailItem.day !== 1 ?
@@ -259,7 +260,7 @@ const AddTrip = () => {
                                                                 </div>
                                                             </div>
                                                         ))}
-                                                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                                        <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '10px', paddingBottom: '10px' }}>
                                                             <Button variant="primary" onClick={() => { addPlaceToDetailTrip(tripDetailItem.day) }}>Thêm địa điểm</Button>
                                                             <button className="mx-3 p-1 border border-danger" onClick={() => { addServiceToDetailTrip(tripDetailItem.day) }}>Thêm dịch vụ</button>
                                                         </div>
@@ -276,8 +277,8 @@ const AddTrip = () => {
                         <Button variant="primary" onClick={() => { addDetailTrip() }}>Thêm ngày</Button>
 
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                        <Button variant="primary" onClick={() => { handleAddTrip() }}>Đồng ý</Button>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '15px' }}>
+                        <Button variant="primary" style={{ marginRight: '15px' }} onClick={() => { handleAddTrip() }}>Đồng ý</Button>
                         <Button variant="secondary" onClick={() => { handleGoback() }}>Quay lại</Button>
 
                     </div>
