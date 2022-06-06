@@ -7,7 +7,37 @@ import { TiTick } from "react-icons/ti"
 import { AiOutlinePlus } from 'react-icons/ai'
 import { useHistory } from 'react-router-dom'
 import { getAllPlaces, enablePlace, deletePlace } from "../../networking/adminNetworking"
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
 import Admin from '../admin'
+const columns = [
+    { id: 'placeID', label: 'Mã số', },
+    { id: 'placeName', label: 'Tên địa điểm', },
+    {
+        id: 'city',
+        label: 'Tỉnh thành',
+
+    },
+    {
+        id: 'status',
+        label: 'Tình trạng',
+
+
+    },
+    {
+        id: 'action',
+        label: 'Hành động  ',
+
+
+    },
+];
+
 const PlaceManagement = () => {
 
     const [searchfield, setSearchfield] = useState('');
@@ -64,7 +94,7 @@ const PlaceManagement = () => {
                             Thêm mới
                         </button>
                     </div>
-                    <table className="table_place">
+                    {/* <table className="table_place">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -94,7 +124,69 @@ const PlaceManagement = () => {
                                 );
                             })}
                         </tbody>
-                    </table>
+                    </table> */}
+                    <Paper sx={{ width: '100%', overflow: 'hidden', height: '450px' }}>
+                        <TableContainer sx={{ maxHeight: 440 }}>
+                            <Table stickyHeader aria-label="sticky table">
+                                <TableHead>
+                                    <TableRow >
+                                        {columns.map((column) => (
+                                            <TableCell
+                                                key={column.id}
+                                                align={column.align}
+                                                style={{ minWidth: column.minWidth, backgroundColor: 'skyblue' }}
+                                            >
+                                                {column.label}
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {filteredPlaces
+                                        .map((row) => {
+                                            return (
+                                                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                                    {columns.map((column) => {
+                                                        const value = row[column.id];
+                                                        if (column.id === "status") {
+                                                            return (
+                                                                <TableCell>
+                                                                    <a>{row.isDeleted ? "Bị vô hiệu hóa" : "Đang hoạt động"}</a>
+                                                                </TableCell>
+
+                                                            )
+                                                        }
+                                                        if (column.id === "action") {
+                                                            return (
+                                                                <TableCell>
+                                                                    <div className="action_button">
+                                                                        <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(row.placeID); }}><BiPencil /></button>
+                                                                        {row.isDeleted ?
+                                                                            <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(row.placeID); }}><TiTick /></button>
+                                                                            : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(row.placeID); }}><IoBan /></button>}
+                                                                    </div>
+                                                                </TableCell>
+                                                            )
+                                                        }
+
+                                                        return (
+
+                                                            <TableCell key={column.id} align={column.align}>
+                                                                {column.format && typeof value === 'number'
+                                                                    ? column.format(value)
+                                                                    : value}
+                                                            </TableCell>
+                                                        );
+                                                    }
+                                                    )}
+                                                </TableRow>
+                                            );
+                                        })}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+
+                    </Paper>
                 </div>
             </div>
         </div>

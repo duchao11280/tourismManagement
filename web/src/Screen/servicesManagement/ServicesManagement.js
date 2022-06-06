@@ -7,6 +7,46 @@ import { TiTick } from "react-icons/ti"
 import { useHistory } from 'react-router-dom'
 import Admin from '../admin'
 import { getAllServices, enableService, disableService } from '../../networking/servicesNetworking'
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+
+const columns = [
+    { id: 'userId', label: 'Mã số', },
+    { id: 'userName', label: 'Tên tài khoản', },
+    {
+        id: 'fullName',
+        label: 'Tên đầy đủ',
+
+    },
+    {
+        id: 'email',
+        label: 'Email',
+
+
+    },
+    {
+        id: 'phone',
+        label: 'PhoneNumber  ',
+    },
+    {
+        id: 'typeAccount',
+        label: 'Loại tài khoản  ',
+    },
+    {
+        id: 'status',
+        label: 'trạng thái  ',
+    },
+    {
+        id: 'action',
+        label: ' ',
+    },
+];
 const ServicesManagement = () => {
     const [searchfield, setSearchfield] = useState('');
     const [listService, setListService] = useState([]);
