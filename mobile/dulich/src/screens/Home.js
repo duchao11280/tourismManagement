@@ -119,7 +119,15 @@ const Home = ({ navigation }) => {
                                 }
 
                                 }>
+                                <Picker.Item label="Hà Nội" value="Hà Nội" />
+                                <Picker.Item label="Hải Phòng" value="Hải Phòng" />
+                                <Picker.Item label="Huế" value="Huế" />
+                                <Picker.Item label="Đà Nẵng" value="Đà Nẵng" />
+                                <Picker.Item label="Vũng Tàu" value="Vũng Tàu" />
+                                <Picker.Item label="Bến Tre" value="Bến Tre" />
+                                <Picker.Item label="Cà Mau" value="Cà Mau" />
                                 <Picker.Item label="Đồng Nai" value="Đồng Nai" />
+                                <Picker.Item label="Bình Dương" value="Bình Dương" />
                                 <Picker.Item label="Thành Phố Hồ Chí Minh" value="Thành Phố Hồ Chí Minh" />
                             </Picker>
                         </View>

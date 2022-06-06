@@ -265,78 +265,85 @@ const SignUp = () => {
     }
 
     return (
-        <div className="containerLogin">
-            <div className="login-form">
-                <form onSubmit={handleSubmit}>
-                    <div className="login-title">Đăng ký tài khoản</div>
-                    <div className="input-container">
-                        <label className="login-title-input">Họ và tên </label>
-                        <input type="text" name="fullName" value={fullName}
-                            onChange={(e) => { handleFullNameChange(e) }} />
-                        <div className="error-font">{errfullName}</div>
-                    </div>
+        <div className="container">
+            <div className="containerLogin">
+                <div className="login-form">
+                    <form onSubmit={handleSubmit}>
+                        <div className="login-title">Đăng ký tài khoản</div>
+                        <div className="input-container">
+                            <label className="login-title-input">Họ và tên </label>
+                            <input type="text" name="fullName" value={fullName} style={{ width: "390px", borderRadius: "15px", padding: "13px" }}
+                                onChange={(e) => { handleFullNameChange(e) }} />
+                            <div className="error-font">{errfullName}</div>
+                        </div>
 
-                    <div className="input-container">
-                        <label className="login-title-input">Tên đăng nhập </label>
-                        <input type="text" name="userName" value={userName}
-                            onChange={(e) => { handleUserNameChange(e) }} />
-                        <div className="error-font">{erruserName}</div>
-                    </div>
+                        <div className="input-container">
+                            <label className="login-title-input">Tên đăng nhập </label>
+                            <input type="text" name="userName" value={userName} style={{ width: "390px", borderRadius: "15px", padding: "13px" }}
+                                onChange={(e) => { handleUserNameChange(e) }} />
+                            <div className="error-font">{erruserName}</div>
+                        </div>
 
-                    <div className="input-container">
-                        <label className="login-title-input">Mật khẩu </label>
-                        <input type="password" name="password" value={password}
-                            onChange={(e) => { handlePasswordChange(e) }} />
-                        <div className="error-font">{errpassword}</div>
-                    </div>
-
-
-                    <div className="input-container">
-                        <label className="login-title-input">Nhập lại mật khẩu </label>
-                        <input type="password" name="confirmpassword" value={confirmpassword}
-                            onChange={(e) => { handleConfirmPasswordChange(e) }} />
-                        <div className="error-font">{errconfirmpassword}</div>
-                    </div>
+                        <div className="input-container">
+                            <label className="login-title-input">Mật khẩu </label>
+                            <input type="password" name="password" value={password} style={{ width: "390px", borderRadius: "15px", padding: "13px" }}
+                                onChange={(e) => { handlePasswordChange(e) }} />
+                            <div className="error-font">{errpassword}</div>
+                        </div>
 
 
-                    <div className="input-container">
-                        <label className="login-title-input">Email </label>
-                        <input type="text" name="email" value={email}
-                            onChange={(e) => { handleEmailChange(e) }} />
-                        <div className="error-font">{erremail}</div>
-                    </div>
+                        <div className="input-container">
+                            <label className="login-title-input">Nhập lại mật khẩu </label>
+                            <input type="password" name="confirmpassword" value={confirmpassword} style={{ width: "390px", borderRadius: "15px", padding: "13px" }}
+                                onChange={(e) => { handleConfirmPasswordChange(e) }} />
+                            <div className="error-font">{errconfirmpassword}</div>
+                        </div>
 
 
-                    <div className="input-container">
-                        <label className="login-title-input">Số điện thoại </label>
-                        <input type="text" name="phonenumber" value={phonenumber}
-                            onChange={(e) => { handlePhoneNumberChange(e) }} />
-                        <div className="error-font">{errphonenumber}</div>
-                    </div>
+                        <div className="input-container">
+                            <label className="login-title-input">Email </label>
+                            <input type="text" name="email" value={email} style={{ width: "390px", borderRadius: "15px", padding: "13px" }}
+                                onChange={(e) => { handleEmailChange(e) }} />
+                            <div className="error-font">{erremail}</div>
+                        </div>
 
-                    <div className="combobox-signup">
-                        <label className="login-title-input">Đối tượng sử dụng  </label>
-                        <select
-                            onChange={(e) => {
-                                const select = e.target.value;
-                                setrole(select);
-                            }}>
-                            <option value="0">Người dùng ứng dụng</option>
-                            <option value="2">Nhà quản lý dịch vụ</option>
 
-                        </select>
-                    </div>
+                        <div className="input-container">
+                            <label className="login-title-input">Số điện thoại </label>
+                            <input type="text" name="phonenumber" value={phonenumber} style={{ width: "390px", borderRadius: "15px", padding: "13px" }}
+                                onChange={(e) => { handlePhoneNumberChange(e) }} />
+                            <div className="error-font">{errphonenumber}</div>
+                        </div>
 
-                    <div className="button-container">
-                        <button className="SignButton" type="submit">
-                            Đăng ký tài khoản
-                        </button>
-                    </div>
-                </form>
+                        <div className="combobox-signup">
+                            <label className="login-title-input">Đối tượng sử dụng  </label>
+                            <select style={{ width: "390px", borderRadius: "15px", padding: "5px" }}
+                                onChange={(e) => {
+                                    const select = e.target.value;
+                                    setrole(select);
+                                }}>
+                                <option value="0">Người dùng ứng dụng</option>
+                                <option value="2">Nhà quản lý dịch vụ</option>
+
+                            </select>
+                        </div>
+
+                        <div className="button-container" style={{ paddingTop: "13px", }}>
+                            <button className="SignButton" type="submit" style={{ borderRadius: "6px", width: "200px", }}>
+                                Đăng ký tài khoản
+                            </button>
+                        </div>
+
+                        <div className="signUpSentense" style={{ paddingLeft: "100px" }}>
+                            <a href="$" >Đã có tài khoản? đăng nhập</a>
+                        </div>
+                    </form>
+
+                </div >
 
             </div >
-            <a href="http" className="signUpSentense">Đã có tài khoản? đăng nhập</a>
-        </div >
+        </div>
+
     );
 }
 

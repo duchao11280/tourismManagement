@@ -51,6 +51,11 @@ table tr:nth-child(odd){
 table th{
     background-color:skyblue;
 }
+
+.table_place {
+   
+}
+
 .box_button_add{
     display: flex;
     justify-content: space-between;
