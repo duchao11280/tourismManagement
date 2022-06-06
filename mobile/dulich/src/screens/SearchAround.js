@@ -12,7 +12,7 @@ const SearchAround = ({ navigation }) => {
     const [listPlace, setListPlace] = useState([])
     const [listService, setListService] = useState([])
     const isFocused = useIsFocused();
-    const [refresh, setRefresh] = useState(false)
+    const [refresh, setRefresh] = useState(true)
     const filter = [{ id: 1, name: 'Tất cả' }, { id: 2, name: 'Địa điểm' }, { id: 3, name: 'Nơi ở' }, { id: 4, name: 'Dịch vụ' }]
     const [currentFilter, setCurrentFilter] = useState(1);
     useEffect(() => {
@@ -22,7 +22,7 @@ const SearchAround = ({ navigation }) => {
                 setErrorMsg('Quyền truy cập vị trí bị từ chối!');
                 return;
             }
-            setRefresh(true)
+
             let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.HighlatitudeDeltaest, maximumAge: 10000 });
             setInitialRegion({
                 latitude: location.coords.latitude,
@@ -39,7 +39,7 @@ const SearchAround = ({ navigation }) => {
 
             setRefresh(false)
         })();
-    }, []);
+    }, [isFocused]);
 
     const filterHotel = listService == undefined ? [] : listService.filter(item => {
         return item.typeID === 1;

@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     },
     InputFeedback: {
         width: 330,
-        height: 500,
+        height: 400,
         marginLeft: 10,
         fontSize: 15,
         borderWidth: 1,

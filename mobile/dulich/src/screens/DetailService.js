@@ -25,7 +25,7 @@ const DetailService = ({ navigation, route }) => {
 
     const getHeader = () => (
         <View>
-            <Text style={styles.title}>Tên địa điểm:</Text>
+            <Text style={styles.title}>Tên dịch vụ:</Text>
             <Text style={styles.content}>{service.serviceName}</Text>
             <Text style={styles.title}>Địa chỉ:</Text>
             <Text style={styles.content}>{service.address}</Text>

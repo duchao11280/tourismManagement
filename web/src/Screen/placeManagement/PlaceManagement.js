@@ -64,8 +64,9 @@ const PlaceManagement = () => {
                             Thêm mới
                         </button>
                     </div>
+
                     <table className="table_place">
-                        <thead>
+                        <thead className="thead-table-place">
                             <tr>
                                 <th>ID</th>
                                 <th>Tên địa điểm</th>
@@ -74,7 +75,7 @@ const PlaceManagement = () => {
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="tbody-place-management">
                             {filteredPlaces.map((item, i) => {
                                 return (
                                     <tr key={i}>
@@ -95,6 +96,7 @@ const PlaceManagement = () => {
                             })}
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>

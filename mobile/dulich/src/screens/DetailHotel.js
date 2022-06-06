@@ -43,7 +43,7 @@ const DetailHotel = ({ navigation, route }) => {
 
     const getHeader = () => (
         <View>
-            <Text style={styles.title}>Tên địa điểm:</Text>
+            <Text style={styles.title}>Tên dịch vụ:</Text>
             <Text style={styles.content}>{service.serviceName}</Text>
             <Text style={styles.title}>Số điện thoại:</Text>
             {/* <View style={styles.phone}>

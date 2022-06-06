@@ -97,3 +97,20 @@ table th{
     font-size: medium;
     color: red;
 }
+
+
+.thead-table-place, .tbody-place-management tr, .tbody-place-management th{
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+.tbody-place-management tr{
+    
+    width: calc( 100% + 1em );
+}
+.tbody-place-management{
+    display: block;
+    height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
