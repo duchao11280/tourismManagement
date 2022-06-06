@@ -17,34 +17,38 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
 const columns = [
-    { id: 'userId', label: 'Mã số', },
-    { id: 'userName', label: 'Tên tài khoản', },
+    { id: 'Id', label: 'ID', },
+    { id: 'Name', label: 'Tên dịch vụ', },
     {
-        id: 'fullName',
-        label: 'Tên đầy đủ',
+        id: 'type',
+        label: 'Loại dịch vụ',
 
     },
     {
-        id: 'email',
-        label: 'Email',
+        id: 'city',
+        label: 'Tỉnh thành',
 
 
+    },
+    {
+        id: 'place',
+        label: 'Địa điểm  ',
+    },
+    {
+        id: 'address',
+        label: 'Địa chỉ  ',
     },
     {
         id: 'phone',
-        label: 'PhoneNumber  ',
-    },
-    {
-        id: 'typeAccount',
-        label: 'Loại tài khoản  ',
+        label: 'Liên hệ  ',
     },
     {
         id: 'status',
-        label: 'trạng thái  ',
+        label: 'Tình trạng ',
     },
     {
         id: 'action',
-        label: ' ',
+        label: 'Hành động ',
     },
 ];
 const ServicesManagement = () => {
@@ -97,7 +101,7 @@ const ServicesManagement = () => {
                             Thêm mới
                         </button>
                     </div>
-                    <table>
+                    {/* <table>
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -136,7 +140,108 @@ const ServicesManagement = () => {
                                 )
                             })}
                         </tbody>
-                    </table>
+                    </table> */}
+                    <Paper sx={{ width: '100%', overflow: 'hidden', height: '450px' }}>
+                        <TableContainer sx={{ maxHeight: 440 }}>
+                            <Table stickyHeader aria-label="sticky table">
+                                <TableHead>
+                                    <TableRow >
+                                        {columns.map((column) => (
+                                            <TableCell
+                                                key={column.id}
+                                                align={column.align}
+                                                style={{ minWidth: column.minWidth, backgroundColor: 'skyblue' }}
+                                            >
+                                                {column.label}
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {filteredTables
+                                        .map((row) => {
+                                            return (
+                                                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                                    {columns.map((column) => {
+                                                        const value = row[column.id];
+                                                        if (column.id === "status") {
+                                                            return (
+                                                                <TableCell>
+                                                                    <a>{row.isDeleted ? "Bị vô hiệu hóa" : "Đang hoạt động"}</a>
+                                                                </TableCell>
+
+                                                            )
+                                                        }
+                                                        if (column.id === "action") {
+                                                            return (
+                                                                <TableCell>
+                                                                    <div className="action_button">
+                                                                        <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(row.placeID); }}><BiPencil /></button>
+                                                                        {row.isDeleted ?
+                                                                            <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(row.placeID); }}><TiTick /></button>
+                                                                            : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(row.placeID); }}><IoBan /></button>}
+                                                                    </div>
+                                                                </TableCell>
+                                                            )
+                                                        }
+                                                        if (column.id === "phone") {
+                                                            return (
+                                                                <TableCell>
+                                                                    <a>{row.hotline}</a>
+                                                                </TableCell>
+                                                            )
+                                                        }
+                                                        if (column.id === "place") {
+                                                            return (
+                                                                <TableCell>
+                                                                    <a>{row.city}</a>
+                                                                </TableCell>
+                                                            )
+                                                        }
+                                                        if (column.id === "type") {
+                                                            return (
+                                                                <TableCell>
+                                                                    <a>{row.typeService}</a>
+                                                                </TableCell>
+                                                            )
+                                                        }
+                                                        if (column.id === "Id") {
+                                                            return (
+                                                                <TableCell>
+                                                                    <a>{row.serviceID}</a>
+                                                                </TableCell>
+                                                            )
+                                                        }
+
+                                                        if (column.id === "Name") {
+                                                            return (
+                                                                <TableCell>
+                                                                    <a>{row.serviceName}</a>
+                                                                </TableCell>
+                                                            )
+                                                        }
+
+
+
+
+                                                        return (
+
+                                                            <TableCell key={column.id} align={column.align}>
+                                                                {column.format && typeof value === 'number'
+                                                                    ? column.format(value)
+                                                                    : value}
+                                                            </TableCell>
+                                                        );
+                                                    }
+                                                    )}
+                                                </TableRow>
+                                            );
+                                        })}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+
+                    </Paper>
                 </div>
             </div>
         </div>
