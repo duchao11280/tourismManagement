@@ -7,50 +7,9 @@ import { TiTick } from "react-icons/ti"
 import { useHistory } from 'react-router-dom'
 import Admin from '../admin'
 import { getAllServices, enableService, disableService } from '../../networking/servicesNetworking'
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-
-const columns = [
-    { id: 'Id', label: 'ID', },
-    { id: 'Name', label: 'Tên dịch vụ', },
-    {
-        id: 'type',
-        label: 'Loại dịch vụ',
-
-    },
-    {
-        id: 'city',
-        label: 'Tỉnh thành',
 
 
-    },
-    {
-        id: 'place',
-        label: 'Địa điểm  ',
-    },
-    {
-        id: 'address',
-        label: 'Địa chỉ  ',
-    },
-    {
-        id: 'phone',
-        label: 'Liên hệ  ',
-    },
-    {
-        id: 'status',
-        label: 'Tình trạng ',
-    },
-    {
-        id: 'action',
-        label: 'Hành động ',
-    },
-];
+
 const ServicesManagement = () => {
     const [searchfield, setSearchfield] = useState('');
     const [listService, setListService] = useState([]);
@@ -101,9 +60,9 @@ const ServicesManagement = () => {
                             Thêm mới
                         </button>
                     </div>
-                    <div style={{ height: '30px' }}>
-                        <table>
-                            <thead>
+                    <div >
+                        <table className="table_place">
+                            <thead className="thead-table-place">
                                 <tr>
                                     <th>ID</th>
                                     <th>Tên dịch vụ</th>
@@ -116,7 +75,7 @@ const ServicesManagement = () => {
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody className="tbody-place-management">
                                 {filteredTables.map((item, i) => {
                                     return (
                                         <tr key={i}>
@@ -144,115 +103,7 @@ const ServicesManagement = () => {
                         </table>
                     </div>
 
-                    {/* <Paper sx={{ width: '100%', overflow: 'hidden', height: '450px' }}>
-                        <TableContainer sx={{ maxHeight: 440 }}>
-                            <Table stickyHeader aria-label="sticky table">
-                                <TableHead>
-                                    <TableRow >
-                                        {columns.map((column) => (
-                                            <TableCell
-                                                key={column.id}
-                                                align={column.align}
-                                                style={{ minWidth: column.minWidth, backgroundColor: 'skyblue' }}
-                                            >
-                                                {column.label}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {filteredTables
-                                        .map((row) => {
-                                            return (
-                                                <TableRow hover role="checkbox" key={row.serviceID}>
-                                                    {columns.map((column) => {
-                                                        const value = row[column.id];
-                                                        console.log(value);
-                                                        if (column.id === "status") {
-                                                            return (
-                                                                <TableCell>
-                                                                    <a>{row.isDeleted ? "Bị vô hiệu hóa" : "Đang hoạt động"}</a>
-                                                                </TableCell>
 
-                                                            )
-                                                        }
-                                                        if (column.id === "action") {
-                                                            return (
-                                                                <TableCell>
-                                                                    <div className="action_button">
-                                                                        <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(row.serviceID); }}><BiPencil /></button>
-                                                                        {row.isDeleted ?
-                                                                            <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(row.serviceID); }}><TiTick /></button>
-                                                                            : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(row.serviceID); }}><IoBan /></button>}
-                                                                    </div>
-                                                                </TableCell>
-                                                            )
-                                                        }
-                                                        if (column.id === "phone") {
-                                                            return (
-                                                                <TableCell>
-                                                                    <a>{row.hotline}</a>
-                                                                </TableCell>
-                                                            )
-                                                        }
-                                                        if (column.id === "city") {
-                                                            return (
-                                                                <TableCell>
-                                                                    <a>{row.hotline}</a>
-                                                                </TableCell>
-                                                            )
-                                                        }
-                                                        if (column.id === "place") {
-                                                            return (
-                                                                <TableCell>
-                                                                    <a>{row.city}</a>
-                                                                </TableCell>
-                                                            )
-                                                        }
-                                                        if (column.id === "type") {
-                                                            return (
-                                                                <TableCell>
-                                                                    <a>{row.typeService}</a>
-                                                                </TableCell>
-                                                            )
-                                                        }
-                                                        if (column.id === "Id") {
-                                                            return (
-                                                                <TableCell>
-                                                                    <a>{row.serviceID}</a>
-                                                                </TableCell>
-                                                            )
-                                                        }
-
-                                                        if (column.id === "Name") {
-                                                            return (
-                                                                <TableCell>
-                                                                    <a>{row.serviceName}</a>
-                                                                </TableCell>
-                                                            )
-                                                        }
-
-
-
-
-                                                        return (
-
-                                                            <TableCell key={column.id} align={column.align}>
-                                                                {typeof value === 'number'
-                                                                    ? column.format(value)
-                                                                    : value}
-                                                            </TableCell>
-                                                        );
-                                                    }
-                                                    )}
-                                                </TableRow>
-                                            );
-                                        })}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-
-                    </Paper> */}
                 </div>
             </div>
         </div>

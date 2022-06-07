@@ -53,63 +53,19 @@ table tr:nth-child(odd){
 table th{
     background-color:skyblue;
 }
-.box_button_add{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.button_add{
-    padding: 5px 10px;
-    margin: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #23e415;
-    border-radius: 8px;
-    right: 0px;
-}
-.action_button{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.btn_action{
-    height: 30px;
-    width: 30px;
-    justify-content: center;
-    
-}
-.btn_action svg{
-    vertical-align: top;
-}
-.button_edit{
-    margin: 10px;
-    padding: 5px;
-    font-size: medium;
-    color:blue;
-}
-
-.button_enable{
-    padding: 5px;
-    font-size: medium;
-    color: green;
-}
-.button_disable{
-    padding: 5px;
-    font-size: medium;
-    color: red;
-}
 
 
-.thead-table-place, .tbody-place-management tr, .tbody-place-management th{
+
+
+.thead-table-user, .tbody-user-management tr, .tbody-user-management th{
     display: table;
     width: 100%;
     table-layout: fixed;
 }
-.tbody-place-management tr{
+.tbody-user-management tr{
     width: calc( 100% + 1em );
 }
-.tbody-place-management{
+.tbody-user-management{
     display: block;
     height: 70vh;
     overflow-y: auto;
