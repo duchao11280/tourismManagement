@@ -3,6 +3,7 @@ import { getAllTypeService, searchAllPlaceByCity, addService } from '../../netwo
 import { province } from '../../assets/values/province'
 import { useHistory } from 'react-router-dom'
 import '../css/addservice.css'
+import { ToastContainer, toast } from 'react-toastify';
 import Admin from '../admin'
 const AddService = () => {
     const [values, setValues] = useState({
@@ -15,6 +16,8 @@ const AddService = () => {
         latitude: "",
         longitude: ""
     })
+    const [typeErr, setTypeErr] = useState("")
+    const [isValidate, setIsValidate] = useState(false)
     const [types, setTypes] = useState([])
     const [currProvince, setCurrProvince] = useState('')
     const [placesByCity, setPlacesByCity] = useState([])
@@ -71,11 +74,118 @@ const AddService = () => {
     const handleGoback = () => {
         history.goBack();
     }
+
+
+    const checkAddService = () => {
+        if (values.serviceName.length === 0) {
+            setIsValidate(false);
+            setTypeErr("placeName")
+            toast.error(" Bạn chưa nhập tên dịch vụ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (values.address.length === 0) {
+            setIsValidate(false);
+            setTypeErr("address")
+            toast.error(" Bạn chưa nhập địa chỉ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (values.latitude.length === 0) {
+            setIsValidate(false);
+            setTypeErr("latitude")
+            toast.error(" Bạn chưa nhập vĩ độ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (values.longitude.length === 0) {
+            setIsValidate(false);
+            setTypeErr("longitude")
+            toast.error(" Bạn chưa nhập kinh độ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (values.description.length === 0) {
+            setIsValidate(false);
+            setTypeErr("description")
+            toast.error(" Bạn chưa nhập mô tả", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (values.tips.length === 0) {
+            setIsValidate(false);
+            setTypeErr("tips")
+            toast.error(" Bạn chưa nhập gợi ý", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (images.length === 0) {
+            setIsValidate(false);
+            setTypeErr("tips")
+            toast.error(" Bạn chưa thêm hình ảnh", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else {
+            setIsValidate(true);
+            setTypeErr("")
+        }
+    }
     return (
         <div className="containerWithsideBar">
             <Admin />
             <div className="container-manager">
                 <h2>Thêm mới dịch vụ</h2>
+                <ToastContainer />
                 <div className="add_service">
                     <div className="box_add_service">
                         <div className="input_text">

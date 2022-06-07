@@ -155,8 +155,6 @@ const AddPlace = () => {
         if (isValidate === true) {
             addPlace(values, images).then((res) => { alert(res.message); history.goBack(); }).catch((err) => { console.log(err) })
         }
-        console.log(isValidate)
-
     }
 
     const handleChangeImage = (e) => {

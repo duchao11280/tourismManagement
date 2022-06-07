@@ -267,74 +267,63 @@ const SignUp = () => {
     return (
         <div className="container">
             <div className="containerLogin">
-                <div className="login-form">
+                <div className="signup-form">
                     <form onSubmit={handleSubmit}>
                         <div className="login-title">Đăng ký tài khoản</div>
-                        <div className="input-container">
+                        <div className="input-container-signup">
                             <label className="login-title-input">Họ và tên </label>
-                            <input type="text" name="fullName" value={fullName} style={{ width: "390px", borderRadius: "15px", padding: "13px" }}
+                            <input type="text" name="fullName" value={fullName} style={{ width: "290px", borderRadius: "15px", padding: "13px" }}
                                 onChange={(e) => { handleFullNameChange(e) }} />
                             <div className="error-font">{errfullName}</div>
                         </div>
 
-                        <div className="input-container">
+                        <div className="input-container-signup">
                             <label className="login-title-input">Tên đăng nhập </label>
-                            <input type="text" name="userName" value={userName} style={{ width: "390px", borderRadius: "15px", padding: "13px" }}
+                            <input type="text" name="userName" value={userName} style={{ width: "290px", borderRadius: "15px", padding: "13px" }}
                                 onChange={(e) => { handleUserNameChange(e) }} />
                             <div className="error-font">{erruserName}</div>
                         </div>
 
-                        <div className="input-container">
+                        <div className="input-container-signup">
                             <label className="login-title-input">Mật khẩu </label>
-                            <input type="password" name="password" value={password} style={{ width: "390px", borderRadius: "15px", padding: "13px" }}
+                            <input type="password" name="password" value={password} style={{ width: "290px", borderRadius: "15px", padding: "13px" }}
                                 onChange={(e) => { handlePasswordChange(e) }} />
                             <div className="error-font">{errpassword}</div>
                         </div>
 
 
-                        <div className="input-container">
+                        <div className="input-container-signup">
                             <label className="login-title-input">Nhập lại mật khẩu </label>
-                            <input type="password" name="confirmpassword" value={confirmpassword} style={{ width: "390px", borderRadius: "15px", padding: "13px" }}
+                            <input type="password" name="confirmpassword" value={confirmpassword} style={{ width: "290px", borderRadius: "15px", padding: "13px" }}
                                 onChange={(e) => { handleConfirmPasswordChange(e) }} />
                             <div className="error-font">{errconfirmpassword}</div>
                         </div>
 
 
-                        <div className="input-container">
+                        <div className="input-container-signup">
                             <label className="login-title-input">Email </label>
-                            <input type="text" name="email" value={email} style={{ width: "390px", borderRadius: "15px", padding: "13px" }}
+                            <input type="text" name="email" value={email} style={{ width: "290px", borderRadius: "15px", padding: "13px" }}
                                 onChange={(e) => { handleEmailChange(e) }} />
                             <div className="error-font">{erremail}</div>
                         </div>
 
 
-                        <div className="input-container">
+                        <div className="input-container-signup">
                             <label className="login-title-input">Số điện thoại </label>
-                            <input type="text" name="phonenumber" value={phonenumber} style={{ width: "390px", borderRadius: "15px", padding: "13px" }}
+                            <input type="text" name="phonenumber" value={phonenumber} style={{ width: "290px", borderRadius: "15px", padding: "13px" }}
                                 onChange={(e) => { handlePhoneNumberChange(e) }} />
                             <div className="error-font">{errphonenumber}</div>
                         </div>
 
-                        <div className="combobox-signup">
-                            <label className="login-title-input">Đối tượng sử dụng  </label>
-                            <select style={{ width: "390px", borderRadius: "15px", padding: "5px" }}
-                                onChange={(e) => {
-                                    const select = e.target.value;
-                                    setrole(select);
-                                }}>
-                                <option value="0">Người dùng ứng dụng</option>
-                                <option value="2">Nhà quản lý dịch vụ</option>
 
-                            </select>
-                        </div>
 
-                        <div className="button-container" style={{ paddingTop: "13px", }}>
+                        <div className="button-container-signup" style={{ paddingTop: "13px", paddingLeft: "53px" }}>
                             <button className="SignButton" type="submit" style={{ borderRadius: "6px", width: "200px", }}>
                                 Đăng ký tài khoản
                             </button>
                         </div>
 
-                        <div className="signUpSentense" style={{ paddingLeft: "100px" }}>
+                        <div className="signUpSentense" style={{ paddingLeft: "35px" }}>
                             <a href="$" >Đã có tài khoản? đăng nhập</a>
                         </div>
                     </form>

@@ -41,16 +41,7 @@ const Feedback = () => {
     const handleCloseAlert = () => {
         setShowModalAlert(false);
     }
-    const handleOnDelete = (item) => {
-        setCurrNotification({
-            notificationID: item.notificationID,
-            title: item.title,
-            content: item.content,
-            time: item.time,
 
-        });
-        setShowModalAlert(true);
-    }
     const deleteNoti = (id) => {
         deleteNotification(id)
             .then((response) => {
@@ -61,21 +52,7 @@ const Feedback = () => {
                 alert("Hệ thống xảy ra lỗi! Vui lòng thử lại sau.")
             })
     }
-    const handleOnAddService = () => {
-        setShowModalInput(true)
-    }
-    const handleOnEdit = (item) => {
-        setIsEdit(true);
 
-        setCurrNotification({
-            notificationID: item.notificationID,
-            title: item.title,
-            content: item.content,
-            time: item.time,
-
-        });
-        setShowModalInput(true);
-    }
 
     const handleCloseModalInput = () => {
         setCurrNotification({ notificationID: null, title: '', content: '', time: '' })
