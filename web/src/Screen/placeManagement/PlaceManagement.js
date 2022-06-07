@@ -5,6 +5,7 @@ import { BiPencil } from "react-icons/bi";
 import { IoBan } from "react-icons/io5";
 import { TiTick } from "react-icons/ti"
 import { AiOutlinePlus } from 'react-icons/ai'
+import { FaComment } from "react-icons/fa";
 import { useHistory } from 'react-router-dom'
 import { getAllPlaces, enablePlace, deletePlace } from "../../networking/adminNetworking"
 import Admin from '../admin'
@@ -24,6 +25,7 @@ const PlaceManagement = () => {
         getAllPlaces()
             .then((listPlaces) => {
                 setListPlaces(listPlaces)
+
             })
             .catch((err) => { alert("Xảy ra lỗi, vui lòng thử lại sau"); setListPlaces([]) })
     }
@@ -38,6 +40,9 @@ const PlaceManagement = () => {
     }
     const handleOnEdit = (id) => {
         history.push(`/admin/placemanagement/editplace/${id}`)
+    }
+    const handleOnComment = (id) => {
+        history.push(`/admin/placemanagement/commentplace/${id}`)
     }
     const handleOnAddPlace = (id) => {
         history.push(`/admin/placemanagement/addplace`)
@@ -86,6 +91,7 @@ const PlaceManagement = () => {
                                         <td>
                                             <div className="action_button">
                                                 <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(item.placeID); }}><BiPencil /></button>
+                                                <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnComment(item.placeID); }}><FaComment /></button>
                                                 {item.isDeleted ?
                                                     <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(item.placeID); }}><TiTick /></button>
                                                     : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(item.placeID); }}><IoBan /></button>}
