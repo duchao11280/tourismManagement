@@ -91,7 +91,7 @@ const PlaceManagement = () => {
                                         <td>
                                             <div className="action_button">
                                                 <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(item.placeID); }}><BiPencil /></button>
-                                                <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnComment(item.placeID); }}><FaComment /></button>
+                                                <button className="btn_action button_commment" title="Xem bình luận" onClick={() => { handleOnComment(item.placeID); }}><FaComment /></button>
                                                 {item.isDeleted ?
                                                     <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(item.placeID); }}><TiTick /></button>
                                                     : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(item.placeID); }}><IoBan /></button>}

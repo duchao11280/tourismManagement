@@ -3,7 +3,7 @@ import Landing from './Screen/landing';
 import Login from './Screen/login';
 import SignUp from './Screen/signup';
 import Admin from './Screen/admin';
-
+import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import PlaceManagement from '../src/Screen/placeManagement/PlaceManagement'
 import AddPlace from '../src/Screen/placeManagement/AddPlace'
