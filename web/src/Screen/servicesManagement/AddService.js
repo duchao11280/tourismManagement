@@ -151,20 +151,7 @@ const AddService = () => {
 
             });
         }
-        else if (values.tips.length === 0) {
-            setIsValidate(false);
-            setTypeErr("tips")
-            toast.error(" Bạn chưa nhập gợi ý", {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
 
-            });
-        }
         else if (images.length === 0) {
             setIsValidate(false);
             setTypeErr("tips")

@@ -46,7 +46,10 @@ const EditPlace = () => {
                 });
                 setImgs(response.data.images);
                 setCurrImg(response.data.images[0])
-            })
+
+            }
+
+            )
             .catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau!") })
     }, [id, refresh])
 
@@ -66,6 +69,8 @@ const EditPlace = () => {
     }
 
     const checkEditPlace = () => {
+        console.log(values.placeName.length)
+
         if (values.placeName.length === 0) {
             setIsValidate(false);
             setTypeErr("placeName")
