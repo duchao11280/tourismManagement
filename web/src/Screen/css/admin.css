@@ -54,7 +54,8 @@
 
 .sidebar-Admin {
     position: fixed;
-    /* top: 60px; */
+    top: -1px;
+    height: 100%;
     width: 260px;
     /* height: calc(100% - 60px); */
     height: calc(100%);
