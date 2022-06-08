@@ -67,9 +67,13 @@ const AddService = () => {
         setImages([...e.target.files]);
     }
     const handleAdd = () => {
-        addService(values, images)
-            .then((res) => { alert(res.message); handleGoback() })
-            .catch((err) => { console.log(err) })
+        checkAddService();
+        if (isValidate === true) {
+            addService(values, images)
+                .then((res) => { alert(res.message); handleGoback() })
+                .catch((err) => { console.log(err) })
+        }
+
     }
     const handleGoback = () => {
         history.goBack();

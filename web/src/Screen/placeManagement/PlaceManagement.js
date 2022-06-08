@@ -15,19 +15,20 @@ const PlaceManagement = () => {
     const [listPlaces, setListPlaces] = useState([]);
     const history = useHistory();
     const [refresh, setRefresh] = useState(true)
-
+    const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
 
         getPlaceFromServer();
     }, [refresh])
     const getPlaceFromServer = () => {
-
+        setIsLoading(true)
         getAllPlaces()
             .then((listPlaces) => {
                 setListPlaces(listPlaces)
 
             })
             .catch((err) => { alert("Xảy ra lỗi, vui lòng thử lại sau"); setListPlaces([]) })
+            .finally(() => { setIsLoading(false) })
     }
     const onSearchChange = (event) => {
         setSearchfield(event.target.value);
@@ -56,56 +57,62 @@ const PlaceManagement = () => {
 
     return (
 
-        <div className="containerWithsideBar">
-            <Admin />
+        < div className="containerWithsideBar" >
+            < Admin />
             <div className="container-manager">
                 <h2 className="title">Quản lý địa điểm du lịch</h2>
                 <SearchBox searchChange={onSearchChange} />
                 <div>
-                    <div className="box_button_add">
-                        <h3> Danh sách địa điểm</h3>
-                        <button className="button_add" onClick={() => { handleOnAddPlace(); }}>
-                            <AiOutlinePlus />
-                            Thêm mới
-                        </button>
-                    </div>
+                    {isLoading ? <div> đang tải </div> : <div>
+                        <div className="box_button_add">
+                            <h3> Danh sách địa điểm</h3>
+                            <button className="button_add" onClick={() => { handleOnAddPlace(); }}>
+                                <AiOutlinePlus />
+                                Thêm mới
+                            </button>
+                        </div>
 
-                    <table className="table_place">
-                        <thead className="thead-table-place">
-                            <tr>
-                                <th>ID</th>
-                                <th>Tên địa điểm</th>
-                                <th>Tỉnh thành</th>
-                                <th>Tình trạng</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody className="tbody-place-management">
-                            {filteredPlaces.map((item, i) => {
-                                return (
-                                    <tr key={i}>
-                                        <td>{item.placeID}</td>
-                                        <td>{item.placeName}</td>
-                                        <td>{item.city}</td>
-                                        <td>{item.isDeleted ? "Bị vô hiệu hóa" : "Đang hoạt động"}</td>
-                                        <td>
-                                            <div className="action_button">
-                                                <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(item.placeID); }}><BiPencil /></button>
-                                                <button className="btn_action button_commment" title="Xem bình luận" onClick={() => { handleOnComment(item.placeID); }}><FaComment /></button>
-                                                {item.isDeleted ?
-                                                    <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(item.placeID); }}><TiTick /></button>
-                                                    : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(item.placeID); }}><IoBan /></button>}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
+                        <table className="table_place">
+                            <thead className="thead-table-place">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tên địa điểm</th>
+                                    <th>Tỉnh thành</th>
+                                    <th>Tình trạng</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody className="tbody-place-management">
+                                {filteredPlaces.map((item, i) => {
+                                    return (
+                                        <tr key={i}>
+                                            <td>{item.placeID}</td>
+                                            <td>{item.placeName}</td>
+                                            <td>{item.city}</td>
+                                            <td>{item.isDeleted ? "Bị vô hiệu hóa" : "Đang hoạt động"}</td>
+                                            <td>
+                                                <div className="action_button">
+                                                    <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(item.placeID); }}><BiPencil /></button>
+                                                    <button className="btn_action button_commment" title="Xem bình luận" onClick={() => { handleOnComment(item.placeID); }}><FaComment /></button>
+                                                    {item.isDeleted ?
+                                                        <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(item.placeID); }}><TiTick /></button>
+                                                        : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(item.placeID); }}><IoBan /></button>}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+
+
+                    </div>}
+
 
                 </div>
             </div>
-        </div>
+        </div >
+
     )
 }
 

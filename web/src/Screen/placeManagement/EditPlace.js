@@ -150,20 +150,20 @@ const EditPlace = () => {
 
             });
         }
-        else if (imagesAdd.length === 0) {
-            setIsValidate(false);
-            setTypeErr("tips")
-            toast.error(" Phải có hình ảnh", {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
+        // else if (imagesAdd.length === 0) {
+        //     setIsValidate(false);
+        //     setTypeErr("tips")
+        //     toast.error(" Phải có hình ảnh", {
+        //         position: "top-right",
+        //         autoClose: 3000,
+        //         hideProgressBar: false,
+        //         closeOnClick: true,
+        //         pauseOnHover: true,
+        //         draggable: true,
+        //         progress: undefined,
 
-            });
-        }
+        //     });
+        // }
         else {
             setIsValidate(true);
             setTypeErr("")
@@ -182,14 +182,29 @@ const EditPlace = () => {
     }
     const handleDeleteImage = (id) => {
         disableImage(id)
-            .then((response) => { alert(response.message) })
+            .then((response) => {
+                toast.success(response.message, {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+
+                });
+                setRefresh(!refresh);
+            })
             .catch(() => { alert("Err") })
+
+
     }
     const handleClose = () => {
         setImagesAdd([]);
         setShowModal(false);
     }
     const handleShow = () => setShowModal(true);
+
     const handleChangeImage = (e) => {
         setImagesAdd([...e.target.files]);
         if (e.target.files.length !== 0) {
@@ -212,7 +227,19 @@ const EditPlace = () => {
         checkEditPlace();
         if (isValidate === true) {
             updateInfoPlace(id, values)
-                .then((response) => { if (response !== undefined) alert(response.message); history.goBack(); })
+                // .then((response) => { if (response !== undefined) alert(response.message); })
+                .then((response) => {
+                    if (response !== undefined) toast.success(response.message, {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+
+                    });
+                })
                 .catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau") })
         }
 

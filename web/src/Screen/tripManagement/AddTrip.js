@@ -9,10 +9,12 @@ import '../css/addtrip.css'
 import { getAllPlacesEnable } from '../../networking/adminNetworking'
 import { getAllServicesEnable } from '../../networking/servicesNetworking'
 import { addTrip } from '../../networking/tripNetworking'
+import { ToastContainer, toast } from 'react-toastify';
 import Admin from '../admin'
 const AddTrip = () => {
     let uId = new Date().getTime();
-
+    const [typeErr, setTypeErr] = useState("")
+    const [isValidate, setIsValidate] = useState(false)
     const history = useHistory();
     const [listPlace, setListPlace] = useState([])
     const [listService, setListService] = useState([])
@@ -41,9 +43,13 @@ const AddTrip = () => {
             .catch(() => { setListPlace([]) })
     }, [])
     const handleAddTrip = () => {
-        addTrip(values, tripDetail)
-            .then((response) => { alert(response?.message); handleGoback() })
-            .catch((error) => { console.log(error) })
+        checkAddTrip();
+        if (isValidate === true) {
+            addTrip(values, tripDetail)
+                .then((response) => { alert(response?.message); handleGoback() })
+
+                .catch((error) => { console.log(error) })
+        }
     }
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -79,6 +85,8 @@ const AddTrip = () => {
     const addDetailTrip = () => {
 
         setTripDetail([...tripDetail, { day: sortByDay(tripDetail)[tripDetail.length - 1].day + 1, detail: [] }])
+
+
     }
     const addPlaceToDetailTrip = (day) => {
         let copiedTripDetail = [...tripDetail];
@@ -133,10 +141,34 @@ const AddTrip = () => {
         history.goBack();
     }
 
+    const checkAddTrip = () => {
+        if (values.tripName.length === 0) {
+            setIsValidate(false);
+            setTypeErr("placeName")
+            toast.error(" Bạn chưa nhập tên lịch trình", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+
+
+        else {
+            setIsValidate(true);
+            setTypeErr("")
+        }
+    }
+
     return (
         <div className="containerWithsideBar">
             <Admin />
             <div className="container-manager">
+                <ToastContainer />
                 <h2>Thêm mới lịch trình</h2>
                 <hr />
                 <div className="box_add_trip">
