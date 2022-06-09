@@ -11,7 +11,8 @@
     
     margin:5px;
     padding:5px;
-
+    border-radius: 15px;
+    background-color: rgb(124, 234, 122);
 }
 
 .add_service{

@@ -33,3 +33,16 @@
     color: white;
     font-size: 23px;
 }
+
+.day_description_edittrip{
+    text-align: center;
+    display: block;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.btn-trash {
+    padding: 10px 20px;
+    font-size: 24px;
+    background-color: red;
+}

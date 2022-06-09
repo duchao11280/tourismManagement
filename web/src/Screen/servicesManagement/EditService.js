@@ -7,6 +7,7 @@ import { province } from '../../assets/values/province'
 import { useParams } from 'react-router-dom'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { useHistory } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import {
@@ -21,6 +22,8 @@ import {
 } from '../../networking/adminNetworking'
 const EditService = () => {
     const [imgs, setImgs] = useState([])
+    const [typeErr, setTypeErr] = useState("")
+    const [isValidate, setIsValidate] = useState(false)
     const [types, setTypes] = useState([])
     const [placesByCity, setPlacesByCity] = useState([])
     const [currImg, setCurrImg] = useState({ id: null, imgURL: "" })
@@ -99,6 +102,84 @@ const EditService = () => {
             [name]: value,
         });
     };
+    const checkEditService = () => {
+        if (values.serviceName.length === 0) {
+            setIsValidate(false);
+            setTypeErr("placeName")
+            toast.error(" Tên địa điểm không được để trống", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (values.address.length === 0) {
+            setIsValidate(false);
+            setTypeErr("address")
+            toast.error(" Địa chỉ không được để trống", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (values.latitude.length === 0) {
+            setIsValidate(false);
+            setTypeErr("latitude")
+            toast.error(" Vĩ độ không được để trống", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (values.longitude.length === 0) {
+            setIsValidate(false);
+            setTypeErr("longitude")
+            toast.error(" Kinh độ không được để trống", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (values.description.length === 0) {
+            setIsValidate(false);
+            setTypeErr("description")
+            toast.error(" Mô tả không được để trống", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+
+
+        else {
+            setIsValidate(true);
+            setTypeErr("")
+        }
+    }
     const handleChangeProvince = (e) => {
         setCurrProvince(e.target.value)
     }
@@ -107,8 +188,20 @@ const EditService = () => {
     }
     const handleDeleteImage = (id) => {
         disableImage(id)
-            .then((response) => { alert(response.message); setRefresh(!refresh) })
+            .then((response) => {
+                toast.success(response.message, {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+
+                });; setRefresh(!refresh)
+            })
             .catch(() => { alert("Err") })
+        setRefresh(!refresh);
     }
     const handleClose = () => {
         setImagesAdd([]);
@@ -125,22 +218,58 @@ const EditService = () => {
         uploadImageInEditService(id, imagesAdd)
             .then((response) => {
                 console.log(response)
-                alert(response?.message);
+                toast.success(response.message, {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+
+                });;
                 setRefresh(!refresh)
                 setShowModal(false)
             })
             .catch((err) => {
-                alert(err)
+                toast.error(err, {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+
+                });;
             })
     }
     const handleOnEdit = () => {
-        updateInfoService(id, values)
-            .then((response) => { if (response !== undefined) { alert(response.message); setRefresh(!refresh) } })
-            .catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau") })
+        checkEditService();
+        if (isValidate === true) {
+            updateInfoService(id, values)
+                .then((response) => {
+                    if (response !== undefined) {
+                        toast.success(response.message, {
+                            position: "top-right",
+                            autoClose: 3000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+
+                        });; setRefresh(!refresh)
+                    }
+                })
+                .catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau") })
+        }
+
     }
     return (
         <div className="containerWithsideBar">
             <Admin />
+            <ToastContainer />
             <div className="container-edit-service">
                 <h2>Chỉnh sửa dịch vụ</h2>
                 <div className="edit_service">

@@ -161,6 +161,40 @@ const uploadImageInEdit = async (id, images) => {
 
     }
 }
+
+// get comment for user by place id
+const getAllCommentByPlaceID = async (id) => {
+    try {
+        const response = await fetch(
+            API_URL + `/api/v1/comment/placeid=${id}`,
+            {
+                method: 'GET',
+                credentials: 'include',
+            }
+        );
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+
+    }
+};
+//delete comment by admin
+const deleteCommentByAdmin = async (id) => {
+    try {
+        const response = await fetch(
+            API_URL + `/api/v1/comment/deletecomment/${id}`,
+            {
+                method: 'DELETE',
+                credentials: 'include',
+            }
+        );
+        const json = await response.json();
+        return json;
+    } catch (error) {
+
+    }
+}
+
 // user management
 const getAllUsers = async () => {
     try {
@@ -316,4 +350,6 @@ export {
     deleteNotification,
     addNotification,
     updateNotification,
+    getAllCommentByPlaceID,
+    deleteCommentByAdmin
 }

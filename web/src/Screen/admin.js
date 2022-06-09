@@ -2,7 +2,7 @@ import "../styles.css";
 import React from "react";
 
 import "./css/admin.css"
-
+import Logo from '../../src/assets/imgs/Logo.png'
 import { FaThLarge, FaUserAlt, FaConciergeBell, FaSignOutAlt, FaBell, FaMotorcycle } from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
 import { GiEarthAmerica } from "react-icons/gi";
@@ -15,18 +15,10 @@ const Admin = () => {
     }
     return (
         <div className="container-Admin">
-            {/* <div class="topbar-Admin">
-                <div class="logo-Admin">
-                    <h2>Brand.</h2> 
-                </div>
-                <div class="search-Admin">
-                    <input type="text" name="search" placeholder="search here" />
-                    <label for="search"><i class="fas fa-search"></i></label>
-                </div>
-
-
-            </div> */}
             <div className="sidebar-Admin">
+                <div style={{ paddingLeft: '50px' }}>
+                    <img src={Logo} alt="logo" />
+                </div>
                 <ul>
                     <li>
 

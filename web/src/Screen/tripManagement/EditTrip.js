@@ -184,11 +184,11 @@ const EditTrip = () => {
                                             return (
                                                 <div style={{ backgroundColor: "azure", border: "1px solid", marginBottom: "5px" }} key={i}>
                                                     <div style={{ backgroundColor: "gray" }}>
-                                                        <div style={{ display: "flex", flex: 1, justifyContent: "space-between", marginLeft: "15px", color: "white", paddingTop: "5px" }}>
-                                                            Ngày {tripDetailItem.day}
+                                                        <div style={{ display: "flex", flex: 1, justifyContent: "space-between", marginLeft: "15px", color: "white" }}>
+                                                            <p className="day_description_edittrip">Ngày {tripDetailItem.day}</p>
                                                             {tripDetailItem.day === tripDetail?.detail[tripDetail?.detail.length - 1].day && tripDetailItem.day !== 1 ?
                                                                 <div>
-                                                                    <button className="btn" onClick={() => { handleDeleteLastTripDetail(tripDetailItem.day) }} style={{ backgroundColor: '#f64645' }}><BsTrash /></button>
+                                                                    <button className="btn-trash" onClick={() => { handleDeleteLastTripDetail(tripDetailItem.day) }}><BsTrash /></button>
                                                                 </div>
                                                                 : <div></div>
                                                             }

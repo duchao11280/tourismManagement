@@ -7,17 +7,23 @@ import { TiTick } from "react-icons/ti"
 import { useHistory } from 'react-router-dom'
 import Admin from '../admin'
 import { getAllServices, enableService, disableService } from '../../networking/servicesNetworking'
+
+
+
 const ServicesManagement = () => {
     const [searchfield, setSearchfield] = useState('');
     const [listService, setListService] = useState([]);
     const [refresh, setRefresh] = useState(true)
     const history = useHistory();
+    const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
+        setIsLoading(true)
         getAllServices()
             .then((response) => {
                 setListService(response.data)
             })
             .catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau") })
+            .finally(() => { setIsLoading(false) })
     }, [refresh])
     const onSearchChange = (event) => {
         setSearchfield(event.target.value);
@@ -50,53 +56,58 @@ const ServicesManagement = () => {
                 <h2 className="title">Quản lý dịch vụ</h2>
                 <SearchBox searchChange={onSearchChange} />
                 <div>
-                    <div className="box_button_add">
-                        <h3> Danh sách dịch vụ</h3>
-                        <button className="button_add" onClick={() => { handleOnAddService() }}>
-                            <AiOutlinePlus />
-                            Thêm mới
-                        </button>
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Tên dịch vụ</th>
-                                <th>Loại dịch vụ</th>
-                                <th>Tỉnh thành</th>
-                                <th>Địa diểm</th>
-                                <th>Địa chỉ</th>
-                                <th>Liên hệ</th>
-                                <th>Tình trạng</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filteredTables.map((item, i) => {
-                                return (
-                                    <tr key={i}>
-
-                                        <td>{item.serviceID}</td>
-                                        <td>{item.serviceName}</td>
-                                        <td>{item.typeService}</td>
-                                        <td>{item.city}</td>
-                                        <td>{item.placeName}</td>
-                                        <td>{item.address}</td>
-                                        <td>{item.hotline}</td>
-                                        <td>{item.isDisabled ? "Bị vô hiệu hóa" : "Đang hoạt động"}</td>
-                                        <td>
-                                            <div className="action_button">
-                                                <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(item.serviceID) }}><BiPencil /></button>
-                                                {item.isDisabled ?
-                                                    <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(item.serviceID) }}><TiTick /></button>
-                                                    : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(item.serviceID) }}><IoBan /></button>}
-                                            </div>
-                                        </td>
+                    {isLoading ? <div> đang tải... </div> : <div>
+                        <div className="box_button_add">
+                            <h3> Danh sách dịch vụ</h3>
+                            <button className="button_add" onClick={() => { handleOnAddService() }}>
+                                <AiOutlinePlus />
+                                Thêm mới
+                            </button>
+                        </div>
+                        <div >
+                            <table className="table_place">
+                                <thead className="thead-table-place">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Tên dịch vụ</th>
+                                        <th>Loại dịch vụ</th>
+                                        <th>Tỉnh thành</th>
+                                        <th>Địa diểm</th>
+                                        <th>Địa chỉ</th>
+                                        <th>Liên hệ</th>
+                                        <th>Tình trạng</th>
+                                        <th></th>
                                     </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
+                                </thead>
+                                <tbody className="tbody-place-management">
+                                    {filteredTables.map((item, i) => {
+                                        return (
+                                            <tr key={i}>
+
+                                                <td>{item.serviceID}</td>
+                                                <td>{item.serviceName}</td>
+                                                <td>{item.typeService}</td>
+                                                <td>{item.city}</td>
+                                                <td>{item.placeName}</td>
+                                                <td>{item.address}</td>
+                                                <td>{item.hotline}</td>
+                                                <td>{item.isDisabled ? "Bị vô hiệu hóa" : "Đang hoạt động"}</td>
+                                                <td>
+                                                    <div className="action_button">
+                                                        <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(item.serviceID) }}><BiPencil /></button>
+                                                        {item.isDisabled ?
+                                                            <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(item.serviceID) }}><TiTick /></button>
+                                                            : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(item.serviceID) }}><IoBan /></button>}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>}
+
                 </div>
             </div>
         </div>

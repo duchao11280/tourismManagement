@@ -1,14 +1,16 @@
-
-
 .containerWithsideBar{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    background-color: rgb(255 251 251 / 96%);
+    
 }
 
 .container-manager{
     width: 70%;
-   margin-right:150px
+   margin-right:150px;
+    height: 740px;
+    background-color: rgb(255 251 251 / 96%);
 
 }
 
@@ -81,10 +83,16 @@ table th{
     vertical-align: top;
 }
 .button_edit{
-    margin: 10px;
+    margin: 5px;
     padding: 5px;
     font-size: medium;
     color:blue;
+}
+.button_commment{
+    margin: 10px;
+    padding: 5px;
+    font-size: medium;
+    color:rgb(46, 2, 41);
 }
 
 .button_enable{
@@ -105,8 +113,7 @@ table th{
     table-layout: fixed;
 }
 .tbody-place-management tr{
-    
-    width: calc( 100% + 1em );
+    width: calc( 100% + 0.98em );
 }
 .tbody-place-management{
     display: block;

@@ -7,6 +7,7 @@ import { province } from '../../assets/values/province'
 import { useParams } from 'react-router-dom'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { useHistory } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import { getPlaceAndImageByPlaceID, updateInfoPlace, disableImage, uploadImageInEdit } from '../../networking/adminNetworking'
@@ -22,6 +23,8 @@ const EditPlace = () => {
         latitude: "",
         longitude: ""
     })
+    const [typeErr, setTypeErr] = useState("")
+    const [isValidate, setIsValidate] = useState(false)
     const [showModal, setShowModal] = useState(false);
     const [imagesAdd, setImagesAdd] = useState([])
     const [imageURLs, setImageURLs] = useState([])
@@ -43,7 +46,10 @@ const EditPlace = () => {
                 });
                 setImgs(response.data.images);
                 setCurrImg(response.data.images[0])
-            })
+
+            }
+
+            )
             .catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau!") })
     }, [id, refresh])
 
@@ -62,6 +68,113 @@ const EditPlace = () => {
         history.goBack();
     }
 
+    const checkEditPlace = () => {
+        console.log(values.placeName.length)
+
+        if (values.placeName.length === 0) {
+            setIsValidate(false);
+            setTypeErr("placeName")
+            toast.error(" Tên địa điểm không được để trống", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (values.address.length === 0) {
+            setIsValidate(false);
+            setTypeErr("address")
+            toast.error(" Địa chỉ không được để trống", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (values.latitude.length === 0) {
+            setIsValidate(false);
+            setTypeErr("latitude")
+            toast.error(" Vĩ độ không được để trống", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (values.longitude.length === 0) {
+            setIsValidate(false);
+            setTypeErr("longitude")
+            toast.error(" Kinh độ không được để trống", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (values.description.length === 0) {
+            setIsValidate(false);
+            setTypeErr("description")
+            toast.error(" Mô tả không được để trống", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (values.tips.length === 0) {
+            setIsValidate(false);
+            setTypeErr("tips")
+            toast.error(" Gợi ý không được để trống", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        // else if (imagesAdd.length === 0) {
+        //     setIsValidate(false);
+        //     setTypeErr("tips")
+        //     toast.error(" Phải có hình ảnh", {
+        //         position: "top-right",
+        //         autoClose: 3000,
+        //         hideProgressBar: false,
+        //         closeOnClick: true,
+        //         pauseOnHover: true,
+        //         draggable: true,
+        //         progress: undefined,
+
+        //     });
+        // }
+        else {
+            setIsValidate(true);
+            setTypeErr("")
+        }
+    }
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setValues({
@@ -74,14 +187,29 @@ const EditPlace = () => {
     }
     const handleDeleteImage = (id) => {
         disableImage(id)
-            .then((response) => { alert(response.message) })
+            .then((response) => {
+                toast.success(response.message, {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+
+                });
+                setRefresh(!refresh);
+            })
             .catch(() => { alert("Err") })
+
+
     }
     const handleClose = () => {
         setImagesAdd([]);
         setShowModal(false);
     }
     const handleShow = () => setShowModal(true);
+
     const handleChangeImage = (e) => {
         setImagesAdd([...e.target.files]);
         if (e.target.files.length !== 0) {
@@ -101,9 +229,26 @@ const EditPlace = () => {
             })
     }
     const handleOnEdit = () => {
-        updateInfoPlace(id, values)
-            .then((response) => { if (response !== undefined) alert(response.message); history.goBack(); })
-            .catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau") })
+
+        checkEditPlace();
+        if (isValidate === true) {
+            updateInfoPlace(id, values)
+                // .then((response) => { if (response !== undefined) alert(response.message); })
+                .then((response) => {
+                    if (response !== undefined) toast.success(response.message, {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+
+                    });
+                })
+                .catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau") })
+        }
+        console.log("press")
     }
     return (
         <div>
@@ -111,7 +256,7 @@ const EditPlace = () => {
             <div className="container-edit">
                 <h2>Chỉnh sửa địa điểm</h2>
                 <div className="edit_place">
-
+                    <ToastContainer />
                     <div className="box_edit_place">
                         <div className="input_text">
                             <label htmlFor="placeName">Tên địa điểm(*)</label>

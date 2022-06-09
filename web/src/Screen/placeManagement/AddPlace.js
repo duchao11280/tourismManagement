@@ -3,9 +3,12 @@ import '../css/addplace.css'
 import { province } from '../../assets/values/province'
 import { addPlace } from '../../networking/adminNetworking'
 import Admin from '../admin'
+import { ToastContainer, toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom'
 const AddPlace = () => {
     const [images, setImages] = useState([])
+    const [typeErr, setTypeErr] = useState("")
+    const [isValidate, setIsValidate] = useState(false)
     const [imageURLs, setImageURLs] = useState([])
     const [values, setValues] = useState({
         placeName: "",
@@ -23,6 +26,8 @@ const AddPlace = () => {
         setURLListImage(images);
 
     }, [images])
+
+
     const setURLListImage = (images) => {
         if (images.length < 1) return;
         const newImageURL = [];
@@ -37,12 +42,119 @@ const AddPlace = () => {
         });
     };
 
+    const checkAddPlace = () => {
+        if (values.placeName.length === 0) {
+            setIsValidate(false);
+            setTypeErr("placeName")
+            toast.error(" Bạn chưa nhập tên địa điểm", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (values.address.length === 0) {
+            setIsValidate(false);
+            setTypeErr("address")
+            toast.error(" Bạn chưa nhập địa chỉ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (values.latitude.length === 0) {
+            setIsValidate(false);
+            setTypeErr("latitude")
+            toast.error(" Bạn chưa nhập vĩ độ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (values.longitude.length === 0) {
+            setIsValidate(false);
+            setTypeErr("longitude")
+            toast.error(" Bạn chưa nhập kinh độ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (values.description.length === 0) {
+            setIsValidate(false);
+            setTypeErr("description")
+            toast.error(" Bạn chưa nhập mô tả", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (values.tips.length === 0) {
+            setIsValidate(false);
+            setTypeErr("tips")
+            toast.error(" Bạn chưa nhập gợi ý", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else if (images.length === 0) {
+            setIsValidate(false);
+            setTypeErr("tips")
+            toast.error(" Bạn chưa thêm hình ảnh", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }
+        else {
+            setIsValidate(true);
+            setTypeErr("")
+        }
+    }
     const handleGoback = () => {
         history.goBack();
     }
 
     const handleAdd = () => {
-        addPlace(values, images).then((res) => { alert(res.message); history.goBack(); }).catch((err) => { console.log(err) })
+        checkAddPlace();
+        if (isValidate === true) {
+            addPlace(values, images).then((res) => { alert(res.message); history.goBack(); }).catch((err) => { console.log(err) })
+        }
     }
 
     const handleChangeImage = (e) => {
@@ -52,13 +164,14 @@ const AddPlace = () => {
         <div className="containerWithsideBar">
             <div><Admin /></div>
             <div className="container-manager">
-
+                <ToastContainer />
                 <h2>Thêm mới địa điểm</h2>
                 <div className="container_box">
                     <div className="input_text">
                         <label htmlFor="placeName">Tên địa điểm(*)</label>
 
                         <input
+                            style={{ padding: "10px" }}
                             id="placeName"
                             type="text"
                             name="placeName"
@@ -81,6 +194,7 @@ const AddPlace = () => {
                     <div className="input_text">
                         <label htmlFor="address">Địa chỉ(*)</label>
                         <input
+                            style={{ padding: "10px" }}
                             id="address"
                             type="text"
                             name="address"
@@ -92,6 +206,7 @@ const AddPlace = () => {
                     <div className="input_text">
                         <label htmlFor="latitude">Vĩ độ(*)</label>
                         <input
+                            style={{ padding: "10px" }}
                             id="latitude"
                             type="text"
                             name="latitude"
@@ -103,6 +218,7 @@ const AddPlace = () => {
                     <div className="input_text">
                         <label htmlFor="longitude">Kinh độ(*)</label>
                         <input
+                            style={{ padding: "10px" }}
                             id="longitude"
                             type="text"
                             name="longitude"
@@ -115,6 +231,7 @@ const AddPlace = () => {
                         <label htmlFor="description">Mô tả</label>
 
                         <textarea
+                            style={{ padding: "10px" }}
                             id="description"
                             name="description"
                             aria-multiline="true"
@@ -124,6 +241,7 @@ const AddPlace = () => {
                     <div className="input_text">
                         <label htmlFor="tips">Gợi ý</label>
                         <textarea
+                            style={{ padding: "10px" }}
                             id="tips"
                             name="tips"
                             aria-multiline="true"

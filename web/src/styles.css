@@ -1,17 +1,27 @@
 
 /* //login.js */
+.container {
+  background-image: url(../src/assets/imgs/backgroundLogin.png),linear-gradient(rgb(107, 119, 247),rgb(227, 61, 61));
+  width: 100% ;
+  height: 100vh;
+  /* background-color: rgba(0, 0, 0, 0.8); */
+  background-repeat: round;
+  background-size: cover;
+  background-blend-mode: overlay;
+  
+}
+
 .containerLogin {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
-  min-height: 100vh;
-  background-color: #87ceeb;
+  /* background-color: #87ceeb; */
+  
 }
 
 .login-title {
   justify-content: center;
-
+  text-align: center;
   align-items: center;
   font-family: Monospace;
   font-size: 25px;
@@ -23,21 +33,30 @@
 }
 .login-form {
   margin-top: 10px;
-  /* padding: 60px; */
-  padding-left: 60px;
-  padding-right: 60px;
+  padding: 0 50px;
   padding-bottom: 60px;
   padding-top: 30px;
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 30px;
 }
 
+.signup-form {
+  margin-top: 10px;
+  padding: 0 50px;
+  width:400px;
+  padding-bottom: 60px;
+  padding-top: 30px;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 30px;
+}
 .button-container {
   display: flex;
   justify-content: center;
 }
 .SignButton{
-  background-color: #00b36b;
+  background-color: #48ebaa;
 }
 
 .input-container {
@@ -45,6 +64,15 @@
   flex-direction: column;
   gap: 8px;
   margin: 10px;
+  width: 250px;
+}
+
+.input-container-signup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 10px;
+  width: 250px;
 }
 
 .combobox-signup {
@@ -57,7 +85,7 @@
 }
 
 .signUpSentense {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 .error-font{
   color: red;

@@ -127,11 +127,6 @@ const Home = ({ navigation }) => {
                     </View>
 
 
-
-
-
-
-
                     <View >
                         <Text style={styles.content}>{filteredPlace.length != 0 ? "Khám phá các địa điểm khi du lịch:" : ""} </Text>
                     </View>

@@ -1,0 +1,73 @@
+.containerWithsideBar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: rgb(255 251 251 / 96%);
+    
+}
+
+.container-manager{
+    width: 70%;
+   margin-right:150px;
+    height: 740px;
+    background-color: rgb(255 251 251 / 96%);
+
+}
+
+.container-edit{
+    width: 75%;
+    margin-left:300px
+
+}
+
+.container-edit-service{
+    width: 80%;
+   margin-left:240px;
+   margin-right:15px
+}
+.container_tabbar_PM{
+    width:40%;
+}
+.title{
+    text-align: center;
+
+}
+/* Css cho table */
+
+table, th, td{
+    border:1px solid #868585;
+}
+table{
+    margin: 20px auto;
+    border-collapse:collapse;
+    width: 100%;
+}
+td,th{
+    text-align: left;
+    padding: 10px 20px;
+}
+table tr:nth-child(odd){
+    background-color: antiquewhite;
+}
+
+table th{
+    background-color:skyblue;
+}
+
+
+
+
+.thead-table-user, .tbody-user-management tr, .tbody-user-management th{
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+.tbody-user-management tr{
+    width: calc( 100% + 1em );
+}
+.tbody-user-management{
+    display: block;
+    height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

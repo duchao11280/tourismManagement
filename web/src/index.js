@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Admin from './Screen/admin';
 import App from './App';
 import Landing from './Screen/landing';
-
+import 'react-toastify/dist/ReactToastify.css';
 
 
 ReactDOM.render(
