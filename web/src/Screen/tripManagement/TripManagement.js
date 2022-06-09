@@ -12,12 +12,15 @@ const TripManagement = () => {
     const [listTrip, setListTrip] = useState([]);
     const [refresh, setRefresh] = useState(true)
     const history = useHistory();
+    const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
+        setIsLoading(true)
         getAllTrip()
             .then((response) => {
                 setListTrip(response.data)
             })
             .catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau") })
+            .finally(() => { setIsLoading(false) })
     }, [refresh])
     const onSearchChange = (event) => {
         setSearchfield(event.target.value);
@@ -47,45 +50,48 @@ const TripManagement = () => {
                 <h2 className="title">Quản lý lịch trình</h2>
                 <SearchBox searchChange={onSearchChange} />
                 <div>
-                    <div className="box_button_add">
-                        <h3> Danh sách lịch trình</h3>
-                        <button className="button_add" onClick={() => { handleOnAddTrip() }}>
-                            <AiOutlinePlus />
-                            Thêm mới
-                        </button>
-                    </div>
-                    <table className="table_place">
-                        <thead className="thead-table-place">
-                            <tr>
-                                <th>ID</th>
-                                <th>Tên lịch trình</th>
-                                <th>Tỉnh thành xuất phát</th>
-                                <th>Tình trạng</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody className="tbody-place-management">
-                            {filteredTables.map((item, i) => {
-                                return (
-                                    <tr key={i}>
-                                        <td>{item.tripID}</td>
-                                        <td>{item.tripName}</td>
-                                        <td>{item.city}</td>
-                                        <td>{item.isDisabled ? "Bị vô hiệu hóa" : "Đang hoạt động"}</td>
-                                        <td>
-                                            <div className="action_button">
-                                                <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(item.tripID) }}><BiPencil /></button>
-                                                {item.isDisabled ?
-                                                    <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(item.tripID) }}><TiTick /></button>
-                                                    : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(item.tripID) }}><IoBan /></button>}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
+                    {isLoading ? <div> đang tải... </div> : <div>
+                        <div className="box_button_add">
+                            <h3> Danh sách lịch trình</h3>
+                            <button className="button_add" onClick={() => { handleOnAddTrip() }}>
+                                <AiOutlinePlus />
+                                Thêm mới
+                            </button>
+                        </div>
+                        <table className="table_place">
+                            <thead className="thead-table-place">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tên lịch trình</th>
+                                    <th>Tỉnh thành xuất phát</th>
+                                    <th>Tình trạng</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody className="tbody-place-management">
+                                {filteredTables.map((item, i) => {
+                                    return (
+                                        <tr key={i}>
+                                            <td>{item.tripID}</td>
+                                            <td>{item.tripName}</td>
+                                            <td>{item.city}</td>
+                                            <td>{item.isDisabled ? "Bị vô hiệu hóa" : "Đang hoạt động"}</td>
+                                            <td>
+                                                <div className="action_button">
+                                                    <button className="btn_action button_edit" title="Chỉnh sửa" onClick={() => { handleOnEdit(item.tripID) }}><BiPencil /></button>
+                                                    {item.isDisabled ?
+                                                        <button className="btn_action button_enable" title="Kích hoạt" onClick={() => { handleOnEnable(item.tripID) }}><TiTick /></button>
+                                                        : <button className="btn_action button_disable" title="Vô hiệu hóa" onClick={() => { handleOnDisable(item.tripID) }}><IoBan /></button>}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                    </div>}
                 </div>
+
             </div>
         </div>
     )

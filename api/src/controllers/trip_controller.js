@@ -43,16 +43,19 @@ exports.getTripDetailById = (req, res) => {
             data.distance = []
             let listDay = []
 
-            detail.forEach((item) => {
-                listDay.push(item.day)
-            })
-            // xóa bỏ các ngày trùng có dữ liệu
-            listDay = Array.from(new Set(listDay))
-            let listDayEmpty = [];
-            for (let i = listDay[listDay.length - 1] + 1 || 1; i <= trip[0].numberOfDays; i++) {
-                listDayEmpty.push(i)
+            // detail.forEach((item) => {
+            //     listDay.push(item.day)
+            // })
+            // // xóa bỏ các ngày trùng có dữ liệu
+            // listDay = Array.from(new Set(listDay))
+            // let listDayEmpty = [];
+            // for (let i = listDay[listDay.length - 1] + 1 || 1; i <= trip[0].numberOfDays; i++) {
+            //     listDayEmpty.push(i)
+            // }
+            // listDay.push(...listDayEmpty)
+            for (let i = 1; i <= trip[0].numberOfDays; i++) {
+                listDay.push(i)
             }
-            listDay.push(...listDayEmpty)
             listDay.forEach((day) => {
                 let detailPerDay = { day: day }
                 let detailOfDay = []

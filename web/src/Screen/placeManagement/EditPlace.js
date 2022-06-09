@@ -229,6 +229,7 @@ const EditPlace = () => {
             })
     }
     const handleOnEdit = () => {
+
         checkEditPlace();
         if (isValidate === true) {
             updateInfoPlace(id, values)
@@ -247,7 +248,7 @@ const EditPlace = () => {
                 })
                 .catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau") })
         }
-
+        console.log("press")
     }
     return (
         <div>

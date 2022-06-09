@@ -63,7 +63,7 @@ const PlaceManagement = () => {
                 <h2 className="title">Quản lý địa điểm du lịch</h2>
                 <SearchBox searchChange={onSearchChange} />
                 <div>
-                    {isLoading ? <div> đang tải </div> : <div>
+                    {isLoading ? <div> đang tải... </div> : <div>
                         <div className="box_button_add">
                             <h3> Danh sách địa điểm</h3>
                             <button className="button_add" onClick={() => { handleOnAddPlace(); }}>
