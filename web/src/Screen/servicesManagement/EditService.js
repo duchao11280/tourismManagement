@@ -116,6 +116,7 @@ const EditService = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else if (values.address.length === 0) {
             setIsValidate(false);
@@ -130,6 +131,7 @@ const EditService = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else if (values.latitude.length === 0) {
             setIsValidate(false);
@@ -144,6 +146,7 @@ const EditService = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else if (values.longitude.length === 0) {
             setIsValidate(false);
@@ -158,6 +161,7 @@ const EditService = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else if (values.description.length === 0) {
             setIsValidate(false);
@@ -172,12 +176,14 @@ const EditService = () => {
                 progress: undefined,
 
             });
+            return false
         }
 
 
         else {
             setIsValidate(true);
             setTypeErr("")
+            return true
         }
     }
     const handleChangeProvince = (e) => {
@@ -245,8 +251,9 @@ const EditService = () => {
             })
     }
     const handleOnEdit = () => {
-        checkEditService();
-        if (isValidate === true) {
+        const check = checkEditService();
+
+        if (check === true) {
             updateInfoService(id, values)
                 .then((response) => {
                     if (response !== undefined) {

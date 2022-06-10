@@ -67,8 +67,8 @@ const AddService = () => {
         setImages([...e.target.files]);
     }
     const handleAdd = () => {
-        checkAddService();
-        if (isValidate === true) {
+        const check = checkAddService();
+        if (check === true) {
             addService(values, images)
                 .then((res) => { alert(res.message); handleGoback() })
                 .catch((err) => { console.log(err) })
@@ -94,6 +94,7 @@ const AddService = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else if (values.address.length === 0) {
             setIsValidate(false);
@@ -108,6 +109,7 @@ const AddService = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else if (values.latitude.length === 0) {
             setIsValidate(false);
@@ -122,6 +124,7 @@ const AddService = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else if (values.longitude.length === 0) {
             setIsValidate(false);
@@ -136,6 +139,7 @@ const AddService = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else if (values.description.length === 0) {
             setIsValidate(false);
@@ -150,6 +154,7 @@ const AddService = () => {
                 progress: undefined,
 
             });
+            return false
         }
 
         else if (images.length === 0) {
@@ -165,10 +170,12 @@ const AddService = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else {
             setIsValidate(true);
             setTypeErr("")
+            return true
         }
     }
     return (
