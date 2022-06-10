@@ -43,8 +43,9 @@ const AddTrip = () => {
             .catch(() => { setListPlace([]) })
     }, [])
     const handleAddTrip = () => {
-        checkAddTrip();
-        if (isValidate === true) {
+        const check = checkAddTrip();
+
+        if (check === true) {
             addTrip(values, tripDetail)
                 .then((response) => { alert(response?.message); handleGoback() })
 
@@ -155,12 +156,14 @@ const AddTrip = () => {
                 progress: undefined,
 
             });
+            return false
         }
 
 
         else {
             setIsValidate(true);
             setTypeErr("")
+            return true
         }
     }
 

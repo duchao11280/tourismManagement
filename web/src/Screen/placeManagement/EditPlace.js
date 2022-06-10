@@ -69,7 +69,7 @@ const EditPlace = () => {
     }
 
     const checkEditPlace = () => {
-        console.log(values.placeName.length)
+        // console.log(values.placeName.length)
 
         if (values.placeName.length === 0) {
             setIsValidate(false);
@@ -84,6 +84,7 @@ const EditPlace = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else if (values.address.length === 0) {
             setIsValidate(false);
@@ -98,6 +99,7 @@ const EditPlace = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else if (values.latitude.length === 0) {
             setIsValidate(false);
@@ -112,6 +114,7 @@ const EditPlace = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else if (values.longitude.length === 0) {
             setIsValidate(false);
@@ -126,6 +129,7 @@ const EditPlace = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else if (values.description.length === 0) {
             setIsValidate(false);
@@ -140,6 +144,7 @@ const EditPlace = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else if (values.tips.length === 0) {
             setIsValidate(false);
@@ -154,24 +159,13 @@ const EditPlace = () => {
                 progress: undefined,
 
             });
+            return false
         }
-        // else if (imagesAdd.length === 0) {
-        //     setIsValidate(false);
-        //     setTypeErr("tips")
-        //     toast.error(" Phải có hình ảnh", {
-        //         position: "top-right",
-        //         autoClose: 3000,
-        //         hideProgressBar: false,
-        //         closeOnClick: true,
-        //         pauseOnHover: true,
-        //         draggable: true,
-        //         progress: undefined,
 
-        //     });
-        // }
         else {
             setIsValidate(true);
             setTypeErr("")
+            return true
         }
     }
 
@@ -219,7 +213,7 @@ const EditPlace = () => {
     const handleUploadImage = () => {
         uploadImageInEdit(id, imagesAdd)
             .then((response) => {
-                console.log(response)
+                // console.log(response)
                 alert(response?.message);
                 setRefresh(!refresh)
                 setShowModal(false)
@@ -230,25 +224,25 @@ const EditPlace = () => {
     }
     const handleOnEdit = () => {
 
-        checkEditPlace();
-        if (isValidate === true) {
+        const check = checkEditPlace();
+        if (check === true) {
             updateInfoPlace(id, values)
                 // .then((response) => { if (response !== undefined) alert(response.message); })
                 .then((response) => {
-                    if (response !== undefined) toast.success(response.message, {
-                        position: "top-right",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-
-                    });
+                    if (response !== undefined) {
+                        toast.success(response.message, {
+                            position: "top-right",
+                            autoClose: 3000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                        });
+                    }
                 })
                 .catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau") })
         }
-        console.log("press")
     }
     return (
         <div>

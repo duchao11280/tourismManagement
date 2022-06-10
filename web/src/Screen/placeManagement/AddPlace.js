@@ -56,6 +56,7 @@ const AddPlace = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else if (values.address.length === 0) {
             setIsValidate(false);
@@ -70,6 +71,7 @@ const AddPlace = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else if (values.latitude.length === 0) {
             setIsValidate(false);
@@ -84,6 +86,7 @@ const AddPlace = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else if (values.longitude.length === 0) {
             setIsValidate(false);
@@ -98,6 +101,7 @@ const AddPlace = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else if (values.description.length === 0) {
             setIsValidate(false);
@@ -112,6 +116,7 @@ const AddPlace = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else if (values.tips.length === 0) {
             setIsValidate(false);
@@ -126,6 +131,7 @@ const AddPlace = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else if (images.length === 0) {
             setIsValidate(false);
@@ -140,10 +146,12 @@ const AddPlace = () => {
                 progress: undefined,
 
             });
+            return false
         }
         else {
             setIsValidate(true);
             setTypeErr("")
+            return true
         }
     }
     const handleGoback = () => {
@@ -151,8 +159,9 @@ const AddPlace = () => {
     }
 
     const handleAdd = () => {
-        checkAddPlace();
-        if (isValidate === true) {
+        const check = checkAddPlace();
+
+        if (check === true) {
             addPlace(values, images).then((res) => { alert(res.message); history.goBack(); }).catch((err) => { console.log(err) })
         }
     }
