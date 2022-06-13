@@ -19,7 +19,6 @@ const SearchAround = ({ navigation }) => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
-                setErrorMsg('Quyền truy cập vị trí bị từ chối!');
                 return;
             }
 
