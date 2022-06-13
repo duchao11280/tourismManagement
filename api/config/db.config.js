@@ -1,12 +1,12 @@
 const mysql = require('mysql');
 
 const dbConn = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    port: '3306',
-    database: 'tourismManagement',
-    connectionLimit:5,
+    host: process.env.HOST_DB,
+    user: process.env.USER_DB,
+    password: process.env.PASS_DB,
+    port: process.env.PORT_DB,
+    database: process.env.NAME_DB,
+    connectionLimit: 5,
 });
 
 

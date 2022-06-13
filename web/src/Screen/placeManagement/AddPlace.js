@@ -24,7 +24,9 @@ const AddPlace = () => {
 
     useEffect(() => {
         setURLListImage(images);
-
+        return () => {
+            setURLListImage([])
+        }
     }, [images])
 
 

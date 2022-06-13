@@ -41,6 +41,10 @@ const AddTrip = () => {
                     .catch(() => { setListService([]) })
             })
             .catch(() => { setListPlace([]) })
+        return () => {
+            setListPlace([])
+            setListService([])
+        }
     }, [])
     const handleAddTrip = () => {
         const check = checkAddTrip();

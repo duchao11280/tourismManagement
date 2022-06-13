@@ -31,6 +31,10 @@ const AddService = () => {
                 setValues({ ...values, typeID: response?.data[0].typeID })
             })
             .catch(() => { setTypes([]) })
+        return () => {
+            setTypes([])
+            setValues({})
+        }
     }, [])
     useEffect(() => {
         searchAllPlaceByCity(currProvince)
@@ -42,6 +46,10 @@ const AddService = () => {
                 })
             })
             .catch(() => { setPlacesByCity([]) })
+        return () => {
+            setPlacesByCity([])
+            setValues({})
+        }
     }, [currProvince])
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -52,7 +60,9 @@ const AddService = () => {
     };
     useEffect(() => {
         setURLListImage(images);
-
+        return () => {
+            setURLListImage([])
+        }
     }, [images])
     const setURLListImage = (images) => {
         if (images.length < 1) return;

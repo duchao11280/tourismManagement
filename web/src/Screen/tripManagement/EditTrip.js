@@ -46,13 +46,20 @@ const EditTrip = () => {
                     .catch(() => { setListService([]) })
             })
             .catch(() => { setListPlace([]) })
-
+        return () => {
+            setListPlace([])
+            setListService([])
+        }
     }, [])
     useEffect(() => {
         getTripDetailByTripID(id)
             .then((response) => { setTripDetail(response.data); })
             .catch((error) => { setTripDetail({}) })
             .finally(() => { setLoading(false) })
+        return () => {
+            setTripDetail({})
+            setLoading(false)
+        }
     }, [refresh])
     // change info (tripName, city )of trip
     const handleChange = (e) => {
@@ -157,7 +164,7 @@ const EditTrip = () => {
                                         disabled
                                         type="text"
                                         name="tripName"
-                                        value={tripDetail.tripName}
+                                        value={tripDetail?.tripName}
                                         placeholder="Nhập tên lịch trình"
                                         autoFocus
                                         onChange={handleChange}
@@ -166,7 +173,7 @@ const EditTrip = () => {
                                 <div>
                                     <label htmlFor="province">Tỉnh thành(*)</label>
                                     <br />
-                                    <select disabled value={tripDetail.city} id="province" name="city" onChange={handleChange}>
+                                    <select disabled value={tripDetail?.city} id="province" name="city" onChange={handleChange}>
                                         {province.map((item) =>
                                             <option
                                                 key={item.id}
@@ -180,7 +187,7 @@ const EditTrip = () => {
                             <div>
                                 <div>
                                     {
-                                        tripDetail?.detail.map((tripDetailItem, i) => {
+                                        tripDetail?.detail?.map((tripDetailItem, i) => {
                                             return (
                                                 <div style={{ backgroundColor: "azure", border: "1px solid", marginBottom: "5px" }} key={i}>
                                                     <div style={{ backgroundColor: "gray" }}>
@@ -197,7 +204,7 @@ const EditTrip = () => {
                                                     </div>
                                                     <div>
                                                         <div>
-                                                            {tripDetailItem.detail.map((detailPerItem, index) => (
+                                                            {tripDetailItem?.detail?.map((detailPerItem, index) => (
                                                                 <div className="d-flex flex-row" key={index}>
                                                                     <div className="d-flex m-3 justify-content-around container-item-place-trip-detail-addtrip" key={detailPerItem.id} style={{}}>
                                                                         {

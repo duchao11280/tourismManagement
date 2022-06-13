@@ -22,7 +22,11 @@ const UserManagement = () => {
             })
             .catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau!"); setListUser([]) })
             .finally(() => { setIsLoading(false) })
-        return () => { flag = false }
+        return () => {
+            flag = false
+            setListUser([])
+            setIsLoading(false)
+        }
     }, [refresh])
     const onSearchChange = (event) => {
         setSearchfield(event.target.value);

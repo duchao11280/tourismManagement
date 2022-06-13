@@ -68,21 +68,52 @@ const EditService = () => {
                     .catch(() => { setTypes([]) })
             })
             .catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau!") })
+        return () => {
+            setValues({})
+            setCurrProvince('')
+            setImgs([])
+            setCurrImg({})
+            setTypes([])
+        }
     }, [id, refresh])
     useEffect(() => {
         searchAllPlaceByCity(currProvince)
             .then((response) => {
                 setPlacesByCity(response?.data)
-                setValues({
-                    ...values,
-                    placeID: response?.data[0].placeID
-                })
+                let index = checkExistPlaceId(response?.data, values?.placeID)
+                if (index >= 0) {
+                    setValues({
+                        ...values,
+                        placeID: response?.data[index].placeID
+                    })
+                } else {
+                    setValues({
+                        ...values,
+                        placeID: response?.data[0].placeID
+                    })
+                }
             })
             .catch(() => { setPlacesByCity([]) })
+        return () => {
+            setPlacesByCity([])
+        }
     }, [currProvince])
+    const checkExistPlaceId = (arr, placeID) => {
+        if (arr == null) {
+            return -1;
+        }
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].placeID === placeID) {
+                return i;
+            }
+        }
+        return -1;
+    }
     useEffect(() => {
         setURLListImage(imagesAdd);
-
+        return () => {
+            setURLListImage([])
+        }
     }, [imagesAdd])
     const setURLListImage = (images) => {
         if (images.length < 1) return;

@@ -19,6 +19,10 @@ const PlaceManagement = () => {
     useEffect(() => {
 
         getPlaceFromServer();
+        return () => {
+            setListPlaces([])
+            setIsLoading(false)
+        }
     }, [refresh])
     const getPlaceFromServer = () => {
         setIsLoading(true)

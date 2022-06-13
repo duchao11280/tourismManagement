@@ -51,6 +51,11 @@ const EditPlace = () => {
 
             )
             .catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau!") })
+        return () => {
+            setValues({})
+            setImgs([])
+            setCurrImg({})
+        }
     }, [id, refresh])
 
     useEffect(() => {

@@ -20,20 +20,23 @@ const ModalAddDetailTrip = (props) => {
     };
     useEffect(() => {
         setValues({
-            placeID: listPlace[0].placeID,
+            placeID: listPlace[0]?.placeID,
             serviceID: listService[0]?.serviceID,
             note: "",
             timeClock: `0${new Date().getHours()}`.slice(-2) + ":" + `0${new Date().getMinutes()}`.slice(-2)
         })
+        return () => {
+            setValues({})
+        }
     }, [showModal])
     const onSubmit = () => {
         if (isAddPlace) {
-            addPlaceToDetailTrip(tripID, day, values.placeID, values.note, values.timeClock)
+            addPlaceToDetailTrip(tripID, day, values.placeID, values?.note, values?.timeClock)
                 .then((response) => { alert(response?.message) })
                 .catch(() => { alert("Hệ thống bị lỗi, vui lòng thử lại.") })
                 .finally(() => { props.handleCloseModal() })
         } else {
-            addServiceToDetailTrip(tripID, day, values.serviceID, values.note, values.timeClock)
+            addServiceToDetailTrip(tripID, day, values?.serviceID, values?.note, values?.timeClock)
                 .then((response) => { alert(response?.message) })
                 .catch(() => { alert("Hệ thống bị lỗi, vui lòng thử lại.") })
                 .finally(() => { props.handleCloseModal() })
@@ -57,7 +60,7 @@ const ModalAddDetailTrip = (props) => {
                                 <label>Địa điểm</label>
                                 <br />
                                 <select
-                                    value={values.placeID}
+                                    value={values?.placeID}
                                     name="placeID"
                                     onChange={handleChange}
 
@@ -75,7 +78,7 @@ const ModalAddDetailTrip = (props) => {
                                 <label>Dịch vụ:</label>
                                 <br />
                                 <select
-                                    value={values.serviceID}
+                                    value={values?.serviceID}
                                     name="serviceID"
                                     onChange={handleChange}
 

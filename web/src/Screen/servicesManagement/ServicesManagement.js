@@ -24,6 +24,10 @@ const ServicesManagement = () => {
             })
             .catch(() => { alert("Xảy ra lỗi, vui lòng thử lại sau") })
             .finally(() => { setIsLoading(false) })
+        return () => {
+            setListService([])
+            setIsLoading(false)
+        }
     }, [refresh])
     const onSearchChange = (event) => {
         setSearchfield(event.target.value);

@@ -29,6 +29,9 @@ const Feedback = () => {
             .catch(() => {
                 setListNotification([]);
             })
+        return () => {
+            setListNotification([])
+        }
     }, [refresh])
     const onSearchChange = (event) => {
         setSearchfield(event.target.value);

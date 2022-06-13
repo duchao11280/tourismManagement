@@ -20,6 +20,9 @@ const CommentPlace = () => {
     useEffect(() => {
 
         getCommentFromServer(id);
+        return () => {
+            setListComment([])
+        }
     }, [id, refresh])
     const getCommentFromServer = (id) => {
 
