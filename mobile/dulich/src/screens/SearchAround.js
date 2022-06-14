@@ -22,22 +22,29 @@ const SearchAround = ({ navigation }) => {
                 return;
             }
 
-            let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.HighlatitudeDeltaest, maximumAge: 10000 });
-            setInitialRegion({
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude,
-                latitudeDelta: 0.016,
-                longitudeDelta: 0.016
-            })
-            getAllPlaceAround(location?.coords?.latitude || initialRegion.latitude, location?.coords?.longitude || initialRegion.longitude, 5)
-                .then((response) => { setListPlace(response.data) })
-                .catch((err) => { setListPlace([]) })
-            getAllServiceAround(location?.coords?.latitude || initialRegion.latitude, location?.coords?.longitude || initialRegion.longitude, 5)
-                .then((response) => { setListService(response.data) })
-                .catch((err) => { setListService([]) })
+            Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.HighlatitudeDeltaest, maximumAge: 10000 })
+                .then((location) => {
+                    setInitialRegion({
+                        latitude: location.coords.latitude,
+                        longitude: location.coords.longitude,
+                        latitudeDelta: 0.016,
+                        longitudeDelta: 0.016
+                    })
+                    getAllPlaceAround(location?.coords?.latitude || initialRegion.latitude, location?.coords?.longitude || initialRegion.longitude, 5)
+                        .then((response) => { setListPlace(response.data) })
+                        .catch((err) => { setListPlace([]) })
+                    getAllServiceAround(location?.coords?.latitude || initialRegion.latitude, location?.coords?.longitude || initialRegion.longitude, 5)
+                        .then((response) => { setListService(response.data) })
+                        .catch((err) => { setListService([]) })
+                })
+                .catch((err) => console.log(err))
 
             setRefresh(false)
         })();
+        return () => {
+            setListPlace([])
+            setListService([])
+        }
     }, [isFocused]);
 
     const filterHotel = listService == undefined ? [] : listService.filter(item => {
