@@ -184,7 +184,7 @@ const Feedback = () => {
         <div className="containerWithsideBar">
             <div><Admin /></div>
             <div className="container-manager">
-                <h2 className="title">Quản lý thông báo</h2>
+                <h2 className="title">Quản lý phản hồi</h2>
                 <SearchBox searchChange={onSearchChange} />
                 <hr />
                 <br />

@@ -92,6 +92,7 @@ Trip.addTrip = (tripName, city, tripDetail, userID, result) => {
                     })
                 }
             })
+            connection.release()
         }
     });
 
@@ -127,7 +128,7 @@ Trip.deleteDayOfDetailTrip = (tripID, day, result) => {
                                 result(err, null);
                             });
                         } else {
-                            var querySubDayTrip = `Update trip set numberOfDays = numberOfDays - 1 where tripID=${tripID}`
+                            var querySubDayTrip = `Update trip set numberOfDays = numberOfDays - 1 where tripID=${tripID} and numberOfDays >1`
                             connection.query(querySubDayTrip, (err, data) => {
                                 if (err) {
                                     return connection.rollback(function () {
@@ -149,6 +150,7 @@ Trip.deleteDayOfDetailTrip = (tripID, day, result) => {
                     })
                 }
             })
+            connection.release()
         }
     });
 }

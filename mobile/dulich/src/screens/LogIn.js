@@ -10,8 +10,8 @@ import { login } from '../networking/usernetworking'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LogIn = ({ navigation }) => {
-  const [userName, setUsername] = useState("Admin");
-  const [password, setPassword] = useState('123456');
+  const [userName, setUsername] = useState("");
+  const [password, setPassword] = useState('');
   const [isLoading, setLoading] = useState(false);
   let isValidate = false;
   const validate = () => {
@@ -22,7 +22,7 @@ const LogIn = ({ navigation }) => {
       isValidate = false;
     } else isValidate = true;
   }
-  
+
   const onLogin = async () => {
     const response = await login(userName, password);
     if (response.status == true) {
@@ -84,7 +84,7 @@ const LogIn = ({ navigation }) => {
           {isLoading ? <ActivityIndicator size="large" color='blue' /> :
             <Pressable
               onPress={() => {
-                
+
                 validate();
                 if (isValidate == true) {
                   setLoading(true);
