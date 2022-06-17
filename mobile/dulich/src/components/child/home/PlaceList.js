@@ -26,9 +26,18 @@ const PlaceList = (props) => {
 
 
             <View style={Styles.container}>
-                <Image style={Styles.image}
-                    source={{ uri: hotel.images[0]?.image }}>
-                </Image>
+                {
+                    hotel.images.length > 0 ?
+                        <Image style={Styles.image}
+                            source={{ uri: hotel.images[0]?.image }}>
+                        </Image>
+                        :
+                        <Image
+                            style={Styles.image}
+                            source={require('../../../resources/imgs/defau.jpg')}
+                        />
+                }
+
                 <Text numberOfLines={2} ellipsizeMode="tail" style={Styles.nameProvince}>{hotel.placeName}</Text>
             </View>
 
