@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
-import { Text, View, StyleSheet, Button, Image, TextInput, Pressable, FlatList, SafeAreaView, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, Button, Image, TextInput, Pressable, FlatList, SafeAreaView, ScrollView, RefreshControl } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { FontAwesome5 } from 'react-native-vector-icons';
 import { Entypo } from '@expo/vector-icons';
@@ -24,7 +24,7 @@ const Home = ({ navigation }) => {
     const [listHotel, setListHotel] = useState([]);
     const [listOtherServices, setListOtherServices] = useState([])
     // const [role, setrole] = useState([]);
-    const [nameFilter, setNameFilter] = useState("Đồng Nai");
+    const [nameFilter, setNameFilter] = useState("Thành Phố Hồ Chí Minh");
     const [listPlaces, setListPlaces] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [isLoading, setLoading] = useState(true);
@@ -68,6 +68,11 @@ const Home = ({ navigation }) => {
     const handleGotoDetailPlace = (item) => {
 
         navigation.push("TabDetailPlace", { place: item });
+    }
+    const onRefresh = () => {
+        setRefreshing(true); getPlaceFromServer();
+        getHotelFromServer();
+        getOtherServicesFromServer();
     }
 
 
@@ -119,8 +124,9 @@ const Home = ({ navigation }) => {
                                 }
 
                                 }>
-                                <Picker.Item label="Đồng Nai" value="Đồng Nai" />
                                 <Picker.Item label="Thành Phố Hồ Chí Minh" value="Thành Phố Hồ Chí Minh" />
+                                <Picker.Item label="Đồng Nai" value="Đồng Nai" />
+
                             </Picker>
                         </View>
 
@@ -128,6 +134,21 @@ const Home = ({ navigation }) => {
 
 
                     <View >
+                        {/* {isLoading ? <ActivityIndicator size="large" color='blue' /> :
+                            <FlatList
+                                data={listNotification}
+                                ListFooterComponent={<View style={{ paddingBottom: 400 }} />}
+                                keyExtractor={item => item.notificationID.toString()}
+
+                                renderItem={renderItem}
+                                refreshControl={
+                                    <RefreshControl
+                                        refreshing={refreshing}
+                                        onRefresh={() => onRefresh()}
+                                    />
+                                }
+                            >
+                            </FlatList>} */}
                         <Text style={styles.content}>{filteredPlace.length != 0 ? "Khám phá các địa điểm khi du lịch:" : ""} </Text>
                     </View>
                     <View style={styles.flatlistview}>
@@ -142,6 +163,12 @@ const Home = ({ navigation }) => {
                                     <Pressable onPress={() => { handleGotoDetailPlace(item) }}><PlaceList hotels={item} /></Pressable>
                                 )
                             }}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={() => onRefresh()}
+                                />
+                            }
 
                         ></FlatList>
                     </View>
@@ -161,7 +188,12 @@ const Home = ({ navigation }) => {
                                     <Pressable onPress={() => { handleGotoDetailHotel(item) }}><ServicesList hotels={item} /></Pressable>
                                 )
                             }}
-
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={() => onRefresh()}
+                                />
+                            }
                         ></FlatList>
                     </View>
 
@@ -180,7 +212,12 @@ const Home = ({ navigation }) => {
                                     // <ServicesList hotels={item} />
                                 )
                             }}
-
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={() => onRefresh()}
+                                />
+                            }
                         ></FlatList>
                     </View>
 

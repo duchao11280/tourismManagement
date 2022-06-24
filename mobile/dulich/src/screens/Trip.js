@@ -77,8 +77,9 @@ const Trip = ({ navigation }) => {
                             setNameFilter(itemValue)
                         }}
                     >
-                        <Picker.Item label="Đồng Nai" value="Đồng Nai" />
                         <Picker.Item label="T.p Hồ Chí Minh" value="Thành Phố Hồ Chí Minh" />
+                        <Picker.Item label="Đồng Nai" value="Đồng Nai" />
+
                     </Picker>
                 </View>
 
